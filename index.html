@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>GLOW（グロウ）｜北海道中標津町のアミューズメントバー</title>
+<meta name="description" content="北海道標津郡中標津町のアミューズメントバー「GLOW」。ボードゲーム・レトロゲーム・カラオケが楽しめる、初めてでも入りやすいアットホームな空間。ただいまプレオープン中！">
+<meta name="theme-color" content="#0a0916">
+
+<!-- OGP（SNSシェア時の表示設定。og:imageは店舗写真ができ次第 images/ogp.jpg 等を用意して追加してください） -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="GLOW（グロウ）｜北海道中標津町のアミューズメントバー">
+<meta property="og:description" content="ボードゲーム・レトロゲーム・カラオケが楽しめるアットホームな秘密基地。ただいまプレオープン中！">
+<meta property="og:locale" content="ja_JP">
+
+<!-- 簡易ファビコン（ネオン風「G」。差し替える場合は favicon.ico 等を用意してこのlinkタグを置き換えてください） -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0916'/%3E%3Ctext x='32' y='44' font-size='34' font-family='Georgia,serif' font-weight='bold' fill='%23ff3fa4' text-anchor='middle'%3EG%3C/text%3E%3C/svg%3E">
+
+<style>
+  :root{
+    --bg-0:#07060d;
+    --panel:#151228;
+    --panel-border:rgba(255,255,255,0.08);
+    --text-main:#f4f2fa;
+    --text-sub:#b7b0cc;
+    --text-faint:#8a83a3;
+    --pink:#ff3fa6;
+    --purple:#9b5cff;
+    --blue:#3fd4ff;
+    --radius:16px;
+    --maxw:1040px;
+    --header-h:64px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle 1px, rgba(255,63,166,0.55), transparent 1.6px) 12% 8%/210px 260px repeat,
+      radial-gradient(circle 1px, rgba(63,212,255,0.5), transparent 1.6px) 68% 35%/260px 300px repeat,
+      radial-gradient(circle 1px, rgba(155,92,255,0.5), transparent 1.6px) 35% 70%/230px 240px repeat,
+      radial-gradient(ellipse at 20% -10%, rgba(155,92,255,0.18), transparent 55%),
+      radial-gradient(ellipse at 90% 10%, rgba(63,212,255,0.12), transparent 50%),
+      radial-gradient(ellipse at 50% 100%, rgba(255,63,166,0.10), transparent 55%),
+      var(--bg-0);
+    color:var(--text-main);
+    font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.8;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;}
+  h1,h2,h3{margin:0;line-height:1.4;}
+  ul{margin:0;padding:0;list-style:none;}
+
+  .container{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 20px;
+  }
+
+  /* ---------- Header ---------- */
+  .site-header{
+    position:fixed;
+    top:0;left:0;right:0;
+    z-index:100;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:12px 18px;
+    background:transparent;
+    border-bottom:1px solid transparent;
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    transition:background .4s ease, border-color .4s ease;
+  }
+  .site-header.is-scrolled{
+    background:rgba(7,6,13,0.72);
+    border-bottom-color:var(--panel-border);
+  }
+  .brand{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    opacity:0;
+    transform:translateY(-6px);
+    pointer-events:none;
+    transition:opacity .4s ease, transform .4s ease;
+  }
+  .site-header.is-scrolled .brand{
+    opacity:1;
+    transform:translateY(0);
+    pointer-events:auto;
+  }
+  .brand-logo{
+    font-family:Georgia,"Times New Roman",serif;
+    font-weight:700;
+    font-size:1.35rem;
+    letter-spacing:0.12em;
+    color:#fff;
+    text-shadow:
+      0 0 6px rgba(255,255,255,0.6),
+      0 0 14px var(--pink),
+      0 0 26px rgba(255,63,166,0.5);
+  }
+  .brand-badge{
+    font-size:0.62rem;
+    letter-spacing:0.08em;
+    padding:3px 8px;
+    border-radius:999px;
+    border:1px solid var(--blue);
+    color:var(--blue);
+    text-shadow:0 0 6px rgba(63,212,255,0.6);
+    white-space:nowrap;
+  }
+  .nav-toggle{
+    background:none;
+    border:1px solid var(--panel-border);
+    border-radius:10px;
+    width:40px;height:40px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    padding:0;
+    flex-shrink:0;
+    margin-left:auto;
+  }
+  .nav-toggle span,
+  .nav-toggle::before,
+  .nav-toggle::after{
+    content:"";
+    display:block;
+    width:18px;height:2px;
+    background:var(--text-main);
+    border-radius:2px;
+    transition:transform .25s ease, opacity .25s ease;
+  }
+  .nav-toggle span{margin:4px 0;position:relative;}
+  .nav-toggle.is-open span{opacity:0;}
+  .nav-toggle.is-open::before{transform:translateY(6px) rotate(45deg);}
+  .nav-toggle.is-open::after{transform:translateY(-6px) rotate(-45deg);}
+
+  .mobile-nav{
+    position:fixed;
+    top:0;left:0;right:0;
+    z-index:90;
+    background:rgba(10,9,20,0.98);
+    border-bottom:1px solid var(--panel-border);
+    padding:76px 20px 20px;
+    display:flex;
+    flex-direction:column;
+    gap:2px;
+    max-height:100svh;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    transform:translateY(-100%);
+    opacity:0;
+    transition:transform .3s ease, opacity .3s ease;
+    pointer-events:none;
+  }
+  .mobile-nav.is-open{
+    transform:translateY(0);
+    opacity:1;
+    pointer-events:auto;
+  }
+  .mobile-nav a{
+    text-decoration:none;
+    color:var(--text-sub);
+    padding:11px 4px;
+    border-bottom:1px solid var(--panel-border);
+    font-size:0.95rem;
+    letter-spacing:0.02em;
+  }
+  .mobile-nav a:active{color:var(--pink);}
+
+  /* アンカー移動時に見出しが固定ヘッダーに隠れないための余白 */
+  section{
+    padding:72px 0;
+    position:relative;
+    scroll-margin-top:calc(var(--header-h) + 24px);
+  }
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(18px);
+    transition:opacity .8s ease, transform .8s ease;
+  }
+  .reveal.is-visible{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  /* ---------- Hero (top) ---------- */
+  .hero{
+    position:relative;
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:100px 20px 60px;
+    overflow:hidden;
+    background-color:var(--bg-0);
+  }
+  .hero-bg{
+    position:absolute;
+    inset:0;
+    z-index:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:1;
+    background:
+      linear-gradient(180deg, rgba(7,6,13,0.82), rgba(24,10,45,0.72) 45%, rgba(7,6,13,0.88)),
+      radial-gradient(ellipse at 50% 20%, rgba(155,92,255,0.28), transparent 60%);
+    pointer-events:none;
+  }
+  .hero > *:not(.hero-bg){
+    position:relative;
+    z-index:2;
+  }
+  .hero-logo{
+    margin:22px 0 0;
+    line-height:0;
+  }
+  .hero-logo img{
+    display:block;
+    width:clamp(180px, 46vw, 300px);
+    height:auto;
+    margin:0 auto;
+    animation:neonPulse 4.5s ease-in-out infinite;
+  }
+  @keyframes neonPulse{
+    0%,100%{
+      filter:
+        drop-shadow(0 0 10px rgba(255,63,166,0.45))
+        drop-shadow(0 0 22px rgba(255,63,166,0.25))
+        drop-shadow(0 0 34px rgba(63,212,255,0.22));
+    }
+    50%{
+      filter:
+        drop-shadow(0 0 16px rgba(255,63,166,0.65))
+        drop-shadow(0 0 32px rgba(155,92,255,0.4))
+        drop-shadow(0 0 50px rgba(63,212,255,0.35));
+    }
+  }
+  .hero-tagline{
+    margin-top:18px;
+    font-size:1rem;
+    color:var(--text-sub);
+    letter-spacing:0.04em;
+  }
+  .hero-tagline strong{
+    color:#fff;
+    font-weight:600;
+  }
+
+  .hero-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:0.72rem;
+    letter-spacing:0.15em;
+    padding:7px 16px;
+    border-radius:999px;
+    border:1px solid var(--pink);
+    color:var(--pink);
+    background:rgba(255,63,166,0.05);
+    box-shadow:0 0 12px rgba(255,63,166,0.35), inset 0 0 8px rgba(255,63,166,0.12);
+  }
+  .hero-badge .chip-dot{
+    width:6px;height:6px;
+    border-radius:50%;
+    background:var(--pink);
+    box-shadow:0 0 8px var(--pink);
+    animation:dotPulse 2.4s ease-in-out infinite;
+    flex-shrink:0;
+  }
+  @keyframes dotPulse{
+    0%,100%{opacity:0.55; transform:scale(0.85);}
+    50%{opacity:1; transform:scale(1.15);}
+  }
+
+  .hero-lead{
+    margin-top:14px;
+    max-width:480px;
+    font-size:0.92rem;
+    color:#d9d0fb;
+    letter-spacing:0.02em;
+    line-height:1.8;
+  }
+  .lead-highlight{
+    background:linear-gradient(90deg, var(--pink), var(--purple));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    text-shadow:0 0 14px rgba(155,92,255,0.32);
+    font-weight:600;
+  }
+
+  .hero-hours{
+    margin-top:24px;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:0.76rem;
+    letter-spacing:0.06em;
+    color:var(--text-faint);
+  }
+  .hero-hours svg{
+    width:13px;height:13px;
+    flex-shrink:0;
+  }
+
+  .hero-price-hint{
+    margin-top:6px;
+    font-size:0.7rem;
+    letter-spacing:0.03em;
+    color:var(--text-faint);
+    opacity:0.85;
+  }
+
+  .hero-cta{
+    margin-top:28px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+    width:100%;
+    max-width:340px;
+  }
+  .hero-cta .btn{width:100%;}
+  @media (min-width:480px){
+    .hero-cta{
+      flex-direction:row;
+      justify-content:center;
+      max-width:none;
+    }
+    .hero-cta .btn{width:auto;}
+  }
+
+  /* ---------- Section head ---------- */
+  .section-head{
+    margin-bottom:32px;
+    text-align:center;
+  }
+  .section-eyebrow{
+    font-size:0.7rem;
+    letter-spacing:0.3em;
+    color:var(--blue);
+    text-shadow:0 0 10px rgba(63,212,255,0.5);
+    margin-bottom:10px;
+    display:block;
+  }
+  .section-title{
+    font-size:1.5rem;
+    font-weight:700;
+    color:#fff;
+  }
+  .section-lead{
+    margin-top:14px;
+    color:var(--text-sub);
+    font-size:0.94rem;
+  }
+  .divider{
+    width:56px;
+    height:3px;
+    margin:18px auto 0;
+    border-radius:3px;
+    background:linear-gradient(90deg, var(--pink), var(--purple), var(--blue), var(--pink));
+    background-size:220% 100%;
+    animation:dividerFlow 7s linear infinite;
+  }
+  @keyframes dividerFlow{
+    0%{background-position:0% 0%;}
+    100%{background-position:-120% 0%;}
+  }
+
+  /* ---------- Preopen announcement (細いお知らせ欄) ---------- */
+  #preopen{ padding:32px 0; }
+  .preopen-strip{
+    max-width:560px;
+    margin:0 auto;
+    text-align:center;
+    padding:18px 24px;
+    border-radius:var(--radius);
+    border:1px solid rgba(255,255,255,0.12);
+    background:linear-gradient(90deg, rgba(255,63,166,0.06), rgba(155,92,255,0.06));
+  }
+  .preopen-strip p{
+    margin:0 0 6px;
+    font-size:0.88rem;
+    color:var(--text-sub);
+    line-height:1.7;
+  }
+  .preopen-strip p:last-child{ margin-bottom:0; }
+  .preopen-strip strong{ color:#fff; }
+  .preopen-strip-note{
+    font-size:0.78rem;
+    color:var(--text-faint);
+  }
+
+  /* ---------- Decorative art panel (画像の代わりのネオン装飾) ---------- */
+  .art-panel{
+    position:relative;
+    width:100%;
+    aspect-ratio:4/3;
+    border-radius:var(--radius);
+    border:1px solid var(--panel-border);
+    overflow:hidden;
+    background:
+      radial-gradient(circle at 28% 28%, rgba(255,63,166,0.35), transparent 55%),
+      radial-gradient(circle at 76% 68%, rgba(63,212,255,0.30), transparent 55%),
+      radial-gradient(circle at 50% 50%, rgba(155,92,255,0.22), transparent 62%),
+      var(--panel);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .art-panel::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:1;
+    background:linear-gradient(180deg, rgba(7,6,13,0.55), rgba(21,18,40,0.35));
+    pointer-events:none;
+  }
+  .art-panel::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:2;
+    background-image:radial-gradient(rgba(255,255,255,0.6) 1px, transparent 1px);
+    background-size:28px 28px;
+    opacity:0.045;
+    mix-blend-mode:screen;
+    pointer-events:none;
+  }
+  .art-panel svg{
+    position:relative;
+    z-index:1;
+    width:34%;
+    max-width:120px;
+    opacity:0.6;
+    filter:drop-shadow(0 0 16px rgba(255,255,255,0.25));
+  }
+  /* 実写真を敷く場合（object-fit:coverでトリミングし、ネオンの世界観に合わせて暗くなじませる） */
+  .art-panel img,
+  .play-card-visual img{
+    position:absolute;
+    inset:0;
+    z-index:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+  /* ---------- About ---------- */
+  #about{padding-bottom:36px;}
+  .about-grid{
+    display:grid;
+    gap:24px;
+  }
+  .about-text p{
+    color:var(--text-sub);
+    font-size:0.95rem;
+    margin:0 0 14px;
+  }
+  .about-text p:last-child{margin-bottom:0;}
+
+  /* about → play をつなぐ装飾 */
+  .section-connector{
+    display:flex;
+    justify-content:center;
+    height:56px;
+  }
+  .section-connector-line{
+    position:relative;
+    width:2px;
+    height:100%;
+    background:linear-gradient(180deg, transparent, rgba(255,63,166,0.5) 30%, rgba(155,92,255,0.5) 70%, transparent);
+  }
+  .section-connector-line::before{
+    content:"";
+    position:absolute;
+    top:50%;left:50%;
+    width:8px;height:8px;
+    border-radius:50%;
+    background:var(--purple);
+    box-shadow:0 0 12px var(--purple);
+    transform:translate(-50%,-50%);
+  }
+
+  /* ---------- Play cards ---------- */
+  #play{padding-top:36px;}
+  .play-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:22px;
+  }
+  .play-card{
+    background:var(--panel);
+    border:1px solid var(--panel-border);
+    border-radius:var(--radius);
+    padding:20px;
+    transition:border-color .3s ease, box-shadow .3s ease;
+  }
+  .play-card:hover{
+    border-color:rgba(255,63,166,0.4);
+    box-shadow:0 0 24px rgba(155,92,255,0.15);
+  }
+  .play-card-visual{
+    aspect-ratio:16/9;
+    border-radius:12px;
+    border:1px solid var(--panel-border);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:16px;
+    position:relative;
+    overflow:hidden;
+  }
+  .play-card-visual::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:1;
+    background:linear-gradient(180deg, rgba(7,6,13,0.55), rgba(21,18,40,0.35));
+    pointer-events:none;
+  }
+  .play-card-visual::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:2;
+    background-image:radial-gradient(rgba(255,255,255,0.6) 1px, transparent 1px);
+    background-size:26px 26px;
+    opacity:0.04;
+    mix-blend-mode:screen;
+    pointer-events:none;
+  }
+  .play-card-visual svg{
+    position:relative;
+    z-index:1;
+    width:38%;
+    max-width:76px;
+  }
+  .play-card-visual.tone-pink{ background:radial-gradient(circle at 50% 45%, rgba(255,63,166,0.28), transparent 65%), var(--panel); }
+  .play-card-visual.tone-pink svg{ color:var(--pink); filter:drop-shadow(0 0 12px rgba(255,63,166,0.6)); }
+  .play-card-visual.tone-purple{ background:radial-gradient(circle at 50% 45%, rgba(155,92,255,0.28), transparent 65%), var(--panel); }
+  .play-card-visual.tone-purple svg{ color:var(--purple); filter:drop-shadow(0 0 12px rgba(155,92,255,0.6)); }
+  .play-card-visual.tone-blue{ background:radial-gradient(circle at 50% 45%, rgba(63,212,255,0.28), transparent 65%), var(--panel); }
+  .play-card-visual.tone-blue svg{ color:var(--blue); filter:drop-shadow(0 0 12px rgba(63,212,255,0.6)); }
+
+  .play-card h3{
+    font-size:1.05rem;
+    color:#fff;
+    margin-bottom:8px;
+  }
+  .play-card p{
+    color:var(--text-sub);
+    font-size:0.88rem;
+    margin:0;
+  }
+
+  /* ボードゲームを主役として扱う強調カード */
+  .play-card--featured{
+    grid-column:1 / -1;
+  }
+  .play-card--featured .play-card-visual{
+    aspect-ratio:21/9;
+  }
+  .play-card--featured h3{
+    font-size:1.25rem;
+  }
+  .play-card--featured p{
+    font-size:0.92rem;
+  }
+
+  /* ---------- Price plans ---------- */
+  .plan-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:20px;
+  }
+  .plan-card{
+    background:var(--panel);
+    border:1px solid var(--panel-border);
+    border-radius:var(--radius);
+    padding:24px 22px;
+    position:relative;
+    overflow:hidden;
+  }
+  .plan-card::before{
+    content:"";
+    position:absolute;
+    top:0;left:0;right:0;
+    height:3px;
+    background:linear-gradient(90deg, var(--pink), var(--purple), var(--blue));
+  }
+  .plan-name{
+    font-size:1.1rem;
+    font-weight:700;
+    color:#fff;
+    margin-bottom:14px;
+  }
+  .plan-price-row{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:6px;
+  }
+  .plan-time{
+    font-size:0.85rem;
+    color:var(--text-sub);
+  }
+  .plan-price{
+    font-size:1.7rem;
+    font-weight:700;
+    background:linear-gradient(90deg, #fff, var(--pink));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .plan-extension{
+    font-size:0.82rem;
+    color:var(--text-faint);
+    margin-bottom:16px;
+  }
+  .plan-includes{
+    border-top:1px dashed var(--panel-border);
+    padding-top:14px;
+  }
+  .plan-includes-label{
+    display:block;
+    font-size:0.68rem;
+    letter-spacing:0.1em;
+    color:var(--blue);
+    margin-bottom:10px;
+  }
+  .plan-checklist{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .plan-checklist li{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    font-size:0.8rem;
+    color:var(--text-sub);
+    background:rgba(255,255,255,0.04);
+    border:1px solid var(--panel-border);
+    border-radius:999px;
+    padding:5px 12px;
+  }
+  .plan-checklist li svg{
+    width:11px;height:11px;
+    color:var(--pink);
+    flex-shrink:0;
+  }
+  .price-note{
+    margin-top:20px;
+    text-align:center;
+    font-size:0.78rem;
+    color:var(--text-faint);
+    line-height:1.6;
+  }
+
+  /* ---------- Menu ---------- */
+  .menu-categories{
+    display:flex;
+    flex-direction:column;
+    gap:32px;
+  }
+  .menu-category-title{
+    font-size:0.72rem;
+    letter-spacing:0.25em;
+    color:var(--text-sub);
+    margin-bottom:12px;
+    padding-left:12px;
+    border-left:3px solid var(--pink);
+  }
+  .menu-list{
+    background:var(--panel);
+    border:1px solid var(--panel-border);
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .menu-item{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:12px;
+    padding:15px 20px;
+    border-bottom:1px solid var(--panel-border);
+  }
+  .menu-item:last-child{border-bottom:none;}
+  .menu-name{
+    font-size:0.94rem;
+    color:var(--text-main);
+  }
+  .menu-price{
+    font-size:0.94rem;
+    font-weight:700;
+    color:var(--pink);
+    white-space:nowrap;
+    text-shadow:0 0 10px rgba(255,63,166,0.35);
+  }
+
+  /* ---------- Info table ---------- */
+  .info-table{
+    background:var(--panel);
+    border:1px solid var(--panel-border);
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .info-row{
+    display:flex;
+    flex-direction:column;
+    padding:16px 20px;
+    border-bottom:1px solid var(--panel-border);
+    gap:4px;
+  }
+  .info-row:last-child{border-bottom:none;}
+  .info-row dt{
+    font-size:0.72rem;
+    letter-spacing:0.1em;
+    color:var(--blue);
+    text-shadow:0 0 8px rgba(63,212,255,0.4);
+  }
+  .info-row dd{
+    margin:0;
+    font-size:0.96rem;
+    color:var(--text-main);
+    word-break:break-word;
+  }
+  .info-row dd a{
+    color:var(--pink);
+    text-decoration:none;
+    border-bottom:1px solid rgba(255,63,166,0.4);
+  }
+
+  /* ---------- 薄い煌びやかさ：カード枠のごく淡いネオン反射 ---------- */
+  .plan-card,
+  .play-card,
+  .menu-list,
+  .info-table,
+  .insta-card,
+  .preopen-strip{
+    box-shadow:0 0 0 1px rgba(255,255,255,0.03), 0 0 26px rgba(155,92,255,0.07);
+  }
+
+  /* ---------- 薄い煌びやかさ：セクション左右の淡いグロー ---------- */
+  .section-glow-left,
+  .section-glow-right{
+    isolation:isolate;
+    overflow:hidden;
+  }
+  .section-glow-left::before,
+  .section-glow-right::before{
+    content:"";
+    position:absolute;
+    top:6%;
+    width:320px;
+    height:320px;
+    max-width:70vw;
+    border-radius:50%;
+    filter:blur(70px);
+    opacity:0.5;
+    pointer-events:none;
+    z-index:-1;
+  }
+  .section-glow-left::before{
+    left:-130px;
+    background:radial-gradient(circle, rgba(255,63,166,0.35), transparent 70%);
+  }
+  .section-glow-right::before{
+    right:-130px;
+    background:radial-gradient(circle, rgba(63,212,255,0.32), transparent 70%);
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    width:100%;
+    padding:14px 20px;
+    border-radius:999px;
+    font-size:0.92rem;
+    font-weight:700;
+    text-decoration:none;
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:filter .2s ease, box-shadow .2s ease;
+  }
+  .btn-neon{
+    background:linear-gradient(90deg, var(--pink), var(--purple));
+    color:#fff;
+    box-shadow:0 0 22px rgba(255,63,166,0.35);
+  }
+  .btn-outline{
+    background:transparent;
+    border-color:rgba(255,255,255,0.25);
+    color:var(--text-main);
+  }
+  .btn-neon:hover,
+  .btn-neon:active{
+    filter:brightness(1.1);
+    box-shadow:0 0 28px rgba(255,63,166,0.5);
+  }
+  .btn-outline:hover,
+  .btn-outline:active{
+    filter:brightness(1.15);
+    border-color:rgba(255,255,255,0.4);
+  }
+
+  /* ---------- キーボード操作時のフォーカス表示 ---------- */
+  a:focus-visible,
+  button:focus-visible{
+    outline:2px solid var(--blue);
+    outline-offset:3px;
+    border-radius:8px;
+  }
+
+  /* ---------- Access ---------- */
+  .access-address{
+    font-size:0.95rem;
+    color:var(--text-sub);
+    margin-bottom:18px;
+    text-align:center;
+  }
+  .access-address strong{
+    display:block;
+    color:#fff;
+    font-size:1.05rem;
+    margin-bottom:4px;
+  }
+  .map-embed{
+    width:100%;
+    aspect-ratio:16/10;
+    border-radius:var(--radius);
+    border:1px solid var(--panel-border);
+    overflow:hidden;
+    margin-bottom:16px;
+  }
+  .map-embed iframe{
+    width:100%;
+    height:100%;
+    border:0;
+    display:block;
+  }
+
+  /* ---------- Instagram ---------- */
+  .insta-card{
+    text-align:center;
+    background:var(--panel);
+    border:1px solid var(--panel-border);
+    border-radius:var(--radius);
+    padding:34px 22px;
+  }
+  .insta-icon{
+    width:56px;height:56px;
+    margin:0 auto 16px;
+    border-radius:16px;
+    background:linear-gradient(135deg, var(--purple), var(--pink), var(--blue));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .insta-icon svg{width:28px;height:28px;fill:#fff;}
+  .insta-card p{
+    color:var(--text-sub);
+    font-size:0.92rem;
+    margin-bottom:20px;
+  }
+  .insta-handle{
+    display:block;
+    margin-top:14px;
+    font-size:0.82rem;
+    color:var(--text-faint);
+  }
+
+  /* ---------- Legal strip & footer ---------- */
+  .legal-strip{
+    border-top:1px solid var(--panel-border);
+    padding:28px 20px 0;
+  }
+  .legal-strip p{
+    max-width:560px;
+    margin:0 auto;
+    text-align:center;
+    font-size:0.78rem;
+    color:var(--text-faint);
+    line-height:1.7;
+  }
+  footer{
+    text-align:center;
+    padding:24px 20px 48px;
+    color:var(--text-faint);
+    font-size:0.78rem;
+  }
+  footer .footer-logo{
+    font-family:Georgia,serif;
+    font-weight:700;
+    font-size:1rem;
+    color:var(--text-sub);
+    margin-bottom:8px;
+    letter-spacing:0.1em;
+  }
+
+  /* ---------- Larger screens ---------- */
+  @media (min-width:680px){
+    .about-grid{
+      grid-template-columns:1fr 1fr;
+      align-items:center;
+    }
+    .play-grid{
+      grid-template-columns:repeat(2, 1fr);
+      align-items:start;
+    }
+    .plan-grid{
+      grid-template-columns:repeat(2, 1fr);
+    }
+    .menu-list{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+    }
+    .menu-item:nth-child(odd){
+      border-right:1px solid var(--panel-border);
+    }
+    .btn{width:auto;padding:14px 32px;}
+    .info-row{
+      flex-direction:row;
+      align-items:baseline;
+    }
+    .info-row dt{width:140px;flex-shrink:0;}
+  }
+
+  @media (min-width:900px){
+    .container{padding:0 32px;}
+    .play-grid{gap:28px;}
+    .plan-grid{gap:24px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header" id="siteHeader">
+  <div class="brand">
+    <span class="brand-logo">GLOW</span>
+    <span class="brand-badge">PRE OPEN</span>
+  </div>
+  <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="mobileNav">
+    <span></span>
+  </button>
+</header>
+
+<nav class="mobile-nav" id="mobileNav">
+  <a href="#top">トップ</a>
+  <a href="#play">遊べるもの</a>
+  <a href="#price">料金</a>
+  <a href="#menu">メニュー</a>
+  <a href="#info">店舗情報</a>
+  <a href="#instagram">Instagram</a>
+</nav>
+
+<main>
+
+  <!-- 1. トップ -->
+  <section class="hero" id="top">
+    <img class="hero-bg" src="IMG_6155(1).jpeg" alt="" aria-hidden="true" loading="eager">
+
+    <span class="hero-badge"><span class="chip-dot" aria-hidden="true"></span>ただいまプレオープン中</span>
+    <h1 class="hero-logo"><img src="glow-logo.png" alt="GLOW AMUSEMENT BAR" loading="eager"></h1>
+    <p class="hero-tagline">ネオンが灯る、<strong>大人のための秘密基地。</strong></p>
+    <p class="hero-lead"><span class="lead-highlight">約60種類</span>のボードゲーム、レトロゲーム、カラオケ。<br>中標津に生まれた、大人の遊び場。</p>
+
+    <div class="hero-cta reveal">
+      <a class="btn btn-neon" href="#play">遊べるものを見る</a>
+      <a class="btn btn-outline" href="#price">料金を見る</a>
+    </div>
+
+    <div class="hero-hours reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M12 7v5l3.5 2"/>
+      </svg>
+      <span>OPEN 21:00〜28:00</span>
+    </div>
+    <p class="hero-price-hint reveal">飲み放題2時間 2,000円〜 ｜ ALL 3,000円</p>
+  </section>
+
+  <!-- 2. プレオープン告知（細いお知らせ欄） -->
+  <section id="preopen">
+    <div class="container">
+      <div class="preopen-strip reveal">
+        <p><strong>グランドオープンしてません！ただいまプレオープン中！</strong></p>
+        <p>〜お客様の流れを見定め中〜</p>
+        <p class="preopen-strip-note">期間中は営業時間や内容が変更になる場合があります。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. GLOWについて -->
+  <section id="about" class="section-glow-left">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-eyebrow">ABOUT</span>
+        <h2 class="section-title">GLOWについて</h2>
+        <div class="divider"></div>
+      </div>
+
+      <div class="about-grid reveal">
+        <div class="art-panel">
+          <img src="IMG_6138.jpeg" alt="GLOWの店内の様子" loading="lazy" style="object-position:center;">
+        </div>
+        <div class="about-text">
+          <p>北海道中標津町に生まれた、アミューズメントバー「GLOW」。</p>
+          <p>ネオンの光がやさしく灯る店内で、大人がゆったり肩の力を抜いて過ごせる「秘密基地」のような空間を目指しています。</p>
+          <p>お一人でも、初めての方でも入りやすいアットホームな雰囲気を大切にしながら、遊んで、話して、笑える時間をお届けします。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-connector" aria-hidden="true">
+    <div class="section-connector-line"></div>
+  </div>
+
+  <!-- 4. 遊べるもの -->
+  <section id="play" class="section-glow-right">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-eyebrow">PLAY</span>
+        <h2 class="section-title">遊べるもの</h2>
+        <p class="section-lead">豊富なボードゲーム・レトロゲーム・カラオケで、大人も夢中になれる時間を。</p>
+        <div class="divider"></div>
+      </div>
+
+      <div class="play-grid">
+        <!-- 具体的なゲームタイトルは未確認のため、確認が取れるまで個別名称は記載していません。 -->
+        <div class="play-card play-card--featured reveal">
+          <div class="play-card-visual tone-pink">
+            <img src="IMG_6146(1).jpeg" alt="約60種類のボードゲームが並ぶ棚" loading="lazy" style="object-position:center 20%;">
+          </div>
+          <h3>約60種類のボードゲーム</h3>
+          <p>定番からじっくり楽しめるものまで、約60種類をご用意。何度来ても違う遊びに出会えます。</p>
+        </div>
+
+        <div class="play-card reveal">
+          <div class="play-card-visual tone-purple">
+            <img src="IMG_6134.jpeg" alt="レトロゲーム機のコーナー" loading="lazy" style="object-position:center top;">
+          </div>
+          <h3>レトロゲーム</h3>
+          <p>懐かしいあの感覚がよみがえる、レトロゲームで盛り上がろう。</p>
+        </div>
+
+        <div class="play-card reveal">
+          <div class="play-card-visual tone-blue">
+            <img src="IMG_6143.jpeg" alt="カラオケが楽しめる座席スペース" loading="lazy" style="object-position:center 35%;">
+          </div>
+          <h3>カラオケ</h3>
+          <p>みんなで歌って、笑って。飲みながら気軽に楽しめます。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. 料金 -->
+  <section id="price" class="section-glow-left">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-eyebrow">PRICE</span>
+        <h2 class="section-title">料金</h2>
+        <p class="section-lead">2種類の飲み放題プランをご用意しています。</p>
+        <div class="divider"></div>
+      </div>
+
+      <!-- 料金プランはJavaScriptのDRINK_PLANS配列から自動生成されます -->
+      <div class="plan-grid reveal" id="planGrid"></div>
+
+      <p class="price-note reveal">プレオープン期間中は、料金や内容が変更になる場合があります。最新情報はInstagramをご確認ください。</p>
+    </div>
+  </section>
+
+  <!-- 6. メニュー -->
+  <section id="menu" class="section-glow-right">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-eyebrow">MENU</span>
+        <h2 class="section-title">メニュー</h2>
+        <p class="section-lead">フード・お酒・アミューズメントメニュー</p>
+        <div class="divider"></div>
+      </div>
+
+      <!-- メニューはJavaScriptのMENU_CATEGORIES配列から自動生成されます -->
+      <div class="menu-categories reveal" id="menuList"></div>
+    </div>
+  </section>
+
+  <!-- 7. 店舗情報 -->
+  <section id="info" class="section-glow-left">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-eyebrow">SHOP INFO</span>
+        <h2 class="section-title">店舗情報</h2>
+        <div class="divider"></div>
+      </div>
+
+      <dl class="info-table reveal">
+        <div class="info-row">
+          <dt>店名</dt>
+          <dd>GLOW（グロウ）</dd>
+        </div>
+        <div class="info-row">
+          <dt>住所</dt>
+          <dd>北海道標津郡中標津町大通り北2丁目1番地1<br>第一マイビル 1階</dd>
+        </div>
+        <div class="info-row">
+          <dt>営業時間</dt>
+          <dd>21:00〜28:00（深夜4:00）<br><span style="color:var(--text-faint);font-size:0.82rem;">※プレオープン期間中は変更になる場合があります</span></dd>
+        </div>
+        <div class="info-row">
+          <dt>定休日</dt>
+          <dd>不定休 <a href="https://www.instagram.com/glow_amusement/" target="_blank" rel="noopener noreferrer" style="font-size:0.82rem;">（最新情報はInstagramで確認）</a></dd>
+        </div>
+        <div class="info-row">
+          <dt>Instagram</dt>
+          <dd><a href="https://www.instagram.com/glow_amusement/" target="_blank" rel="noopener noreferrer">@glow_amusement</a></dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- 8. アクセス -->
+  <section id="access" class="section-glow-right">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-eyebrow">ACCESS</span>
+        <h2 class="section-title">アクセス</h2>
+        <div class="divider"></div>
+      </div>
+
+      <div class="reveal">
+        <p class="access-address">
+          <strong>GLOW</strong>
+          北海道標津郡中標津町大通り北2丁目1番地1<br>第一マイビル 1階
+        </p>
+
+        <div class="map-embed">
+          <iframe
+            src="https://www.google.com/maps?q=%E5%8C%97%E6%B5%B7%E9%81%93%E6%A8%99%E6%B4%A5%E9%83%A1%E4%B8%AD%E6%A8%99%E6%B4%A5%E7%94%BA%E5%A4%A7%E9%80%9A%E3%82%8A%E5%8C%972%E4%B8%81%E7%9B%AE1%E7%95%AA%E5%9C%B01%20%E7%AC%AC%E4%B8%80my%E3%83%93%E3%83%AB&output=embed"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+            title="GLOWの地図"></iframe>
+        </div>
+
+        <a class="btn btn-neon" href="https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%E6%A8%99%E6%B4%A5%E9%83%A1%E4%B8%AD%E6%A8%99%E6%B4%A5%E7%94%BA%E5%A4%A7%E9%80%9A%E3%82%8A%E5%8C%972%E4%B8%81%E7%9B%AE1%E7%95%AA%E5%9C%B01%20%E7%AC%AC%E4%B8%80%E3%83%9E%E3%82%A4%E3%83%93%E3%83%AB" target="_blank" rel="noopener noreferrer">Googleマップで開く</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. Instagramへの案内 -->
+  <section id="instagram" class="section-glow-left">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-eyebrow">FOLLOW US</span>
+        <h2 class="section-title">最新情報はInstagramで</h2>
+        <div class="divider"></div>
+      </div>
+
+      <div class="insta-card reveal">
+        <div class="insta-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.8.07 1.2.06 2 .24 2.7.5.7.28 1.3.66 1.9 1.26.6.6.98 1.2 1.26 1.9.27.7.45 1.5.5 2.7.07 1.2.07 1.6.07 4.8s0 3.6-.07 4.8c-.06 1.2-.24 2-.5 2.7-.28.7-.66 1.3-1.26 1.9-.6.6-1.2.98-1.9 1.26-.7.27-1.5.45-2.7.5-1.2.07-1.6.07-4.8.07s-3.6 0-4.8-.07c-1.2-.06-2-.24-2.7-.5-.7-.28-1.3-.66-1.9-1.26-.6-.6-.98-1.2-1.26-1.9-.27-.7-.45-1.5-.5-2.7C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.8c.06-1.2.24-2 .5-2.7.28-.7.66-1.3 1.26-1.9.6-.6 1.2-.98 1.9-1.26.7-.27 1.5-.45 2.7-.5C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.14 0-3.5 0-4.74.07-1 .05-1.5.2-1.86.34-.47.18-.8.4-1.15.75-.35.35-.57.68-.75 1.15-.14.36-.29.86-.34 1.86C3.1 8.5 3.1 8.86 3.1 12s0 3.5.07 4.74c.05 1 .2 1.5.34 1.86.18.47.4.8.75 1.15.35.35.68.57 1.15.75.36.14.86.29 1.86.34 1.24.07 1.6.07 4.74.07s3.5 0 4.74-.07c1-.05 1.5-.2 1.86-.34.47-.18.8-.4 1.15-.75.35-.35.57-.68.75-1.15.14-.36.29-.86.34-1.86.07-1.24.07-1.6.07-4.74s0-3.5-.07-4.74c-.05-1-.2-1.5-.34-1.86-.18-.47-.4-.8-.75-1.15-.35-.35-.68-.57-1.15-.75-.36-.14-.86-.29-1.86-.34C15.5 4 15.14 4 12 4zm0 3.4a4.6 4.6 0 110 9.2 4.6 4.6 0 010-9.2zm0 1.8a2.8 2.8 0 100 5.6 2.8 2.8 0 000-5.6zm5.8-2a1.08 1.08 0 11-2.16 0 1.08 1.08 0 012.16 0z"/></svg>
+        </div>
+        <p>営業時間の変更や最新情報は、Instagramでお知らせしています。ぜひフォローしてお待ちください。</p>
+        <a class="btn btn-outline" href="https://www.instagram.com/glow_amusement/" target="_blank" rel="noopener noreferrer">Instagramをフォローする</a>
+        <span class="insta-handle">@glow_amusement</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="legal-strip">
+  <p>20歳未満の飲酒は法律で禁止されています。飲酒運転は絶対におやめください。</p>
+</div>
+
+<footer>
+  <div class="footer-logo">GLOW</div>
+  <div>北海道標津郡中標津町大通り北2丁目1番地1 第一マイビル1階</div>
+  <div style="margin-top:10px;">&copy; <span id="year"></span> GLOW. All Rights Reserved.</div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* =========================================================
+     料金プラン・メニューのデータ
+     金額や内容を変更したい場合は、このエリアの値だけを
+     書き換えてください（HTML/CSSは触らなくてOKです）。
+     ========================================================= */
+
+  // ▼▼▼ 料金プラン（飲み放題） ここを編集 ▼▼▼
+  var DRINK_PLANS = [
+    {
+      name: "SIMPLE飲み放題",
+      time: "2時間",
+      price: "2,000円",
+      extension: "延長 800円",
+      items: ["サワー", "ハイボール", "ボードゲーム", "レトロゲーム"]
+    },
+    {
+      name: "ALL飲み放題",
+      time: "2時間",
+      price: "3,000円",
+      extension: "延長 1,200円",
+      items: ["SIMPLEの全内容", "ビール", "カクテル", "カラオケ"]
+    }
+  ];
+  // ▲▲▲ 料金プラン ここまで ▲▲▲
+
+  // ▼▼▼ メニュー（フード／お酒・スペシャル／アミューズメント） ここを編集 ▼▼▼
+  var MENU_CATEGORIES = [
+    {
+      title: "フード",
+      accent: "var(--pink)",
+      items: [
+        { name: "ポップコーン", price: "400円" },
+        { name: "お菓子セット", price: "2,000円" },
+        { name: "辛ラーメン", price: "500円" },
+        { name: "博多長浜豚骨ラーメン", price: "600円" },
+        { name: "パフェ", price: "1,000円" }
+      ]
+    },
+    {
+      title: "お酒・スペシャル",
+      accent: "var(--purple)",
+      items: [
+        { name: "オリシャン", price: "10,000円" },
+        { name: "酒ガチャ", price: "500円" },
+        { name: "テキーラ観覧車", price: "5,000円" },
+        { name: "テキーラタワー", price: "9,000円" }
+      ]
+    },
+    {
+      title: "アミューズメント",
+      accent: "var(--blue)",
+      items: [
+        { name: "アミューズメント・スクラッチ", price: "300円" }
+      ]
+    }
+  ];
+  // ▲▲▲ メニュー ここまで ▲▲▲
+
+  function escapeHTML(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function renderPlans(){
+    var grid = document.getElementById('planGrid');
+    if (!grid) return;
+    var checkIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>';
+    grid.innerHTML = DRINK_PLANS.map(function(plan){
+      var itemsHtml = plan.items.map(function(item){
+        return '<li>' + checkIcon + escapeHTML(item) + '</li>';
+      }).join('');
+      return (
+        '<div class="plan-card">' +
+          '<div class="plan-name">' + escapeHTML(plan.name) + '</div>' +
+          '<div class="plan-price-row">' +
+            '<span class="plan-time">' + escapeHTML(plan.time) + '</span>' +
+            '<span class="plan-price">' + escapeHTML(plan.price) + '</span>' +
+          '</div>' +
+          '<div class="plan-extension">' + escapeHTML(plan.extension) + '</div>' +
+          '<div class="plan-includes">' +
+            '<span class="plan-includes-label">含まれるもの</span>' +
+            '<ul class="plan-checklist">' + itemsHtml + '</ul>' +
+          '</div>' +
+        '</div>'
+      );
+    }).join('');
+  }
+
+  function renderMenu(){
+    var wrap = document.getElementById('menuList');
+    if (!wrap) return;
+    wrap.innerHTML = MENU_CATEGORIES.map(function(cat){
+      var itemsHtml = cat.items.map(function(item){
+        return (
+          '<div class="menu-item">' +
+            '<span class="menu-name">' + escapeHTML(item.name) + '</span>' +
+            '<span class="menu-price">' + escapeHTML(item.price) + '</span>' +
+          '</div>'
+        );
+      }).join('');
+      return (
+        '<div class="menu-category">' +
+          '<h3 class="menu-category-title" style="border-left-color:' + cat.accent + '">' + escapeHTML(cat.title) + '</h3>' +
+          '<div class="menu-list">' + itemsHtml + '</div>' +
+        '</div>'
+      );
+    }).join('');
+  }
+
+  renderPlans();
+  renderMenu();
+
+  // フッターの年
+  var yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  // モバイルメニューの開閉
+  var toggle = document.getElementById('navToggle');
+  var nav = document.getElementById('mobileNav');
+
+  function closeNav(){
+    nav.classList.remove('is-open');
+    toggle.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-label', 'メニューを開く');
+  }
+  function openNav(){
+    nav.classList.add('is-open');
+    toggle.classList.add('is-open');
+    toggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-label', 'メニューを閉じる');
+  }
+
+  if (toggle && nav) {
+    toggle.addEventListener('click', function(){
+      if (nav.classList.contains('is-open')) closeNav();
+      else openNav();
+    });
+
+    nav.querySelectorAll('a').forEach(function(link){
+      link.addEventListener('click', closeNav);
+    });
+  }
+
+  // 左上のロゴは、トップ画面から少しスクロールした後にだけ表示する
+  var header = document.getElementById('siteHeader');
+  if (header) {
+    var SCROLL_SHOW_THRESHOLD = 120;
+    var ticking = false;
+    var updateHeaderState = function(){
+      if (window.scrollY > SCROLL_SHOW_THRESHOLD) {
+        header.classList.add('is-scrolled');
+      } else {
+        header.classList.remove('is-scrolled');
+      }
+      ticking = false;
+    };
+    window.addEventListener('scroll', function(){
+      if (!ticking) {
+        window.requestAnimationFrame(updateHeaderState);
+        ticking = true;
+      }
+    }, { passive: true });
+    updateHeaderState();
+  }
+
+  // スクロールで自然に現れるアニメーション
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && revealEls.length) {
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(function(el){ observer.observe(el); });
+  } else {
+    // 非対応ブラウザ用フォールバック：即表示
+    revealEls.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+})();
+</script>
+
+</body>
+</html>
