@@ -578,6 +578,32 @@
   .play-card--featured p{
     font-size:0.92rem;
   }
+  .play-card--featured .btn{
+    margin-top:18px;
+  }
+  a.play-card{
+    text-decoration:none;
+    color:inherit;
+    display:block;
+  }
+
+  /* ---------- 更新情報バッジ（控えめなネオン風） ---------- */
+  .badge-soft{
+    display:inline-flex;
+    align-items:center;
+    font-size:0.7rem;
+    letter-spacing:0.03em;
+    padding:4px 12px;
+    border-radius:999px;
+    border:1px solid rgba(63,212,255,0.5);
+    color:var(--blue);
+    background:rgba(63,212,255,0.06);
+    text-shadow:0 0 8px rgba(63,212,255,0.35);
+    white-space:nowrap;
+  }
+  .feature-badge-row{
+    margin-top:10px;
+  }
 
   /* ---------- Price plans ---------- */
   .plan-grid{
@@ -972,6 +998,7 @@
 <nav class="mobile-nav" id="mobileNav">
   <a href="#top">トップ</a>
   <a href="#play">遊べるもの</a>
+  <a href="boardgames.html">ボードゲーム一覧</a>
   <a href="#price">料金</a>
   <a href="#menu">メニュー</a>
   <a href="#info">店舗情報</a>
@@ -987,10 +1014,10 @@
     <span class="hero-badge"><span class="chip-dot" aria-hidden="true"></span>ただいまプレオープン中</span>
     <h1 class="hero-logo"><img src="glow-logo.png" alt="GLOW AMUSEMENT BAR" loading="eager"></h1>
     <p class="hero-tagline">ネオンが灯る、<strong>大人のための秘密基地。</strong></p>
-    <p class="hero-lead"><span class="lead-highlight">約60種類</span>のボードゲーム<br>レトロゲーム、カラオケ<br>中標津に生まれた、大人の遊び場。</p>
+    <p class="hero-lead"><span class="lead-highlight">現在63種類</span>のボードゲーム<br>レトロゲーム、カラオケ<br>中標津に生まれた、大人の遊び場。</p>
 
     <div class="hero-cta reveal">
-      <a class="btn btn-neon" href="#play">遊べるものを見る</a>
+      <a class="btn btn-neon" href="boardgames.html">ボードゲーム全63種を見る</a>
       <a class="btn btn-outline" href="#price">料金を見る</a>
     </div>
 
@@ -1052,13 +1079,15 @@
 
       <div class="play-grid">
         <!-- 具体的なゲームタイトルは未確認のため、確認が取れるまで個別名称は記載していません。 -->
-        <div class="play-card play-card--featured reveal">
+        <a class="play-card play-card--featured reveal" href="boardgames.html">
           <div class="play-card-visual tone-pink">
-            <img src="IMG_6146(1).jpeg" alt="約60種類のボードゲームが並ぶ棚" loading="lazy" style="object-position:center 20%;">
+            <img src="IMG_6146(1).jpeg" alt="現在63種類のボードゲームが並ぶ棚" loading="lazy" style="object-position:center 20%;">
           </div>
-          <h3>約60種類のボードゲーム</h3>
-          <p>定番からじっくり楽しめるものまで、約60種類をご用意。何度来ても違う遊びに出会えます。</p>
-        </div>
+          <h3>現在63種類のボードゲーム</h3>
+          <p>定番からじっくり楽しめるものまで、現在63種類をご用意。</p>
+          <div class="feature-badge-row"><span class="badge-soft">ラインナップは随時追加予定！</span></div>
+          <span class="btn btn-neon">ボードゲーム全63種を見る</span>
+        </a>
 
         <div class="play-card reveal">
           <div class="play-card-visual tone-purple">

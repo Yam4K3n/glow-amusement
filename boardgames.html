@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ボードゲーム一覧｜GLOW（グロウ）</title>
+<meta name="description" content="GLOWで遊べる63種類のボードゲーム一覧。気になる一枚をタップすると拡大表示できます。">
+<meta name="theme-color" content="#0a0916">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 64 64\'%3E%3Crect width=\'64\' height=\'64\' rx=\'14\' fill=\'%230a0916\'/%3E%3Ctext x=\'32\' y=\'44\' font-size=\'34\' font-family=\'Georgia,serif\' font-weight=\'bold\' fill=\'%23ff3fa6\' text-anchor=\'middle\'%3EG%3C/text%3E%3C/svg%3E">
+
+<style>
+  :root{
+    --bg-0:#07060d;
+    --panel:#151228;
+    --panel-border:rgba(255,255,255,0.08);
+    --text-main:#f4f2fa;
+    --text-sub:#b7b0cc;
+    --text-faint:#8a83a3;
+    --pink:#ff3fa6;
+    --purple:#9b5cff;
+    --blue:#3fd4ff;
+    --radius:16px;
+    --maxw:1200px;
+    --header-h:60px;
+    color-scheme: dark;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle 1px, rgba(255,63,166,0.45), transparent 1.6px) 12% 8%/210px 260px repeat,
+      radial-gradient(circle 1px, rgba(63,212,255,0.4), transparent 1.6px) 68% 35%/260px 300px repeat,
+      radial-gradient(circle 1px, rgba(155,92,255,0.4), transparent 1.6px) 35% 70%/230px 240px repeat,
+      radial-gradient(ellipse at 20% -10%, rgba(155,92,255,0.16), transparent 55%),
+      radial-gradient(ellipse at 90% 10%, rgba(63,212,255,0.10), transparent 50%),
+      var(--bg-0);
+    color:var(--text-main);
+    font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.8;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;}
+  h1,h2{margin:0;line-height:1.4;}
+
+  .container{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 20px;
+  }
+
+  /* ---------- Header ---------- */
+  .site-header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    height:var(--header-h);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 20px;
+    background:rgba(7,6,13,0.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--panel-border);
+  }
+  .back-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:0.85rem;
+    color:var(--text-sub);
+    text-decoration:none;
+    letter-spacing:0.02em;
+  }
+  .back-link svg{width:16px;height:16px;flex-shrink:0;}
+  .header-brand{
+    font-family:Georgia,"Times New Roman",serif;
+    font-weight:700;
+    letter-spacing:0.08em;
+    color:#fff;
+    font-size:1.1rem;
+    text-shadow:0 0 10px rgba(255,63,166,0.5), 0 0 22px rgba(155,92,255,0.3);
+  }
+
+  /* ---------- Page head ---------- */
+  .page-head{
+    padding:48px 0 28px;
+    text-align:center;
+  }
+  .page-eyebrow{
+    font-size:0.7rem;
+    letter-spacing:0.3em;
+    color:var(--blue);
+    text-shadow:0 0 10px rgba(63,212,255,0.5);
+    margin-bottom:12px;
+    display:block;
+  }
+  .page-title{
+    font-size:clamp(1.5rem, 4vw, 2.1rem);
+    font-weight:700;
+    color:#fff;
+  }
+  .page-title .hl{
+    background:linear-gradient(90deg, var(--pink), var(--purple));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .divider{
+    width:56px;
+    height:3px;
+    margin:18px auto 0;
+    border-radius:3px;
+    background:linear-gradient(90deg, var(--pink), var(--purple), var(--blue), var(--pink));
+    background-size:220% 100%;
+    animation:dividerFlow 7s linear infinite;
+  }
+  @keyframes dividerFlow{
+    0%{background-position:0% 0%;}
+    100%{background-position:-120% 0%;}
+  }
+  .page-lead{
+    margin-top:16px;
+    color:var(--text-sub);
+    font-size:0.92rem;
+  }
+  .page-count-note{
+    margin-top:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+    color:var(--text-sub);
+    font-size:0.85rem;
+  }
+
+  /* ---------- 更新情報バッジ（控えめなネオン風） ---------- */
+  .badge-soft{
+    display:inline-flex;
+    align-items:center;
+    font-size:0.7rem;
+    letter-spacing:0.03em;
+    padding:4px 12px;
+    border-radius:999px;
+    border:1px solid rgba(63,212,255,0.5);
+    color:var(--blue);
+    background:rgba(63,212,255,0.06);
+    text-shadow:0 0 8px rgba(63,212,255,0.35);
+    white-space:nowrap;
+  }
+
+  /* ---------- 絞り込みフィルター ---------- */
+  .filter-bar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    align-items:flex-end;
+    padding:16px;
+    margin-top:8px;
+    border-radius:var(--radius);
+    border:1px solid var(--panel-border);
+    background:var(--panel);
+    box-shadow:0 0 0 1px rgba(255,255,255,0.03), 0 0 20px rgba(155,92,255,0.06);
+  }
+  .filter-field{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+    flex:1 1 120px;
+    min-width:0;
+  }
+  .filter-label{
+    font-size:0.68rem;
+    letter-spacing:0.06em;
+    color:var(--blue);
+    text-shadow:0 0 8px rgba(63,212,255,0.35);
+  }
+  .filter-select{
+    width:100%;
+    max-width:100%;
+    appearance:none;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    background-color:#100e20;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' fill='none' stroke='%233fd4ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 10px center;
+    background-size:14px;
+    border:1px solid rgba(63,212,255,0.35);
+    border-radius:8px;
+    color:var(--text-main);
+    font-size:0.85rem;
+    padding:8px 32px 8px 10px;
+    cursor:pointer;
+    color-scheme:dark;
+  }
+  .filter-select:hover{
+    border-color:rgba(63,212,255,0.6);
+  }
+  .filter-select:focus-visible{
+    outline:2px solid var(--blue);
+    outline-offset:2px;
+  }
+  .filter-select option{
+    background-color:#100e20;
+    color:var(--text-main);
+  }
+  .filter-reset{
+    appearance:none;
+    border:1px solid rgba(255,255,255,0.25);
+    background:transparent;
+    color:var(--text-main);
+    border-radius:999px;
+    font-size:0.8rem;
+    padding:9px 16px;
+    cursor:pointer;
+    white-space:nowrap;
+    flex:0 0 auto;
+    transition:filter .2s ease, border-color .2s ease;
+  }
+  .filter-reset:hover,
+  .filter-reset:active{
+    filter:brightness(1.15);
+    border-color:rgba(255,255,255,0.4);
+  }
+  .filter-reset:focus-visible{
+    outline:2px solid var(--blue);
+    outline-offset:2px;
+  }
+  .filter-count{
+    margin:10px 0 0;
+    font-size:0.8rem;
+    color:var(--text-faint);
+    text-align:center;
+  }
+  .filter-empty{
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+    padding:40px 20px;
+    margin:14px 0 0;
+    border-radius:var(--radius);
+    border:1px dashed var(--panel-border);
+    background:rgba(255,255,255,0.02);
+    text-align:center;
+  }
+  .filter-empty-text{
+    margin:0;
+    font-size:0.9rem;
+    color:var(--text-sub);
+  }
+  .bg-card.is-filtered-out{
+    display:none;
+  }
+
+  /* ---------- Grid ---------- */
+  .bg-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:10px;
+    padding:8px 0 64px;
+  }
+  @media (min-width:700px){
+    .bg-grid{ grid-template-columns:repeat(3, 1fr); gap:16px; }
+  }
+  @media (min-width:1100px){
+    .bg-grid{ grid-template-columns:repeat(4, 1fr); gap:18px; }
+  }
+  .bg-card{
+    appearance:none;
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    border:1px solid var(--panel-border);
+    background:var(--panel);
+    padding:0;
+    margin:0;
+    border-radius:12px;
+    overflow:hidden;
+    cursor:pointer;
+    box-shadow:0 0 0 1px rgba(255,255,255,0.03), 0 0 20px rgba(155,92,255,0.06);
+    transition:border-color .25s ease, box-shadow .25s ease, transform .25s ease;
+  }
+  .bg-card-photo{
+    display:block;
+    width:100%;
+    aspect-ratio:4/3;
+    overflow:hidden;
+    flex-shrink:0;
+  }
+  .bg-card img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+  .bg-card-title{
+    display:-webkit-box;
+    -webkit-line-clamp:2;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+    height:2.7rem;
+    padding:6px 10px;
+    font-size:0.76rem;
+    line-height:1.35;
+    color:var(--text-sub);
+    text-align:center;
+    word-break:break-word;
+  }
+  .bg-card:hover,
+  .bg-card:focus-visible{
+    border-color:rgba(255,63,166,0.4);
+    box-shadow:0 0 0 1px rgba(255,255,255,0.05), 0 0 26px rgba(155,92,255,0.22);
+    transform:translateY(-2px);
+  }
+  .bg-card:focus-visible{
+    outline:2px solid var(--blue);
+    outline-offset:3px;
+  }
+
+  /* ---------- Game CTA (Instagram誘導) ---------- */
+  .game-cta-wrap{
+    padding:0 0 56px;
+  }
+  .game-cta{
+    max-width:560px;
+    margin:0 auto;
+    text-align:center;
+    padding:32px 24px;
+    border-radius:var(--radius);
+    border:1px solid var(--panel-border);
+    background:var(--panel);
+    box-shadow:0 0 0 1px rgba(255,255,255,0.03), 0 0 26px rgba(155,92,255,0.07);
+  }
+  .game-cta-title{
+    font-size:1.15rem;
+    font-weight:700;
+    color:#fff;
+  }
+  .game-cta-text{
+    margin-top:10px;
+    color:var(--text-sub);
+    font-size:0.9rem;
+  }
+  .game-cta .btn{
+    margin-top:20px;
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:14px 28px;
+    border-radius:999px;
+    font-size:0.92rem;
+    font-weight:700;
+    text-decoration:none;
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:filter .2s ease, box-shadow .2s ease;
+  }
+  .btn-neon{
+    background:linear-gradient(90deg, var(--pink), var(--purple));
+    color:#fff;
+    box-shadow:0 0 22px rgba(255,63,166,0.35);
+  }
+  .btn-neon:hover,
+  .btn-neon:active{
+    filter:brightness(1.1);
+    box-shadow:0 0 28px rgba(255,63,166,0.5);
+  }
+  .btn:focus-visible{
+    outline:2px solid var(--blue);
+    outline-offset:3px;
+    border-radius:999px;
+  }
+
+  /* ---------- Reveal on scroll ---------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .reveal.is-visible{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  /* ---------- Lightbox ---------- */
+  .lightbox{
+    position:fixed;
+    inset:0;
+    z-index:100;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(4,3,9,0.92);
+    backdrop-filter:blur(4px);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .25s ease;
+    padding:24px;
+  }
+  .lightbox.is-open{
+    opacity:1;
+    pointer-events:auto;
+  }
+  .lightbox-content{
+    max-width:min(92vw, 900px);
+    max-height:92vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    overflow-y:auto;
+  }
+  .lightbox-figure{
+    position:relative;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+  .lightbox-figure img{
+    max-width:100%;
+    max-height:64vh;
+    border-radius:12px;
+    border:1px solid var(--panel-border);
+    box-shadow:0 0 40px rgba(155,92,255,0.25);
+  }
+  .lightbox-info{
+    width:100%;
+    max-width:480px;
+    margin-top:16px;
+    text-align:center;
+    flex-shrink:0;
+  }
+  .lightbox-game-name{
+    margin:0 0 10px;
+    color:#fff;
+    font-size:1rem;
+    font-weight:700;
+  }
+  .lightbox-meta{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:center;
+    gap:8px 16px;
+  }
+  .lightbox-meta .meta-item{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:0.82rem;
+    color:var(--text-main);
+  }
+  .lightbox-meta .meta-label{
+    font-size:0.68rem;
+    letter-spacing:0.08em;
+    color:var(--blue);
+    text-shadow:0 0 8px rgba(63,212,255,0.4);
+  }
+  .lightbox-stars{
+    color:var(--pink);
+    letter-spacing:1px;
+    text-shadow:0 0 8px rgba(255,63,166,0.4);
+  }
+  .lightbox-btn{
+    appearance:none;
+    border:1px solid var(--panel-border);
+    background:rgba(21,18,40,0.8);
+    color:var(--text-main);
+    width:42px;
+    height:42px;
+    border-radius:999px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+  }
+  .lightbox-btn:focus-visible{
+    outline:2px solid var(--blue);
+    outline-offset:2px;
+  }
+  .lightbox-btn svg{width:18px;height:18px;}
+  .lightbox-close{
+    position:absolute;
+    top:-18px;
+    right:-18px;
+  }
+  @media (max-width:600px){
+    .lightbox-close{ top:-14px; right:0; }
+  }
+  .lightbox-nav{
+    position:fixed;
+    top:50%;
+    transform:translateY(-50%);
+  }
+  .lightbox-prev{ left:16px; }
+  .lightbox-next{ right:16px; }
+  .lightbox-counter{
+    display:block;
+    margin-top:12px;
+    font-size:0.78rem;
+    color:var(--text-faint);
+    letter-spacing:0.05em;
+    white-space:nowrap;
+  }
+
+  footer{
+    text-align:center;
+    padding:28px 20px 40px;
+    font-size:0.78rem;
+    color:var(--text-faint);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="back-link" href="index.html#play">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    トップへ戻る
+  </a>
+  <span class="header-brand">GLOW</span>
+</header>
+
+<main>
+  <div class="page-head container">
+    <span class="page-eyebrow">GAME LIST</span>
+    <h1 class="page-title"><span class="hl">63種類</span>のボードゲーム</h1>
+    <div class="divider"></div>
+    <p class="page-lead">気になる一枚をタップすると拡大表示できます。</p>
+    <p class="page-count-note">現在63種類。<span class="badge-soft">ラインナップは随時追加予定！</span></p>
+  </div>
+
+  <div class="container">
+    <div class="filter-bar reveal" id="filterBar">
+      <div class="filter-field">
+        <label class="filter-label" for="filterPlayers">人数</label>
+        <select class="filter-select" id="filterPlayers">
+          <option value="">指定なし</option>
+          <option value="1-2">1〜2人</option>
+          <option value="3-4">3〜4人</option>
+          <option value="5-999">5人以上</option>
+        </select>
+      </div>
+      <div class="filter-field">
+        <label class="filter-label" for="filterTime">所要時間</label>
+        <select class="filter-select" id="filterTime">
+          <option value="">指定なし</option>
+          <option value="0-15">〜15分</option>
+          <option value="16-30">16〜30分</option>
+          <option value="31-999">31分以上</option>
+        </select>
+      </div>
+      <div class="filter-field">
+        <label class="filter-label" for="filterDiff">難易度の目安</label>
+        <select class="filter-select" id="filterDiff">
+          <option value="">指定なし</option>
+          <option value="1">★1</option>
+          <option value="2">★2</option>
+          <option value="3">★3</option>
+          <option value="4">★4</option>
+          <option value="5">★5</option>
+        </select>
+      </div>
+      <button class="filter-reset" id="filterReset" type="button">条件をリセット</button>
+    </div>
+    <p class="filter-count" id="filterCount"></p>
+    <div class="filter-empty" id="filterEmpty">
+      <p class="filter-empty-text">条件に合うゲームがありません</p>
+      <button class="filter-reset" id="filterResetEmpty" type="button">条件をリセット</button>
+    </div>
+
+    <div class="bg-grid" id="bgGrid">
+          <button class="bg-card reveal" type="button" data-index="0">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6168.jpeg" alt="プールテーブル" loading="lazy"></span>
+            <span class="bg-card-title">プールテーブル</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="1">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6169.jpeg" alt="カタン スタンダード版" loading="lazy"></span>
+            <span class="bg-card-title">カタン スタンダード版</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="2">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6170.jpeg" alt="スプレンダー" loading="lazy"></span>
+            <span class="bg-card-title">スプレンダー</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="3">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6172.jpeg" alt="ディクシット" loading="lazy"></span>
+            <span class="bg-card-title">ディクシット</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="4">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6173.jpeg" alt="ディセプション 人狼と殺人" loading="lazy"></span>
+            <span class="bg-card-title">ディセプション 人狼と殺人</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="5">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6174.jpeg" alt="ブロックス トライゴン" loading="lazy"></span>
+            <span class="bg-card-title">ブロックス トライゴン</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="6">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6175.jpeg" alt="クイズいいセン行きまSHOW!" loading="lazy"></span>
+            <span class="bg-card-title">クイズいいセン行きまSHOW!</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="7">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6176.jpeg" alt="バトルライン" loading="lazy"></span>
+            <span class="bg-card-title">バトルライン</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="8">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6177.jpeg" alt="ジャスト・ワン" loading="lazy"></span>
+            <span class="bg-card-title">ジャスト・ワン</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="9">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6178.jpeg" alt="六華" loading="lazy"></span>
+            <span class="bg-card-title">六華</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="10">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6179.jpeg" alt="コードネーム" loading="lazy"></span>
+            <span class="bg-card-title">コードネーム</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="11">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6180.jpeg" alt="ナンジャモンジャ デラックス" loading="lazy"></span>
+            <span class="bg-card-title">ナンジャモンジャ デラックス</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="12">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6181.jpeg" alt="DANY" loading="lazy"></span>
+            <span class="bg-card-title">DANY</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="13">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6182.jpeg" alt="AVタイトル制作" loading="lazy"></span>
+            <span class="bg-card-title">AVタイトル制作</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="14">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6183.jpeg" alt="たった今考えたプロポーズの言葉を君に捧ぐよ。" loading="lazy"></span>
+            <span class="bg-card-title">たった今考えたプロポーズの言葉を君に捧ぐよ。</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="15">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6184.jpeg" alt="ピンコンビトリオ" loading="lazy"></span>
+            <span class="bg-card-title">ピンコンビトリオ</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="16">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6185.jpeg" alt="キュービアーズ" loading="lazy"></span>
+            <span class="bg-card-title">キュービアーズ</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="17">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6186.jpeg" alt="スカル" loading="lazy"></span>
+            <span class="bg-card-title">スカル</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="18">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6187.jpeg" alt="ギルドビルド" loading="lazy"></span>
+            <span class="bg-card-title">ギルドビルド</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="19">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6188.jpeg" alt="クソレビュージャングル" loading="lazy"></span>
+            <span class="bg-card-title">クソレビュージャングル</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="20">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6189.jpeg" alt="サンレンタン DEEP" loading="lazy"></span>
+            <span class="bg-card-title">サンレンタン DEEP</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="21">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6190.jpeg" alt="英語だーけ" loading="lazy"></span>
+            <span class="bg-card-title">英語だーけ</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="22">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6191.jpeg" alt="ウミガメのスープ" loading="lazy"></span>
+            <span class="bg-card-title">ウミガメのスープ</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="23">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6192.jpeg" alt="ウミガメのスープ2" loading="lazy"></span>
+            <span class="bg-card-title">ウミガメのスープ2</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="24">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6193.jpeg" alt="はぁって言うゲーム" loading="lazy"></span>
+            <span class="bg-card-title">はぁって言うゲーム</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="25">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6194.jpeg" alt="ナインタイル ポケモン ドコダ!" loading="lazy"></span>
+            <span class="bg-card-title">ナインタイル ポケモン ドコダ!</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="26">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6195.jpeg" alt="サイズアップ!" loading="lazy"></span>
+            <span class="bg-card-title">サイズアップ!</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="27">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6196.jpeg" alt="バナナの木" loading="lazy"></span>
+            <span class="bg-card-title">バナナの木</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="28">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6197.jpeg" alt="ペチャリブレ" loading="lazy"></span>
+            <span class="bg-card-title">ペチャリブレ</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="29">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6198.jpeg" alt="モンスターズvsヒーローズ ヴィクトリア朝の悪夢" loading="lazy"></span>
+            <span class="bg-card-title">モンスターズvsヒーローズ ヴィクトリア朝の悪夢</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="30">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6199.jpeg" alt="ファーミニ" loading="lazy"></span>
+            <span class="bg-card-title">ファーミニ</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="31">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6200.jpeg" alt="ワードウルフ" loading="lazy"></span>
+            <span class="bg-card-title">ワードウルフ</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="32">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6201.jpeg" alt="人狼DX" loading="lazy"></span>
+            <span class="bg-card-title">人狼DX</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="33">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6202.jpeg" alt="カタカナーシ" loading="lazy"></span>
+            <span class="bg-card-title">カタカナーシ</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="34">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6203.jpeg" alt="TIME Bomb 新装版" loading="lazy"></span>
+            <span class="bg-card-title">TIME Bomb 新装版</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="35">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6204.jpeg" alt="ito" loading="lazy"></span>
+            <span class="bg-card-title">ito</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="36">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6205.jpeg" alt="ハゲタカのえじき" loading="lazy"></span>
+            <span class="bg-card-title">ハゲタカのえじき</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="37">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6206.jpeg" alt="よくばりパグ" loading="lazy"></span>
+            <span class="bg-card-title">よくばりパグ</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="38">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6207.jpeg" alt="ニムト" loading="lazy"></span>
+            <span class="bg-card-title">ニムト</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="39">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6208.jpeg" alt="狩歌" loading="lazy"></span>
+            <span class="bg-card-title">狩歌</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="40">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6209.jpeg" alt="ラブレター" loading="lazy"></span>
+            <span class="bg-card-title">ラブレター</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="41">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6210.jpeg" alt="音速飯店" loading="lazy"></span>
+            <span class="bg-card-title">音速飯店</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="42">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6211.jpeg" alt="ジャンボと仲間たち" loading="lazy"></span>
+            <span class="bg-card-title">ジャンボと仲間たち</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="43">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6212.jpeg" alt="テストプレイなんてしてないよ" loading="lazy"></span>
+            <span class="bg-card-title">テストプレイなんてしてないよ</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="44">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6213.jpeg" alt="パパパパパ行" loading="lazy"></span>
+            <span class="bg-card-title">パパパパパ行</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="45">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6214.jpeg" alt="UNO" loading="lazy"></span>
+            <span class="bg-card-title">UNO</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="46">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6215.jpeg" alt="マスクメン" loading="lazy"></span>
+            <span class="bg-card-title">マスクメン</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="47">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6216.jpeg" alt="ワードスナイパー" loading="lazy"></span>
+            <span class="bg-card-title">ワードスナイパー</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="48">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6217.jpeg" alt="NONO" loading="lazy"></span>
+            <span class="bg-card-title">NONO</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="49">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6218.jpeg" alt="XENO" loading="lazy"></span>
+            <span class="bg-card-title">XENO</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="50">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6219.jpeg" alt="トランプ" loading="lazy"></span>
+            <span class="bg-card-title">トランプ</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="51">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6220.jpeg" alt="犯人は踊る" loading="lazy"></span>
+            <span class="bg-card-title">犯人は踊る</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="52">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6221.jpeg" alt="ナナ" loading="lazy"></span>
+            <span class="bg-card-title">ナナ</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="53">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6222.jpeg" alt="コヨーテ" loading="lazy"></span>
+            <span class="bg-card-title">コヨーテ</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="54">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6223.jpeg" alt="クジラオルカ" loading="lazy"></span>
+            <span class="bg-card-title">クジラオルカ</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="55">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6224.jpeg" alt="定時退社" loading="lazy"></span>
+            <span class="bg-card-title">定時退社</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="56">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6225.jpeg" alt="トマトマト" loading="lazy"></span>
+            <span class="bg-card-title">トマトマト</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="57">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6226.jpeg" alt="インサイダーゲーム" loading="lazy"></span>
+            <span class="bg-card-title">インサイダーゲーム</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="58">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6227.jpeg" alt="私とあなた" loading="lazy"></span>
+            <span class="bg-card-title">私とあなた</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="59">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6228.jpeg" alt="極 チンチロセット" loading="lazy"></span>
+            <span class="bg-card-title">極 チンチロセット</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="60">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6229.jpeg" alt="ジェンガ" loading="lazy"></span>
+            <span class="bg-card-title">ジェンガ</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="61">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6230.jpeg" alt="ドブル" loading="lazy"></span>
+            <span class="bg-card-title">ドブル</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="62">
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6231.jpeg" alt="パーティピリピリ" loading="lazy"></span>
+            <span class="bg-card-title">パーティピリピリ</span>
+          </button>
+    </div>
+  </div>
+
+  <div class="container game-cta-wrap">
+    <div class="game-cta reveal">
+      <h2 class="game-cta-title">遊びたいゲームは見つかりましたか？</h2>
+      <p class="game-cta-text">迷ったらスタッフがおすすめをご案内します</p>
+      <a class="btn btn-neon" href="https://www.instagram.com/glow_amusement/" target="_blank" rel="noopener noreferrer">GLOW公式Instagramを見る</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div>GLOW - AMUSEMENT BAR</div>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="ボードゲーム拡大表示">
+  <div class="lightbox-content">
+    <div class="lightbox-figure">
+      <img id="lightboxImg" src="" alt="">
+      <button class="lightbox-btn lightbox-close" id="lightboxClose" aria-label="閉じる">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="lightbox-info">
+      <p class="lightbox-game-name" id="lightboxName"></p>
+      <div class="lightbox-meta" id="lightboxMeta"></div>
+      <span class="lightbox-counter" id="lightboxCounter"></span>
+    </div>
+  </div>
+  <button class="lightbox-btn lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="前の写真">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <button class="lightbox-btn lightbox-nav lightbox-next" id="lightboxNext" aria-label="次の写真">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+  </button>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var SOURCES = [
+  "web-optimized/IMG_6168.jpeg",
+  "web-optimized/IMG_6169.jpeg",
+  "web-optimized/IMG_6170.jpeg",
+  "web-optimized/IMG_6172.jpeg",
+  "web-optimized/IMG_6173.jpeg",
+  "web-optimized/IMG_6174.jpeg",
+  "web-optimized/IMG_6175.jpeg",
+  "web-optimized/IMG_6176.jpeg",
+  "web-optimized/IMG_6177.jpeg",
+  "web-optimized/IMG_6178.jpeg",
+  "web-optimized/IMG_6179.jpeg",
+  "web-optimized/IMG_6180.jpeg",
+  "web-optimized/IMG_6181.jpeg",
+  "web-optimized/IMG_6182.jpeg",
+  "web-optimized/IMG_6183.jpeg",
+  "web-optimized/IMG_6184.jpeg",
+  "web-optimized/IMG_6185.jpeg",
+  "web-optimized/IMG_6186.jpeg",
+  "web-optimized/IMG_6187.jpeg",
+  "web-optimized/IMG_6188.jpeg",
+  "web-optimized/IMG_6189.jpeg",
+  "web-optimized/IMG_6190.jpeg",
+  "web-optimized/IMG_6191.jpeg",
+  "web-optimized/IMG_6192.jpeg",
+  "web-optimized/IMG_6193.jpeg",
+  "web-optimized/IMG_6194.jpeg",
+  "web-optimized/IMG_6195.jpeg",
+  "web-optimized/IMG_6196.jpeg",
+  "web-optimized/IMG_6197.jpeg",
+  "web-optimized/IMG_6198.jpeg",
+  "web-optimized/IMG_6199.jpeg",
+  "web-optimized/IMG_6200.jpeg",
+  "web-optimized/IMG_6201.jpeg",
+  "web-optimized/IMG_6202.jpeg",
+  "web-optimized/IMG_6203.jpeg",
+  "web-optimized/IMG_6204.jpeg",
+  "web-optimized/IMG_6205.jpeg",
+  "web-optimized/IMG_6206.jpeg",
+  "web-optimized/IMG_6207.jpeg",
+  "web-optimized/IMG_6208.jpeg",
+  "web-optimized/IMG_6209.jpeg",
+  "web-optimized/IMG_6210.jpeg",
+  "web-optimized/IMG_6211.jpeg",
+  "web-optimized/IMG_6212.jpeg",
+  "web-optimized/IMG_6213.jpeg",
+  "web-optimized/IMG_6214.jpeg",
+  "web-optimized/IMG_6215.jpeg",
+  "web-optimized/IMG_6216.jpeg",
+  "web-optimized/IMG_6217.jpeg",
+  "web-optimized/IMG_6218.jpeg",
+  "web-optimized/IMG_6219.jpeg",
+  "web-optimized/IMG_6220.jpeg",
+  "web-optimized/IMG_6221.jpeg",
+  "web-optimized/IMG_6222.jpeg",
+  "web-optimized/IMG_6223.jpeg",
+  "web-optimized/IMG_6224.jpeg",
+  "web-optimized/IMG_6225.jpeg",
+  "web-optimized/IMG_6226.jpeg",
+  "web-optimized/IMG_6227.jpeg",
+  "web-optimized/IMG_6228.jpeg",
+  "web-optimized/IMG_6229.jpeg",
+  "web-optimized/IMG_6230.jpeg",
+  "web-optimized/IMG_6231.jpeg"
+  ];
+
+  /* ゲーム情報（ネットで確認できた範囲で記載。不明な項目は空欄にしています） */
+  var GAMES = [
+  { name: "プールテーブル", players: "2人", time: "10〜30分", diff: 1 },
+  { name: "カタン スタンダード版", players: "3〜4人", time: "60〜120分", diff: 3 },
+  { name: "スプレンダー", players: "2〜4人", time: "30分", diff: 2 },
+  { name: "ディクシット", players: "3〜6人", time: "30分", diff: 1 },
+  { name: "ディセプション 人狼と殺人", players: "4〜12人", time: "20〜40分", diff: 2 },
+  { name: "ブロックス トライゴン", players: "2〜4人", time: "20〜30分", diff: 2 },
+  { name: "クイズいいセン行きまSHOW!", players: "3〜10人", time: "10〜30分", diff: 2 },
+  { name: "バトルライン", players: "2人", time: "約30分", diff: 3 },
+  { name: "ジャスト・ワン", players: "3〜7人", time: "20分", diff: 1 },
+  { name: "六華", players: "2〜5人", time: "10〜20分", diff: 2 },
+  { name: "コードネーム", players: "4〜8人", time: "15分", diff: 2 },
+  { name: "ナンジャモンジャ デラックス", players: "2〜6人", time: "約15分", diff: 1 },
+  { name: "DANY", players: "3〜8人", time: "16〜30分", diff: 1 },
+  { name: "AVタイトル制作", players: "3〜6人", time: "20〜30分", diff: 1 },
+  { name: "たった今考えたプロポーズの言葉を君に捧ぐよ。", players: "3〜6人", time: "15〜30分", diff: 2 },
+  { name: "ピンコンビトリオ", players: "2〜5人", time: "20分", diff: 2 },
+  { name: "キュービアーズ", players: "2〜5人", time: "約20分", diff: 2 },
+  { name: "スカル", players: "3〜6人", time: "15〜30分", diff: 1 },
+  { name: "ギルドビルド", players: "2〜5人", time: "20〜40分", diff: 2 },
+  { name: "クソレビュージャングル", players: "3〜6人", time: "15〜30分", diff: 2 },
+  { name: "サンレンタン DEEP", players: "2〜6人", time: "遊び方による", diff: 1 },
+  { name: "英語だーけ", players: "3〜8人", time: "約15分", diff: 1 },
+  { name: "ウミガメのスープ", players: "2人〜", time: "遊び方による", diff: 3 },
+  { name: "ウミガメのスープ2", players: "2〜8人", time: "遊び方による", diff: 3 },
+  { name: "はぁって言うゲーム", players: "3〜8人", time: "約15分", diff: 1 },
+  { name: "ナインタイル ポケモン ドコダ!", players: "2〜4人", time: "約15分", diff: 1 },
+  { name: "サイズアップ!", players: "2〜10人", time: "15〜30分", diff: 1 },
+  { name: "バナナの木", players: "2〜10人", time: "5〜15分", diff: 2 },
+  { name: "ペチャリブレ", players: "3人〜", time: "遊び方による", diff: 1 },
+  { name: "モンスターズvsヒーローズ ヴィクトリア朝の悪夢", players: "2〜8人", time: "10〜30分", diff: 4 },
+  { name: "ファーミニ", players: "1〜4人", time: "約15分", diff: 1 },
+  { name: "ワードウルフ", players: "2〜8人", time: "5〜15分", diff: 1 },
+  { name: "人狼DX", players: "4〜20人", time: "10〜50分", diff: 2 },
+  { name: "カタカナーシ", players: "3〜8人", time: "約15分", diff: 2 },
+  { name: "TIME Bomb 新装版", players: "2〜8人", time: "15〜30分", diff: 2 },
+  { name: "ito", players: "2〜10人", time: "15〜30分", diff: 1 },
+  { name: "ハゲタカのえじき", players: "3〜6人", time: "約20分", diff: 1 },
+  { name: "よくばりパグ", players: "3〜5人", time: "30〜40分", diff: 2 },
+  { name: "ニムト", players: "2〜10人", time: "25〜30分", diff: 1 },
+  { name: "狩歌", players: "2〜8人", time: "15〜30分", diff: 1 },
+  { name: "ラブレター", players: "2〜4人", time: "約20分", diff: 1 },
+  { name: "音速飯店", players: "2〜6人", time: "約15分", diff: 1 },
+  { name: "ジャンボと仲間たち", players: "3〜6人", time: "15分", diff: 2 },
+  { name: "テストプレイなんてしてないよ", players: "2〜10人", time: "1〜5分/ラウンド", diff: 1 },
+  { name: "パパパパパ行", players: "2〜10人", time: "約15分", diff: 1 },
+  { name: "UNO", players: "2〜10人", time: "約30分", diff: 1 },
+  { name: "マスクメン", players: "2〜6人", time: "20〜30分", diff: 2 },
+  { name: "ワードスナイパー", players: "2〜6人", time: "10〜20分", diff: 1 },
+  { name: "NONO", players: "遊び方による", time: "約10分", diff: 2 },
+  { name: "XENO", players: "2〜4人", time: "3〜10分", diff: 2 },
+  { name: "トランプ", players: "2人〜", time: "5分〜", diff: 0 },
+  { name: "犯人は踊る", players: "3〜8人", time: "10〜20分", diff: 1 },
+  { name: "ナナ", players: "2〜5人", time: "15分", diff: 1 },
+  { name: "コヨーテ", players: "2〜10人", time: "約30分", diff: 1 },
+  { name: "クジラオルカ", players: "2〜5人", time: "約30分", diff: 2 },
+  { name: "定時退社", players: "3〜6人", time: "3〜10分", diff: 2 },
+  { name: "トマトマト", players: "3〜6人", time: "約20分", diff: 2 },
+  { name: "インサイダーゲーム", players: "4〜8人", time: "10〜15分", diff: 2 },
+  { name: "私とあなた", players: "3〜6人", time: "15〜30分", diff: 1 },
+  { name: "極 チンチロセット", players: "遊び方による", time: "遊び方による", diff: 1 },
+  { name: "ジェンガ", players: "2人〜", time: "10〜20分", diff: 1 },
+  { name: "ドブル", players: "2〜8人", time: "約15分", diff: 1 },
+  { name: "パーティピリピリ", players: "2〜4人", time: "1分〜/ラウンド", diff: 1 }
+  ];
+
+  /* 絞り込みフィルター */
+  function parseRange(str){
+    if (!str) return null;
+    var nums = (str.match(/\d+/g) || []).map(Number);
+    if (nums.length === 0) return null;
+    if (nums.length >= 2) return { min: nums[0], max: nums[1] };
+    var openEnded = str.indexOf("〜") !== -1;
+    return { min: nums[0], max: openEnded ? Infinity : nums[0] };
+  }
+
+  function rangesOverlap(a, b){
+    if (!a || !b) return false;
+    return a.min <= b.max && b.min <= a.max;
+  }
+
+  var filterPlayers = document.getElementById("filterPlayers");
+  var filterTime = document.getElementById("filterTime");
+  var filterDiff = document.getElementById("filterDiff");
+  var filterReset = document.getElementById("filterReset");
+  var filterResetEmpty = document.getElementById("filterResetEmpty");
+  var filterCount = document.getElementById("filterCount");
+  var filterEmpty = document.getElementById("filterEmpty");
+  var bgCards = document.querySelectorAll(".bg-card");
+
+  function applyFilters(){
+    var pVal = filterPlayers.value;
+    var tVal = filterTime.value;
+    var dVal = filterDiff.value;
+
+    var pRange = pVal ? { min: Number(pVal.split("-")[0]), max: Number(pVal.split("-")[1]) } : null;
+    var tRange = tVal ? { min: Number(tVal.split("-")[0]), max: Number(tVal.split("-")[1]) } : null;
+    var dNum = dVal ? Number(dVal) : null;
+
+    var visibleCount = 0;
+    bgCards.forEach(function(card){
+      var idx = parseInt(card.getAttribute("data-index"), 10);
+      var game = GAMES[idx] || {};
+      var ok = true;
+
+      if (pRange) {
+        ok = ok && rangesOverlap(parseRange(game.players), pRange);
+      }
+      if (ok && tRange) {
+        ok = ok && rangesOverlap(parseRange(game.time), tRange);
+      }
+      if (ok && dNum !== null) {
+        ok = ok && (game.diff === dNum);
+      }
+
+      card.classList.toggle("is-filtered-out", !ok);
+      if (ok) {
+        card.classList.add("is-visible");
+        visibleCount++;
+      }
+    });
+
+    filterCount.textContent = SOURCES.length + "件中 " + visibleCount + "件を表示中";
+    if (filterEmpty) {
+      filterEmpty.style.display = visibleCount === 0 ? "flex" : "none";
+    }
+  }
+
+  function resetFilters(){
+    filterPlayers.value = "";
+    filterTime.value = "";
+    filterDiff.value = "";
+    applyFilters();
+  }
+
+  if (filterPlayers && filterTime && filterDiff && filterReset && filterCount) {
+    [filterPlayers, filterTime, filterDiff].forEach(function(sel){
+      sel.addEventListener("change", applyFilters);
+    });
+    filterReset.addEventListener("click", resetFilters);
+    if (filterResetEmpty) {
+      filterResetEmpty.addEventListener("click", resetFilters);
+    }
+    applyFilters();
+  }
+
+  /* Reveal on scroll */
+  var revealEls = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add("is-visible"); });
+  }
+
+  /* Lightbox */
+  var lightbox = document.getElementById("lightbox");
+  var lightboxImg = document.getElementById("lightboxImg");
+  var lightboxName = document.getElementById("lightboxName");
+  var lightboxMeta = document.getElementById("lightboxMeta");
+  var lightboxCounter = document.getElementById("lightboxCounter");
+  var closeBtn = document.getElementById("lightboxClose");
+  var prevBtn = document.getElementById("lightboxPrev");
+  var nextBtn = document.getElementById("lightboxNext");
+  var activeList = [];
+  var currentPos = 0;
+  var lastFocused = null;
+
+  function getVisibleIndices(){
+    var list = [];
+    bgCards.forEach(function(card){
+      if (!card.classList.contains("is-filtered-out")) {
+        list.push(parseInt(card.getAttribute("data-index"), 10));
+      }
+    });
+    return list;
+  }
+
+  function escapeHTML(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function starString(n){
+    var full = Math.max(0, Math.min(5, Math.round(n)));
+    return "★★★★★".slice(0, full) + "☆☆☆☆☆".slice(0, 5 - full);
+  }
+
+  function show(pos){
+    if (!activeList.length) return;
+    currentPos = (pos + activeList.length) % activeList.length;
+    var idx = activeList[currentPos];
+    var game = GAMES[idx] || {};
+    lightboxImg.src = SOURCES[idx];
+    lightboxImg.alt = game.name ? game.name : ("ボードゲーム " + (idx + 1));
+    lightboxCounter.textContent = (currentPos + 1) + " / " + activeList.length;
+
+    lightboxName.textContent = game.name ? game.name : "未確認";
+    lightboxName.style.display = "";
+
+    var playersText = game.players ? escapeHTML(game.players) : "未確認";
+    var timeText = game.time ? escapeHTML(game.time) : "未確認";
+    var diffText;
+    if (game.diff === null || game.diff === undefined) {
+      diffText = "未確認";
+    } else if (game.diff === 0) {
+      diffText = '<span class="lightbox-stars">評価対象外</span>';
+    } else {
+      diffText = '<span class="lightbox-stars">' + starString(game.diff) + '</span>';
+    }
+
+    var metaHtml =
+      '<span class="meta-item"><span class="meta-label">人数</span>' + playersText + '</span>' +
+      '<span class="meta-item"><span class="meta-label">時間</span>' + timeText + '</span>' +
+      '<span class="meta-item"><span class="meta-label">難易度の目安</span>' + diffText + '</span>';
+    lightboxMeta.innerHTML = metaHtml;
+  }
+
+  function openLightbox(index){
+    lastFocused = document.activeElement;
+    activeList = getVisibleIndices();
+    var pos = activeList.indexOf(index);
+    if (pos === -1) pos = 0;
+    show(pos);
+    lightbox.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+    closeBtn.focus();
+  }
+
+  function closeLightbox(){
+    lightbox.classList.remove("is-open");
+    document.body.style.overflow = "";
+    if (lastFocused && typeof lastFocused.focus === "function") {
+      lastFocused.focus();
+    }
+  }
+
+  document.querySelectorAll(".bg-card").forEach(function(card){
+    card.addEventListener("click", function(){
+      var idx = parseInt(card.getAttribute("data-index"), 10) || 0;
+      openLightbox(idx);
+    });
+  });
+
+  closeBtn.addEventListener("click", closeLightbox);
+  prevBtn.addEventListener("click", function(){ show(currentPos - 1); });
+  nextBtn.addEventListener("click", function(){ show(currentPos + 1); });
+
+  lightbox.addEventListener("click", function(e){
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener("keydown", function(e){
+    if (!lightbox.classList.contains("is-open")) return;
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowLeft") show(currentPos - 1);
+    if (e.key === "ArrowRight") show(currentPos + 1);
+  });
+})();
+</script>
+
+</body>
+</html>
