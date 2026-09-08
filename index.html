@@ -3,15 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>GLOW（グロウ）｜北海道中標津町のアミューズメントバー</title>
-<meta name="description" content="北海道標津郡中標津町のアミューズメントバー「GLOW」。ボードゲーム・レトロゲーム・カラオケが楽しめる、初めてでも入りやすいアットホームな空間。ただいまプレオープン中！">
+<title>GLOW Amusement Bar｜中標津のアミューズメントバー・カラオケ・ボードゲーム</title>
+<meta name="description" content="北海道中標津町のアミューズメントバー「GLOW（グロウ）」。飲み放題、カラオケ、63種類のボードゲーム、レトロゲームを楽しめる大人の遊び場です。お一人様、二次会、宴会、団体・グループでのご利用も歓迎します。">
 <meta name="theme-color" content="#0a0916">
 
 <!-- OGP（SNSシェア時の表示設定。og:imageは店舗写真ができ次第 images/ogp.jpg 等を用意して追加してください） -->
 <meta property="og:type" content="website">
-<meta property="og:title" content="GLOW（グロウ）｜北海道中標津町のアミューズメントバー">
-<meta property="og:description" content="ボードゲーム・レトロゲーム・カラオケが楽しめるアットホームな秘密基地。ただいまプレオープン中！">
+<meta property="og:title" content="GLOW Amusement Bar｜中標津のアミューズメントバー">
+<meta property="og:description" content="北海道中標津町のアミューズメントバー「GLOW（グロウ）」。飲み放題、カラオケ、63種類のボードゲーム、レトロゲームが楽しめます。">
 <meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
 
 <!-- 簡易ファビコン（ネオン風「G」。差し替える場合は favicon.ico 等を用意してこのlinkタグを置き換えてください） -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0916'/%3E%3Ctext x='32' y='44' font-size='34' font-family='Georgia,serif' font-weight='bold' fill='%23ff3fa4' text-anchor='middle'%3EG%3C/text%3E%3C/svg%3E">
@@ -849,6 +850,139 @@
     border-color:rgba(255,255,255,0.4);
   }
 
+  /* ---------- ご予約 ---------- */
+  .reserve-note{
+    font-size:0.88rem;
+    color:var(--text-sub);
+    line-height:1.9;
+    text-align:center;
+    max-width:560px;
+    margin:0 auto 22px;
+  }
+  .reserve-btn-wrap{
+    display:flex;
+    justify-content:center;
+  }
+  .reserve-mail-btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    width:100%;
+    max-width:360px;
+    padding:16px 24px;
+    border-radius:999px;
+    font-size:0.95rem;
+    font-weight:700;
+    text-decoration:none;
+    color:#fff;
+    background:linear-gradient(90deg, var(--pink), var(--purple));
+    box-shadow:0 0 22px rgba(255,63,166,0.35);
+    transition:filter .2s ease, box-shadow .2s ease;
+  }
+  .reserve-mail-btn:hover,
+  .reserve-mail-btn:active{
+    filter:brightness(1.1);
+    box-shadow:0 0 28px rgba(255,63,166,0.5);
+  }
+  .reserve-mail-btn svg{ flex-shrink:0; width:20px; height:20px; }
+  @media (min-width:480px){
+    .reserve-mail-btn{ width:auto; padding:16px 32px; }
+  }
+  .reserve-fallback{
+    margin:14px 0 0;
+    text-align:center;
+    font-size:0.78rem;
+    line-height:1.9;
+    color:var(--text-faint);
+  }
+  .reserve-fallback-row{
+    display:inline-flex;
+    align-items:center;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+    margin-top:2px;
+  }
+  .reserve-fallback-mail{
+    color:var(--text-sub);
+    word-break:break-all;
+    -webkit-user-select:text;
+    user-select:text;
+  }
+  .reserve-copy-btn{
+    appearance:none;
+    border:1px solid rgba(255,255,255,0.2);
+    background:transparent;
+    color:var(--text-sub);
+    border-radius:999px;
+    font-size:0.72rem;
+    padding:4px 12px;
+    cursor:pointer;
+    white-space:nowrap;
+    transition:filter .2s ease, border-color .2s ease, color .2s ease;
+  }
+  .reserve-copy-btn:hover,
+  .reserve-copy-btn:active{
+    filter:brightness(1.2);
+    border-color:rgba(255,255,255,0.35);
+  }
+  .reserve-copy-btn:focus-visible{
+    outline:2px solid var(--blue);
+    outline-offset:2px;
+  }
+  .reserve-copy-btn.is-copied{
+    color:var(--blue);
+    border-color:rgba(63,212,255,0.5);
+  }
+
+  /* ---------- スマホ下部固定・予約バー（スマホ専用／タブレット・PCでは非表示） ---------- */
+  .reserve-bar{
+    position:fixed;
+    left:0;right:0;bottom:0;
+    z-index:80;
+    display:block;
+    width:100%;
+    background:rgba(6,5,12,0.97);
+    border-top:1px solid rgba(255,63,166,0.3);
+    box-shadow:0 -6px 22px rgba(0,0,0,0.55);
+    -webkit-backdrop-filter:blur(8px);
+    backdrop-filter:blur(8px);
+    padding-bottom:env(safe-area-inset-bottom);
+  }
+  .reserve-bar-link{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:9px;
+    width:100%;
+    padding:18px 16px;
+    text-decoration:none;
+    color:var(--text-main);
+    font-size:0.95rem;
+    font-weight:700;
+    letter-spacing:0.02em;
+    line-height:1.2;
+    text-shadow:0 0 10px rgba(255,63,166,0.4);
+    -webkit-tap-highlight-color:transparent;
+    transition:background-color .15s ease;
+  }
+  .reserve-bar-link:active{
+    background:rgba(255,63,166,0.09);
+  }
+  .reserve-bar-link svg{ flex-shrink:0; width:19px; height:19px; color:var(--pink); }
+  @media (min-width:768px){
+    .reserve-bar{ display:none; }
+  }
+
+  /* 下部固定バーで本文・フッターが隠れないための余白（スマホでバー表示中のみ） */
+  body{
+    padding-bottom:calc(68px + env(safe-area-inset-bottom));
+  }
+  @media (min-width:768px){
+    body{ padding-bottom:0; }
+  }
+
   /* ---------- キーボード操作時のフォーカス表示 ---------- */
   a:focus-visible,
   button:focus-visible{
@@ -1001,6 +1135,7 @@
   <a href="boardgames.html">ボードゲーム一覧</a>
   <a href="#price">料金</a>
   <a href="#menu">メニュー</a>
+  <a href="#reserve">ご予約</a>
   <a href="#info">店舗情報</a>
   <a href="#instagram">Instagram</a>
 </nav>
@@ -1026,7 +1161,7 @@
         <circle cx="12" cy="12" r="9"/>
         <path d="M12 7v5l3.5 2"/>
       </svg>
-      <span>OPEN 21:00〜28:00</span>
+      <span>OPEN 20:00〜27:00</span>
     </div>
   </section>
 
@@ -1140,7 +1275,39 @@
     </div>
   </section>
 
-  <!-- 7. 店舗情報 -->
+  <!-- 7. ご予約 -->
+  <section id="reserve" class="section-glow-right">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-eyebrow">RESERVATION</span>
+        <h2 class="section-title">ご予約</h2>
+        <p class="section-lead">メールで簡単にご予約いただけます</p>
+        <div class="divider"></div>
+      </div>
+
+      <p class="reserve-note reveal">ご予約の際は、お名前・人数・希望プラン・希望日時をご記入ください。内容を確認後、店舗より返信いたします。店舗からの返信をもって予約確定となります。</p>
+
+      <div class="reserve-btn-wrap reveal">
+        <a class="reserve-mail-btn" href="mailto:youmore0028@gmail.com?subject=GLOW%E4%BA%88%E7%B4%84%E5%B8%8C%E6%9C%9B&amp;body=GLOW%E3%81%AE%E4%BA%88%E7%B4%84%E3%82%92%E5%B8%8C%E6%9C%9B%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0D%0A%0D%0A%E2%96%A0%E3%81%8A%E5%90%8D%E5%89%8D%EF%BC%9A%0D%0A%E2%96%A0%E4%BA%BA%E6%95%B0%EF%BC%9A%0D%0A%E2%96%A0%E5%B8%8C%E6%9C%9B%E3%83%97%E3%83%A9%E3%83%B3%EF%BC%9ASimple%E9%A3%B2%E3%81%BF%E6%94%BE%E9%A1%8C%EF%BC%8FALL%E9%A3%B2%E3%81%BF%E6%94%BE%E9%A1%8C%EF%BC%8F%E6%9C%AA%E5%AE%9A%0D%0A%E2%96%A0%E5%B8%8C%E6%9C%9B%E6%97%A5%EF%BC%9A%0D%0A%E2%96%A0%E5%B8%8C%E6%9C%9B%E6%99%82%E9%96%93%EF%BC%9A%0D%0A%E2%96%A0%E3%81%9D%E3%81%AE%E4%BB%96%E3%83%BB%E3%81%94%E8%A6%81%E6%9C%9B%EF%BC%9A%0D%0A%0D%0A%E2%80%BB%E5%BA%97%E8%88%97%E3%81%8B%E3%82%89%E3%81%AE%E8%BF%94%E4%BF%A1%E3%82%92%E3%82%82%E3%81%A3%E3%81%A6%E4%BA%88%E7%B4%84%E7%A2%BA%E5%AE%9A%E3%81%A8%E3%81%AA%E3%82%8A%E3%81%BE%E3%81%99%E3%80%82">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="14" rx="2"/>
+            <path d="M3 7l9 6 9-6"/>
+          </svg>
+          メールで予約する
+        </a>
+      </div>
+
+      <p class="reserve-fallback reveal">
+        メールが開かない場合<br>
+        <span class="reserve-fallback-row">
+          <span class="reserve-fallback-mail" id="reserveFallbackMail">youmore0028@gmail.com</span>
+          <button type="button" class="reserve-copy-btn" id="reserveCopyBtn" data-default-label="コピー" data-copied-label="コピーしました">コピー</button>
+        </span>
+      </p>
+    </div>
+  </section>
+
+  <!-- 8. 店舗情報 -->
   <section id="info" class="section-glow-left">
     <div class="container">
       <div class="section-head reveal">
@@ -1160,7 +1327,7 @@
         </div>
         <div class="info-row">
           <dt>営業時間</dt>
-          <dd>21:00〜28:00（深夜4:00）<br><span style="color:var(--text-faint);font-size:0.82rem;">※プレオープン期間中は変更になる場合があります</span></dd>
+          <dd>20:00〜27:00（深夜3:00）<br><span style="color:var(--text-faint);font-size:0.82rem;">※プレオープン期間中は変更になる場合があります</span></dd>
         </div>
         <div class="info-row">
           <dt>定休日</dt>
@@ -1174,7 +1341,7 @@
     </div>
   </section>
 
-  <!-- 8. アクセス -->
+  <!-- 9. アクセス -->
   <section id="access" class="section-glow-right">
     <div class="container">
       <div class="section-head reveal">
@@ -1203,7 +1370,7 @@
     </div>
   </section>
 
-  <!-- 9. Instagramへの案内 -->
+  <!-- 10. Instagramへの案内 -->
   <section id="instagram" class="section-glow-left">
     <div class="container">
       <div class="section-head reveal">
@@ -1234,6 +1401,18 @@
   <div>北海道標津郡中標津町大通り北2丁目1番地1 第一マイビル1階</div>
   <div style="margin-top:10px;">&copy; <span id="year"></span> GLOW. All Rights Reserved.</div>
 </footer>
+
+<!-- ▼スマホ専用・下部固定予約バー▼ -->
+<div class="reserve-bar" id="reserveBar">
+  <a class="reserve-bar-link" id="reserveBarLink" href="mailto:youmore0028@gmail.com?subject=GLOW%E4%BA%88%E7%B4%84%E5%B8%8C%E6%9C%9B&amp;body=GLOW%E3%81%AE%E4%BA%88%E7%B4%84%E3%82%92%E5%B8%8C%E6%9C%9B%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0D%0A%0D%0A%E2%96%A0%E3%81%8A%E5%90%8D%E5%89%8D%EF%BC%9A%0D%0A%E2%96%A0%E4%BA%BA%E6%95%B0%EF%BC%9A%0D%0A%E2%96%A0%E5%B8%8C%E6%9C%9B%E3%83%97%E3%83%A9%E3%83%B3%EF%BC%9ASimple%E9%A3%B2%E3%81%BF%E6%94%BE%E9%A1%8C%EF%BC%8FALL%E9%A3%B2%E3%81%BF%E6%94%BE%E9%A1%8C%EF%BC%8F%E6%9C%AA%E5%AE%9A%0D%0A%E2%96%A0%E5%B8%8C%E6%9C%9B%E6%97%A5%EF%BC%9A%0D%0A%E2%96%A0%E5%B8%8C%E6%9C%9B%E6%99%82%E9%96%93%EF%BC%9A%0D%0A%E2%96%A0%E3%81%9D%E3%81%AE%E4%BB%96%E3%83%BB%E3%81%94%E8%A6%81%E6%9C%9B%EF%BC%9A%0D%0A%0D%0A%E2%80%BB%E5%BA%97%E8%88%97%E3%81%8B%E3%82%89%E3%81%AE%E8%BF%94%E4%BF%A1%E3%82%92%E3%82%82%E3%81%A3%E3%81%A6%E4%BA%88%E7%B4%84%E7%A2%BA%E5%AE%9A%E3%81%A8%E3%81%AA%E3%82%8A%E3%81%BE%E3%81%99%E3%80%82">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <rect x="3" y="5" width="18" height="16" rx="2"/>
+      <path d="M8 3v4M16 3v4M3 10h18"/>
+    </svg>
+    メールで予約する
+  </a>
+</div>
+<!-- ▲スマホ専用・下部固定予約バー▲ -->
 
 <script>
 (function(){
@@ -1383,6 +1562,62 @@
 
     nav.querySelectorAll('a').forEach(function(link){
       link.addEventListener('click', closeNav);
+    });
+  }
+
+  // ご予約セクション：メールアドレスのコピー機能
+  // （メールアプリが開かない環境向けの代替手段。アドレス自体は通常の
+  //   テキストなので、長押しや選択でのコピーも常に可能）
+  var reserveCopyBtn = document.getElementById('reserveCopyBtn');
+  var reserveFallbackMail = document.getElementById('reserveFallbackMail');
+  if (reserveCopyBtn && reserveFallbackMail) {
+    var copyDefaultLabel = reserveCopyBtn.getAttribute('data-default-label') || reserveCopyBtn.textContent;
+    var copyCopiedLabel = reserveCopyBtn.getAttribute('data-copied-label') || 'コピーしました';
+    var copyResetTimer = null;
+
+    var showCopied = function(){
+      reserveCopyBtn.textContent = copyCopiedLabel;
+      reserveCopyBtn.classList.add('is-copied');
+      if (copyResetTimer) clearTimeout(copyResetTimer);
+      copyResetTimer = setTimeout(function(){
+        reserveCopyBtn.textContent = copyDefaultLabel;
+        reserveCopyBtn.classList.remove('is-copied');
+      }, 2200);
+    };
+
+    var legacyCopy = function(text){
+      var textarea = document.createElement('textarea');
+      textarea.value = text;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.top = '-9999px';
+      textarea.style.left = '-9999px';
+      document.body.appendChild(textarea);
+      textarea.select();
+      textarea.setSelectionRange(0, textarea.value.length);
+      var ok = false;
+      try {
+        ok = document.execCommand('copy');
+      } catch (err) {
+        ok = false;
+      }
+      document.body.removeChild(textarea);
+      return ok;
+    };
+
+    reserveCopyBtn.addEventListener('click', function(){
+      var mailText = reserveFallbackMail.textContent.trim();
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(mailText).then(showCopied, function(){
+          // クリップボードAPIが失敗した場合は、旧方式のコピーにフォールバック
+          if (legacyCopy(mailText)) showCopied();
+        });
+      } else if (legacyCopy(mailText)) {
+        showCopied();
+      }
+      // どちらの方法も使えない場合でも、メールアドレスは通常のテキストなので
+      // 利用者が自分で選択してコピーできる。
     });
   }
 
