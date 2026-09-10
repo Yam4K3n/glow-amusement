@@ -114,6 +114,21 @@
       0 0 6px rgba(255,255,255,0.6),
       0 0 14px var(--pink),
       0 0 26px rgba(255,63,166,0.5);
+    animation:brandNeonPulse 5s ease-in-out infinite;
+  }
+  @keyframes brandNeonPulse{
+    0%,100%{
+      text-shadow:
+        0 0 6px rgba(255,255,255,0.6),
+        0 0 14px var(--pink),
+        0 0 26px rgba(255,63,166,0.5);
+    }
+    50%{
+      text-shadow:
+        0 0 9px rgba(255,255,255,0.85),
+        0 0 20px var(--pink),
+        0 0 38px rgba(255,63,166,0.7);
+    }
   }
   .brand-badge{
     font-size:0.62rem;
@@ -226,6 +241,13 @@
     height:100%;
     object-fit:cover;
     object-position:center;
+    transform:scale(1);
+    animation:heroBgZoom 13s ease-out forwards;
+    will-change:transform;
+  }
+  @keyframes heroBgZoom{
+    from{ transform:scale(1); }
+    to{ transform:scale(1.03); }
   }
   .hero::before{
     content:"";
@@ -466,6 +488,14 @@
     width:100%;
     height:100%;
     object-fit:cover;
+    transition:transform .5s ease;
+  }
+  /* 写真カード：PCでマウスを乗せると、ごく控えめに拡大する（スマホのタップでは発動しない） */
+  @media (hover:hover) and (pointer:fine){
+    .art-panel:hover img,
+    .play-card:hover .play-card-visual img{
+      transform:scale(1.06);
+    }
   }
   /* ---------- About ---------- */
   #about{padding-bottom:36px;}
@@ -510,6 +540,10 @@
     grid-template-columns:1fr;
     gap:22px;
   }
+  /* 表示タイミングを少しずつずらす */
+  .play-grid > .reveal:nth-child(1){transition-delay:0s;}
+  .play-grid > .reveal:nth-child(2){transition-delay:0.1s;}
+  .play-grid > .reveal:nth-child(3){transition-delay:0.2s;}
   .play-card{
     background:var(--panel);
     border:1px solid var(--panel-border);
@@ -621,6 +655,11 @@
     grid-template-columns:1fr;
     gap:20px;
   }
+  /* 料金表：カードごとに表示タイミングを少しずつずらす */
+  .plan-grid > .reveal:nth-child(1){transition-delay:0s;}
+  .plan-grid > .reveal:nth-child(2){transition-delay:0.12s;}
+  .plan-grid > .reveal:nth-child(3){transition-delay:0.24s;}
+  .plan-grid > .reveal:nth-child(4){transition-delay:0.36s;}
   .plan-card{
     background:var(--panel);
     border:1px solid var(--panel-border);
@@ -715,6 +754,11 @@
     flex-direction:column;
     gap:32px;
   }
+  /* メニュー：カテゴリごとに表示タイミングを少しずつずらす */
+  .menu-categories > .reveal:nth-child(1){transition-delay:0s;}
+  .menu-categories > .reveal:nth-child(2){transition-delay:0.12s;}
+  .menu-categories > .reveal:nth-child(3){transition-delay:0.24s;}
+  .menu-categories > .reveal:nth-child(4){transition-delay:0.36s;}
   .menu-category-title{
     font-size:0.72rem;
     letter-spacing:0.25em;
@@ -836,7 +880,9 @@
     text-decoration:none;
     border:1px solid transparent;
     cursor:pointer;
-    transition:filter .2s ease, box-shadow .2s ease;
+    position:relative;
+    overflow:hidden;
+    transition:filter .2s ease, box-shadow .2s ease, transform .15s ease;
   }
   .btn-neon{
     background:linear-gradient(90deg, var(--pink), var(--purple));
@@ -857,6 +903,28 @@
   .btn-outline:active{
     filter:brightness(1.15);
     border-color:rgba(255,255,255,0.4);
+  }
+  .btn:active{
+    transform:translateY(2px);
+  }
+  /* 時々、淡い光が横切る演出（派手にならないよう、ごく低頻度・低コントラストに） */
+  .btn::after{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-60%;
+    width:35%;
+    height:100%;
+    background:linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+    transform:skewX(-18deg);
+    mix-blend-mode:screen;
+    pointer-events:none;
+    animation:btnSheen 7s ease-in-out infinite;
+  }
+  @keyframes btnSheen{
+    0%{ left:-60%; }
+    9%{ left:130%; }
+    100%{ left:130%; }
   }
 
   /* ---------- ご予約 ---------- */
@@ -889,12 +957,27 @@
     color:#fff;
     background:linear-gradient(90deg, var(--pink), var(--purple));
     box-shadow:0 0 22px rgba(255,63,166,0.35);
-    transition:filter .2s ease, box-shadow .2s ease;
+    position:relative;
+    overflow:hidden;
+    transition:filter .2s ease, box-shadow .2s ease, transform .15s ease;
   }
   .reserve-mail-btn:hover,
   .reserve-mail-btn:active{
     filter:brightness(1.1);
     box-shadow:0 0 28px rgba(255,63,166,0.5);
+  }
+  .reserve-mail-btn:active{ transform:translateY(2px); }
+  .reserve-mail-btn::after{
+    content:"";
+    position:absolute;
+    top:0; left:-60%;
+    width:35%; height:100%;
+    background:linear-gradient(120deg, transparent, rgba(255,255,255,0.4), transparent);
+    transform:skewX(-18deg);
+    mix-blend-mode:screen;
+    pointer-events:none;
+    animation:btnSheen 7s ease-in-out infinite;
+    animation-delay:1.5s;
   }
   .reserve-mail-btn svg{ flex-shrink:0; width:20px; height:20px; }
   @media (min-width:480px){
@@ -916,13 +999,28 @@
     background:rgba(63,212,255,0.06);
     border:1px solid rgba(63,212,255,0.45);
     box-shadow:0 0 16px rgba(63,212,255,0.12);
-    transition:filter .2s ease, border-color .2s ease, box-shadow .2s ease;
+    position:relative;
+    overflow:hidden;
+    transition:filter .2s ease, border-color .2s ease, box-shadow .2s ease, transform .15s ease;
   }
   .reserve-gmail-btn:hover,
   .reserve-gmail-btn:active{
     filter:brightness(1.15);
     border-color:rgba(63,212,255,0.7);
     box-shadow:0 0 22px rgba(63,212,255,0.22);
+  }
+  .reserve-gmail-btn:active{ transform:translateY(2px); }
+  .reserve-gmail-btn::after{
+    content:"";
+    position:absolute;
+    top:0; left:-60%;
+    width:35%; height:100%;
+    background:linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
+    transform:skewX(-18deg);
+    mix-blend-mode:screen;
+    pointer-events:none;
+    animation:btnSheen 7s ease-in-out infinite;
+    animation-delay:3s;
   }
   .reserve-gmail-btn svg{ flex-shrink:0; width:19px; height:19px; color:var(--blue); }
   @media (min-width:480px){
@@ -959,12 +1057,15 @@
     padding:4px 12px;
     cursor:pointer;
     white-space:nowrap;
-    transition:filter .2s ease, border-color .2s ease, color .2s ease;
+    transition:filter .2s ease, border-color .2s ease, color .2s ease, transform .15s ease;
   }
   .reserve-copy-btn:hover,
   .reserve-copy-btn:active{
     filter:brightness(1.2);
     border-color:rgba(255,255,255,0.35);
+  }
+  .reserve-copy-btn:active{
+    transform:translateY(2px);
   }
   .reserve-copy-btn:focus-visible{
     outline:2px solid var(--blue);
@@ -1007,11 +1108,26 @@
     line-height:1.2;
     text-shadow:0 0 10px rgba(255,63,166,0.4);
     -webkit-tap-highlight-color:transparent;
-    transition:background-color .15s ease;
+    position:relative;
+    overflow:hidden;
+    transition:background-color .15s ease, transform .15s ease;
     cursor:pointer;
   }
   .reserve-bar-link:active{
     background:rgba(255,63,166,0.09);
+    transform:translateY(2px);
+  }
+  .reserve-bar-link::after{
+    content:"";
+    position:absolute;
+    top:0; left:-60%;
+    width:30%; height:100%;
+    background:linear-gradient(120deg, transparent, rgba(255,255,255,0.3), transparent);
+    transform:skewX(-18deg);
+    mix-blend-mode:screen;
+    pointer-events:none;
+    animation:btnSheen 8s ease-in-out infinite;
+    animation-delay:2s;
   }
   .reserve-bar-link svg{ flex-shrink:0; width:19px; height:19px; color:var(--pink); }
   @media (min-width:768px){
@@ -1118,13 +1234,16 @@
     background:rgba(255,255,255,0.03);
     color:var(--text-main);
     cursor:pointer;
-    transition:filter .2s ease, border-color .2s ease, box-shadow .2s ease;
+    transition:filter .2s ease, border-color .2s ease, box-shadow .2s ease, transform .15s ease;
   }
   .reserve-modal-btn svg{ flex-shrink:0; width:18px; height:18px; }
   .reserve-modal-btn:hover,
   .reserve-modal-btn:active{
     filter:brightness(1.15);
     border-color:rgba(255,255,255,0.32);
+  }
+  .reserve-modal-btn:active{
+    transform:translateY(2px);
   }
   .reserve-modal-btn:focus-visible{
     outline:2px solid var(--blue);
@@ -1276,6 +1395,21 @@
   @media (prefers-reduced-motion: reduce){
     *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
     html{scroll-behavior:auto;}
+    .hero-bg{ animation:none !important; transform:none !important; }
+    .hero-logo img{ animation:none !important; }
+    .brand-logo{ animation:none !important; }
+    .btn::after,
+    .reserve-mail-btn::after,
+    .reserve-gmail-btn::after,
+    .reserve-bar-link::after{ animation:none !important; opacity:0 !important; }
+    .btn:active,
+    .reserve-mail-btn:active,
+    .reserve-gmail-btn:active,
+    .reserve-bar-link:active,
+    .reserve-modal-btn:active,
+    .reserve-copy-btn:active{ transform:none !important; }
+    .art-panel img,
+    .play-card-visual img{ transition:none !important; transform:none !important; }
   }
 </style>
 </head>
@@ -1416,7 +1550,7 @@
       </div>
 
       <!-- 料金プランはJavaScriptのDRINK_PLANS配列から自動生成されます -->
-      <div class="plan-grid reveal" id="planGrid"></div>
+      <div class="plan-grid" id="planGrid"></div>
 
       <p class="price-note reveal">プレオープン期間中は、料金や内容が変更になる場合があります。最新情報はInstagramをご確認ください。</p>
     </div>
@@ -1433,7 +1567,7 @@
       </div>
 
       <!-- メニューはJavaScriptのMENU_CATEGORIES配列から自動生成されます -->
-      <div class="menu-categories reveal" id="menuList"></div>
+      <div class="menu-categories" id="menuList"></div>
     </div>
   </section>
 
@@ -1702,7 +1836,7 @@
         return '<li>' + checkIcon + escapeHTML(item) + '</li>';
       }).join('');
       return (
-        '<div class="plan-card">' +
+        '<div class="plan-card reveal">' +
           '<div class="plan-name">' + escapeHTML(plan.name) + '</div>' +
           '<div class="plan-price-row">' +
             '<span class="plan-time">' + escapeHTML(plan.time) + '</span>' +
@@ -1731,7 +1865,7 @@
         );
       }).join('');
       return (
-        '<div class="menu-category">' +
+        '<div class="menu-category reveal">' +
           '<h3 class="menu-category-title" style="border-left-color:' + cat.accent + '">' + escapeHTML(cat.title) + '</h3>' +
           '<div class="menu-list">' + itemsHtml + '</div>' +
         '</div>'

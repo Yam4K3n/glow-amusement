@@ -98,6 +98,15 @@
     color:#fff;
     font-size:1.1rem;
     text-shadow:0 0 10px rgba(255,63,166,0.5), 0 0 22px rgba(155,92,255,0.3);
+    animation:headerBrandNeonPulse 5s ease-in-out infinite;
+  }
+  @keyframes headerBrandNeonPulse{
+    0%,100%{
+      text-shadow:0 0 10px rgba(255,63,166,0.5), 0 0 22px rgba(155,92,255,0.3);
+    }
+    50%{
+      text-shadow:0 0 15px rgba(255,63,166,0.75), 0 0 32px rgba(155,92,255,0.5);
+    }
   }
 
   /* ---------- Page head ---------- */
@@ -235,12 +244,15 @@
     cursor:pointer;
     white-space:nowrap;
     flex:0 0 auto;
-    transition:filter .2s ease, border-color .2s ease;
+    transition:filter .2s ease, border-color .2s ease, transform .15s ease;
   }
   .filter-reset:hover,
   .filter-reset:active{
     filter:brightness(1.15);
     border-color:rgba(255,255,255,0.4);
+  }
+  .filter-reset:active{
+    transform:scale(0.96);
   }
   .filter-reset:focus-visible{
     outline:2px solid var(--blue);
@@ -272,6 +284,12 @@
   .bg-card.is-filtered-out{
     display:none;
   }
+  /* 絞り込みで新しく表示されたカードだけ、一瞬だけ強制的に非表示状態に戻し、
+     次のフレームで解除することで、静かなフェードインを発生させる */
+  .bg-card.is-filter-entering{
+    opacity:0 !important;
+    transform:translateY(10px) !important;
+  }
 
   /* ---------- Grid ---------- */
   .bg-grid{
@@ -299,8 +317,17 @@
     overflow:hidden;
     cursor:pointer;
     box-shadow:0 0 0 1px rgba(255,255,255,0.03), 0 0 20px rgba(155,92,255,0.06);
-    transition:border-color .25s ease, box-shadow .25s ease, transform .25s ease;
   }
+  /* .bg-cardは.revealも併用しているため、両方の対象プロパティを1つのtransitionにまとめて指定する
+     （こうしないとhoverやタップの反応にフェード表示の遅延が引き継がれてしまうため） */
+  .bg-card.reveal{
+    transition:opacity .6s ease, transform .6s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+  /* ゲームカードを順番にフェード表示：グリッド上の位置ごとに少しずつタイミングをずらす（初回表示時のみ） */
+  .bg-card.reveal.is-visible:nth-child(4n+1){ transition-delay:0s; }
+  .bg-card.reveal.is-visible:nth-child(4n+2){ transition-delay:0.06s; }
+  .bg-card.reveal.is-visible:nth-child(4n+3){ transition-delay:0.12s; }
+  .bg-card.reveal.is-visible:nth-child(4n+4){ transition-delay:0.18s; }
   .bg-card-photo{
     display:block;
     width:100%;
@@ -326,15 +353,32 @@
     text-align:center;
     word-break:break-word;
   }
-  .bg-card:hover,
+  /* PCではマウスを乗せると少し浮き、ネオン枠が淡く光る（スマホのタップでは発動しない）
+     ※.reveal.is-visibleと詳細度を揃えないよう、.reveal を含めて詳細度を上げている
+     （そうしないと表示済みカードでhover時のtransformがreveal側に上書きされてしまうため） */
+  @media (hover:hover) and (pointer:fine){
+    .bg-card.reveal:hover{
+      border-color:rgba(255,63,166,0.4);
+      box-shadow:0 0 0 1px rgba(255,255,255,0.05), 0 0 26px rgba(155,92,255,0.22);
+      transform:translateY(-3px);
+    }
+  }
   .bg-card:focus-visible{
     border-color:rgba(255,63,166,0.4);
     box-shadow:0 0 0 1px rgba(255,255,255,0.05), 0 0 26px rgba(155,92,255,0.22);
-    transform:translateY(-2px);
-  }
-  .bg-card:focus-visible{
     outline:2px solid var(--blue);
     outline-offset:3px;
+  }
+  /* タップ／クリックした瞬間だけ軽く縮んで戻る（同様の理由で.reveal込みで詳細度を確保） */
+  .bg-card.reveal:active{
+    transform:scale(0.97);
+    transition:transform .15s ease;
+  }
+  /* hover・タップ操作の反応は、フェード表示の遅延を引き継がず常に即座に反応させる */
+  .bg-card.reveal.is-visible:hover,
+  .bg-card.reveal.is-visible:active{
+    transition-duration:.2s;
+    transition-delay:0s;
   }
 
   /* ---------- Game CTA (Instagram誘導) ---------- */
@@ -378,7 +422,7 @@
     text-decoration:none;
     border:1px solid transparent;
     cursor:pointer;
-    transition:filter .2s ease, box-shadow .2s ease;
+    transition:filter .2s ease, box-shadow .2s ease, transform .15s ease;
   }
   .btn-neon{
     background:linear-gradient(90deg, var(--pink), var(--purple));
@@ -389,6 +433,9 @@
   .btn-neon:active{
     filter:brightness(1.1);
     box-shadow:0 0 28px rgba(255,63,166,0.5);
+  }
+  .btn:active{
+    transform:scale(0.96);
   }
   .btn:focus-visible{
     outline:2px solid var(--blue);
@@ -433,6 +480,12 @@
     flex-direction:column;
     align-items:center;
     overflow-y:auto;
+    /* 拡大画面はフェード＋軽いズームで表示する */
+    transform:scale(0.96);
+    transition:transform .35s ease;
+  }
+  .lightbox.is-open .lightbox-content{
+    transform:scale(1);
   }
   .lightbox-figure{
     position:relative;
@@ -499,6 +552,10 @@
     align-items:center;
     justify-content:center;
     cursor:pointer;
+    transition:transform .15s ease;
+  }
+  .lightbox-btn:active{
+    transform:scale(0.94);
   }
   .lightbox-btn:focus-visible{
     outline:2px solid var(--blue);
@@ -548,13 +605,16 @@
     letter-spacing:0.02em;
     cursor:pointer;
     text-shadow:0 0 8px rgba(255,63,166,0.3);
-    transition:filter .2s ease, border-color .2s ease, box-shadow .2s ease;
+    transition:filter .2s ease, border-color .2s ease, box-shadow .2s ease, transform .15s ease;
   }
   .lightbox-video-btn:hover,
   .lightbox-video-btn:active{
     filter:brightness(1.15);
     border-color:rgba(255,63,166,0.7);
     box-shadow:0 0 16px rgba(255,63,166,0.25);
+  }
+  .lightbox-video-btn:active{
+    transform:scale(0.96);
   }
   .lightbox-video-btn:focus-visible{
     outline:2px solid var(--blue);
@@ -601,6 +661,14 @@
     border-radius:var(--radius);
     padding:20px;
     box-shadow:0 0 40px rgba(155,92,255,0.25);
+    /* 動画画面は下から静かに表示する */
+    opacity:0;
+    transform:translateY(18px);
+    transition:opacity .4s ease, transform .4s ease;
+  }
+  .video-modal.is-open .video-modal-panel{
+    opacity:1;
+    transform:translateY(0);
   }
   .video-modal-close{
     position:absolute;
@@ -617,12 +685,16 @@
     background:rgba(255,255,255,0.04);
     color:var(--text-sub);
     cursor:pointer;
+    transition:color .2s ease, border-color .2s ease, transform .15s ease;
   }
   .video-modal-close svg{ width:16px; height:16px; }
   .video-modal-close:hover,
   .video-modal-close:active{
     color:var(--text-main);
     border-color:rgba(255,255,255,0.3);
+  }
+  .video-modal-close:active{
+    transform:scale(0.92);
   }
   .video-modal-close:focus-visible{
     outline:2px solid var(--blue);
@@ -677,12 +749,15 @@
     text-decoration:none;
     font-size:0.85rem;
     font-weight:700;
-    transition:filter .2s ease, border-color .2s ease;
+    transition:filter .2s ease, border-color .2s ease, transform .15s ease;
   }
   .video-modal-open-link:hover,
   .video-modal-open-link:active{
     filter:brightness(1.15);
     border-color:rgba(63,212,255,0.7);
+  }
+  .video-modal-open-link:active{
+    transform:scale(0.96);
   }
   .video-modal-open-link svg{ flex-shrink:0; width:17px; height:17px; color:var(--blue); }
 
@@ -696,6 +771,17 @@
   @media (prefers-reduced-motion: reduce){
     *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
     html{scroll-behavior:auto;}
+    .bg-card:hover,
+    .bg-card:active,
+    .lightbox-btn:active,
+    .lightbox-video-btn:active,
+    .filter-reset:active,
+    .video-modal-close:active,
+    .video-modal-open-link:active,
+    .btn:active{ transform:none !important; }
+    .lightbox-content{ transform:none !important; }
+    .video-modal-panel{ transform:none !important; opacity:1 !important; }
+    .header-brand{ animation:none !important; }
   }
 </style>
 </head>
@@ -1260,10 +1346,22 @@
         ok = ok && (game.diff === dNum);
       }
 
-      card.classList.toggle("is-filtered-out", !ok);
+      var wasHidden = card.classList.contains("is-filtered-out");
+
       if (ok) {
-        card.classList.add("is-visible");
+        if (wasHidden) {
+          // 絞り込みで新しく表示されたカードだけ、静かにフェードインさせる
+          card.classList.remove("is-filtered-out");
+          card.classList.add("is-filter-entering");
+          void card.offsetWidth; // 強制リフローしてから解除し、遷移を発生させる
+          window.requestAnimationFrame(function(){
+            card.classList.remove("is-filter-entering");
+          });
+        }
         visibleCount++;
+      } else {
+        card.classList.add("is-filtered-out");
+        card.classList.remove("is-filter-entering");
       }
     });
 
@@ -1529,6 +1627,14 @@
     }
 
     videoModal.hidden = false;
+    videoModal.classList.remove("is-open");
+    // hidden解除直後の「非表示状態」を一度描画させてから is-open を付与することで、
+    // 下から浮かび上がる＋フェードのトランジションを確実に発生させる
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        videoModal.classList.add("is-open");
+      });
+    });
     document.addEventListener("keydown", handleVideoModalKeydown);
     videoModalClose.focus();
   }
@@ -1536,6 +1642,7 @@
   function closeVideoModal(){
     if (!videoModal || videoModal.hidden) return;
     videoModal.hidden = true;
+    videoModal.classList.remove("is-open");
     videoModalFrame.innerHTML = ""; // iframeを削除＝動画を停止
     window.removeEventListener("message", handleYouTubeEmbedMessage);
     document.removeEventListener("keydown", handleVideoModalKeydown);
