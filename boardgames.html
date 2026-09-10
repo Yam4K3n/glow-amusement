@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>ボードゲーム一覧｜GLOW（グロウ）</title>
-<meta name="description" content="GLOWで遊べる63種類のボードゲーム一覧。気になる一枚をタップすると拡大表示できます。">
+<meta name="description" content="GLOWで遊べる63種類のボードゲーム一覧。人数・所要時間・難易度を掲載し、遊び方動画や解説記事も確認できます。">
 <meta name="theme-color" content="#0a0916">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 64 64\'%3E%3Crect width=\'64\' height=\'64\' rx=\'14\' fill=\'%230a0916\'/%3E%3Ctext x=\'32\' y=\'44\' font-size=\'34\' font-family=\'Georgia,serif\' font-weight=\'bold\' fill=\'%23ff3fa6\' text-anchor=\'middle\'%3EG%3C/text%3E%3C/svg%3E">
 
@@ -513,6 +513,163 @@
     white-space:nowrap;
   }
 
+  /* ---------- 遊び方動画ボタン（拡大表示内） ---------- */
+  .lightbox-video-btn{
+    appearance:none;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    margin-top:14px;
+    padding:10px 22px;
+    border-radius:999px;
+    border:1px solid rgba(255,63,166,0.45);
+    background:rgba(255,63,166,0.08);
+    color:var(--text-main);
+    font-size:0.85rem;
+    font-weight:700;
+    font-family:inherit;
+    letter-spacing:0.02em;
+    cursor:pointer;
+    text-shadow:0 0 8px rgba(255,63,166,0.3);
+    transition:filter .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .lightbox-video-btn:hover,
+  .lightbox-video-btn:active{
+    filter:brightness(1.15);
+    border-color:rgba(255,63,166,0.7);
+    box-shadow:0 0 16px rgba(255,63,166,0.25);
+  }
+  .lightbox-video-btn:focus-visible{
+    outline:2px solid var(--blue);
+    outline-offset:2px;
+  }
+  .lightbox-video-btn svg{ flex-shrink:0; width:16px; height:16px; }
+  .lightbox-video-btn[hidden]{ display:none; }
+
+  .lightbox-video-pending{
+    display:block;
+    margin-top:14px;
+    font-size:0.78rem;
+    color:var(--text-faint);
+    letter-spacing:0.02em;
+  }
+  .lightbox-video-pending[hidden]{ display:none; }
+
+  /* ---------- 遊び方動画モーダル ---------- */
+  .video-modal{
+    position:fixed;
+    inset:0;
+    z-index:300;
+    padding:20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .video-modal[hidden]{ display:none; }
+  .video-modal-backdrop{
+    position:absolute;
+    inset:0;
+    background:rgba(4,3,9,0.88);
+    -webkit-backdrop-filter:blur(4px);
+    backdrop-filter:blur(4px);
+  }
+  .video-modal-panel{
+    position:relative;
+    width:min(92vw, 720px);
+    max-height:92vh;
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    background:var(--panel);
+    border:1px solid var(--panel-border);
+    border-radius:var(--radius);
+    padding:20px;
+    box-shadow:0 0 40px rgba(155,92,255,0.25);
+  }
+  .video-modal-close{
+    position:absolute;
+    top:12px;
+    right:12px;
+    width:34px;
+    height:34px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0;
+    border:1px solid var(--panel-border);
+    border-radius:50%;
+    background:rgba(255,255,255,0.04);
+    color:var(--text-sub);
+    cursor:pointer;
+  }
+  .video-modal-close svg{ width:16px; height:16px; }
+  .video-modal-close:hover,
+  .video-modal-close:active{
+    color:var(--text-main);
+    border-color:rgba(255,255,255,0.3);
+  }
+  .video-modal-close:focus-visible{
+    outline:2px solid var(--blue);
+    outline-offset:2px;
+  }
+  .video-modal-title{
+    margin:0 40px 14px 0;
+    font-size:1rem;
+    font-weight:700;
+    color:var(--text-main);
+  }
+  .video-modal-frame{
+    position:relative;
+    width:100%;
+    aspect-ratio:16/9;
+    background:#000;
+    border-radius:10px;
+    overflow:hidden;
+  }
+  .video-modal-frame iframe{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    border:0;
+  }
+  .video-modal-fallback{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    padding:20px;
+    text-align:center;
+    color:var(--text-sub);
+    font-size:0.82rem;
+    line-height:1.7;
+  }
+  .video-modal-open-link{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    margin-top:16px;
+    padding:12px 20px;
+    border-radius:999px;
+    border:1px solid rgba(63,212,255,0.45);
+    background:rgba(63,212,255,0.06);
+    color:var(--text-main);
+    text-decoration:none;
+    font-size:0.85rem;
+    font-weight:700;
+    transition:filter .2s ease, border-color .2s ease;
+  }
+  .video-modal-open-link:hover,
+  .video-modal-open-link:active{
+    filter:brightness(1.15);
+    border-color:rgba(63,212,255,0.7);
+  }
+  .video-modal-open-link svg{ flex-shrink:0; width:17px; height:17px; color:var(--blue); }
+
   footer{
     text-align:center;
     padding:28px 20px 40px;
@@ -670,8 +827,8 @@
             <span class="bg-card-title">サンレンタン DEEP</span>
           </button>
           <button class="bg-card reveal" type="button" data-index="21">
-            <span class="bg-card-photo"><img src="web-optimized/IMG_6190.jpeg" alt="英語だーけ" loading="lazy"></span>
-            <span class="bg-card-title">英語だーけ</span>
+            <span class="bg-card-photo"><img src="web-optimized/IMG_6190.jpeg" alt="エイゴダーケ" loading="lazy"></span>
+            <span class="bg-card-title">エイゴダーケ</span>
           </button>
           <button class="bg-card reveal" type="button" data-index="22">
             <span class="bg-card-photo"><img src="web-optimized/IMG_6191.jpeg" alt="ウミガメのスープ" loading="lazy"></span>
@@ -864,6 +1021,11 @@
     <div class="lightbox-info">
       <p class="lightbox-game-name" id="lightboxName"></p>
       <div class="lightbox-meta" id="lightboxMeta"></div>
+      <button type="button" class="lightbox-video-btn" id="lightboxVideoBtn" hidden>
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        <span id="lightboxVideoBtnLabel">遊び方動画を見る</span>
+      </button>
+      <p class="lightbox-video-pending" id="lightboxVideoPending" hidden>遊び方動画は準備中です</p>
       <span class="lightbox-counter" id="lightboxCounter"></span>
     </div>
   </div>
@@ -874,6 +1036,27 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
   </button>
 </div>
+
+<!-- ▼遊び方動画モーダル（「遊び方動画を見る」ボタンから開く。押されるまでYouTube動画は読み込まない）▼ -->
+<div class="video-modal" id="videoModal" hidden>
+  <div class="video-modal-backdrop" id="videoModalBackdrop"></div>
+  <div class="video-modal-panel" role="dialog" aria-modal="true" aria-labelledby="videoModalTitle">
+    <button type="button" class="video-modal-close" id="videoModalClose" aria-label="閉じる">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <h2 class="video-modal-title" id="videoModalTitle"></h2>
+    <div class="video-modal-frame" id="videoModalFrame"></div>
+    <a class="video-modal-open-link" id="videoModalOpenLink" href="#" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M14 4h6v6"/>
+        <path d="M10 14L20 4"/>
+        <path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/>
+      </svg>
+      <span id="videoModalOpenLinkLabel">YouTubeで開く</span>
+    </a>
+  </div>
+</div>
+<!-- ▲遊び方動画モーダル▲ -->
 
 <script>
 (function(){
@@ -948,67 +1131,67 @@
   /* ゲーム情報（ネットで確認できた範囲で記載。不明な項目は空欄にしています） */
   var GAMES = [
   { name: "プールテーブル", players: "2人", time: "10〜30分", diff: 1 },
-  { name: "カタン スタンダード版", players: "3〜4人", time: "60〜120分", diff: 3 },
-  { name: "スプレンダー", players: "2〜4人", time: "30分", diff: 2 },
-  { name: "ディクシット", players: "3〜6人", time: "30分", diff: 1 },
-  { name: "ディセプション 人狼と殺人", players: "4〜12人", time: "20〜40分", diff: 2 },
-  { name: "ブロックス トライゴン", players: "2〜4人", time: "20〜30分", diff: 2 },
-  { name: "クイズいいセン行きまSHOW!", players: "3〜10人", time: "10〜30分", diff: 2 },
-  { name: "バトルライン", players: "2人", time: "約30分", diff: 3 },
-  { name: "ジャスト・ワン", players: "3〜7人", time: "20分", diff: 1 },
-  { name: "六華", players: "2〜5人", time: "10〜20分", diff: 2 },
-  { name: "コードネーム", players: "4〜8人", time: "15分", diff: 2 },
-  { name: "ナンジャモンジャ デラックス", players: "2〜6人", time: "約15分", diff: 1 },
-  { name: "DANY", players: "3〜8人", time: "16〜30分", diff: 1 },
-  { name: "AVタイトル制作", players: "3〜6人", time: "20〜30分", diff: 1 },
-  { name: "たった今考えたプロポーズの言葉を君に捧ぐよ。", players: "3〜6人", time: "15〜30分", diff: 2 },
-  { name: "ピンコンビトリオ", players: "2〜5人", time: "20分", diff: 2 },
-  { name: "キュービアーズ", players: "2〜5人", time: "約20分", diff: 2 },
-  { name: "スカル", players: "3〜6人", time: "15〜30分", diff: 1 },
+  { name: "カタン スタンダード版", players: "3〜4人", time: "60〜120分", diff: 3, videoUrl: "https://www.youtube.com/watch?v=3_E5dr86_80" },
+  { name: "スプレンダー", players: "2〜4人", time: "30分", diff: 2, videoUrl: "https://www.youtube.com/watch?v=kcppXOAlpxc" },
+  { name: "ディクシット", players: "3〜6人", time: "30分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=exvXZjAMLyE" },
+  { name: "ディセプション 人狼と殺人", players: "4〜12人", time: "20〜40分", diff: 2, videoUrl: "https://www.youtube.com/watch?v=avdZUnKNbMg" },
+  { name: "ブロックス トライゴン", players: "2〜4人", time: "20〜30分", diff: 2, videoUrl: "https://www.youtube.com/watch?v=Ps9mfS1JSxE" },
+  { name: "クイズいいセン行きまSHOW!", players: "3〜10人", time: "10〜30分", diff: 2, videoUrl: "https://www.youtube.com/watch?v=XBl44atl7zI" },
+  { name: "バトルライン", players: "2人", time: "約30分", diff: 3, videoUrl: "https://www.youtube.com/watch?v=UvxxJQMH-DY" },
+  { name: "ジャスト・ワン", players: "3〜7人", time: "20分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=DhYtbdCXfV4" },
+  { name: "六華", players: "2〜5人", time: "10〜20分", diff: 2, videoUrl: "https://www.youtube.com/watch?v=M-6QVRz7NDs" },
+  { name: "コードネーム", players: "4〜8人", time: "15分", diff: 2, videoUrl: "https://www.youtube.com/watch?v=15UdbP3tHJM&t=134s" },
+  { name: "ナンジャモンジャ デラックス", players: "2〜6人", time: "約15分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=Ue329Oedevs" },
+  { name: "DANY", players: "3〜8人", time: "16〜30分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=6hr-QvruljE" },
+  { name: "AVタイトル制作", players: "3〜6人", time: "20〜30分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=-HAt-3DXJCM" },
+  { name: "たった今考えたプロポーズの言葉を君に捧ぐよ。", players: "3〜6人", time: "15〜30分", diff: 2, videoUrl: "https://www.youtube.com/watch?v=yU-vqEK9wlo" },
+  { name: "ピンコンビトリオ", players: "2〜5人", time: "20分", diff: 2, videoUrl: "https://www.youtube.com/watch?v=pzByirs2NnY" },
+  { name: "キュービアーズ", players: "2〜5人", time: "約20分", diff: 2, videoUrl: "https://www.youtube.com/watch?v=xcmztNCavNA" },
+  { name: "スカル", players: "3〜6人", time: "15〜30分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=aaU98cW63uY" },
   { name: "ギルドビルド", players: "2〜5人", time: "20〜40分", diff: 2 },
-  { name: "クソレビュージャングル", players: "3〜6人", time: "15〜30分", diff: 2 },
-  { name: "サンレンタン DEEP", players: "2〜6人", time: "遊び方による", diff: 1 },
-  { name: "英語だーけ", players: "3〜8人", time: "約15分", diff: 1 },
-  { name: "ウミガメのスープ", players: "2人〜", time: "遊び方による", diff: 3 },
-  { name: "ウミガメのスープ2", players: "2〜8人", time: "遊び方による", diff: 3 },
-  { name: "はぁって言うゲーム", players: "3〜8人", time: "約15分", diff: 1 },
-  { name: "ナインタイル ポケモン ドコダ!", players: "2〜4人", time: "約15分", diff: 1 },
-  { name: "サイズアップ!", players: "2〜10人", time: "15〜30分", diff: 1 },
-  { name: "バナナの木", players: "2〜10人", time: "5〜15分", diff: 2 },
-  { name: "ペチャリブレ", players: "3人〜", time: "遊び方による", diff: 1 },
-  { name: "モンスターズvsヒーローズ ヴィクトリア朝の悪夢", players: "2〜8人", time: "10〜30分", diff: 4 },
-  { name: "ファーミニ", players: "1〜4人", time: "約15分", diff: 1 },
-  { name: "ワードウルフ", players: "2〜8人", time: "5〜15分", diff: 1 },
-  { name: "人狼DX", players: "4〜20人", time: "10〜50分", diff: 2 },
-  { name: "カタカナーシ", players: "3〜8人", time: "約15分", diff: 2 },
-  { name: "TIME Bomb 新装版", players: "2〜8人", time: "15〜30分", diff: 2 },
-  { name: "ito", players: "2〜10人", time: "15〜30分", diff: 1 },
-  { name: "ハゲタカのえじき", players: "3〜6人", time: "約20分", diff: 1 },
-  { name: "よくばりパグ", players: "3〜5人", time: "30〜40分", diff: 2 },
-  { name: "ニムト", players: "2〜10人", time: "25〜30分", diff: 1 },
-  { name: "狩歌", players: "2〜8人", time: "15〜30分", diff: 1 },
-  { name: "ラブレター", players: "2〜4人", time: "約20分", diff: 1 },
-  { name: "音速飯店", players: "2〜6人", time: "約15分", diff: 1 },
-  { name: "ジャンボと仲間たち", players: "3〜6人", time: "15分", diff: 2 },
-  { name: "テストプレイなんてしてないよ", players: "2〜10人", time: "1〜5分/ラウンド", diff: 1 },
-  { name: "パパパパパ行", players: "2〜10人", time: "約15分", diff: 1 },
-  { name: "UNO", players: "2〜10人", time: "約30分", diff: 1 },
-  { name: "マスクメン", players: "2〜6人", time: "20〜30分", diff: 2 },
-  { name: "ワードスナイパー", players: "2〜6人", time: "10〜20分", diff: 1 },
-  { name: "NONO", players: "遊び方による", time: "約10分", diff: 2 },
-  { name: "XENO", players: "2〜4人", time: "3〜10分", diff: 2 },
+  { name: "クソレビュージャングル", players: "3〜6人", time: "15〜30分", diff: 2, videoUrl: "https://www.youtube.com/watch?v=QOu4noaiszY" },
+  { name: "サンレンタン DEEP", players: "2〜6人", time: "遊び方による", diff: 1, videoUrl: "https://www.youtube.com/watch?v=iH_E0SGdLXc" },
+  { name: "エイゴダーケ", players: "3〜8人", time: "約15分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=byRX-JCDkUE" },
+  { name: "ウミガメのスープ", players: "2人〜", time: "遊び方による", diff: 3, videoUrl: "https://www.youtube.com/watch?v=dvExlccaTes" },
+  { name: "ウミガメのスープ2", players: "2〜8人", time: "遊び方による", diff: 3, videoUrl: "https://www.youtube.com/watch?v=dvExlccaTes" },
+  { name: "はぁって言うゲーム", players: "3〜8人", time: "約15分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=mnZJV_647x8" },
+  { name: "ナインタイル ポケモン ドコダ!", players: "2〜4人", time: "約15分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=vnOlstO6UUw" },
+  { name: "サイズアップ!", players: "2〜10人", time: "15〜30分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=FYj7xYhwSbE" },
+  { name: "バナナの木", players: "2〜10人", time: "5〜15分", diff: 2, videoUrl: "https://www.youtube.com/watch?v=tIaXX2Lt8nA" },
+  { name: "ペチャリブレ", players: "3人〜", time: "遊び方による", diff: 1, videoUrl: "https://www.youtube.com/watch?v=CEl2In0nQI0" },
+  { name: "モンスターズvsヒーローズ ヴィクトリア朝の悪夢", players: "2〜8人", time: "10〜30分", diff: 4, videoUrl: "https://www.youtube.com/watch?v=ggBxfih17-E" },
+  { name: "ファーミニ", players: "1〜4人", time: "約15分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=_OJHccQ8lHI" },
+  { name: "ワードウルフ", players: "2〜8人", time: "5〜15分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=h8VW6-VxVTE" },
+  { name: "人狼DX", players: "4〜20人", time: "10〜50分", diff: 2, videoUrl: "https://www.youtube.com/watch?v=_86_PaQIrs0" },
+  { name: "カタカナーシ", players: "3〜8人", time: "約15分", diff: 2, videoUrl: "https://www.youtube.com/watch?v=SyKOHZerFmU" },
+  { name: "TIME Bomb 新装版", players: "2〜8人", time: "15〜30分", diff: 2, videoUrl: "https://www.youtube.com/watch?v=CCMmdl-O52k" },
+  { name: "ito", players: "2〜10人", time: "15〜30分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=LVFR5eCDvP4" },
+  { name: "ハゲタカのえじき", players: "3〜6人", time: "約20分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=4BVvF7HSncI" },
+  { name: "よくばりパグ", players: "3〜5人", time: "30〜40分", diff: 2, videoUrl: "https://t-machine.jp/web-bungei/80608/" },
+  { name: "ニムト", players: "2〜10人", time: "25〜30分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=yOdCQVhMFYU" },
+  { name: "狩歌", players: "2〜8人", time: "15〜30分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=nYonSVRGcWA" },
+  { name: "ラブレター", players: "2〜4人", time: "約20分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=bmdQ0drbb6k" },
+  { name: "音速飯店", players: "2〜6人", time: "約15分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=a6PvBF1eGVg" },
+  { name: "ジャンボと仲間たち", players: "3〜6人", time: "15分", diff: 2, videoUrl: "https://nissyblogs.com/%e3%80%90%e3%83%9c%e3%83%bc%e3%83%89%e3%82%b2%e3%83%bc%e3%83%a0%e3%80%91%e3%82%b8%e3%83%a3%e3%83%b3%e3%83%9c%e3%81%a8%e4%bb%b2%e9%96%93%e3%81%9f%e3%81%a1%e3%81%ae%e3%83%ab%e3%83%bc%e3%83%ab%e8%aa%ac/" },
+  { name: "テストプレイなんてしてないよ", players: "2〜10人", time: "1〜5分/ラウンド", diff: 1, videoUrl: "https://www.youtube.com/watch?v=uZgjJ7rHHKY" },
+  { name: "パパパパパ行", players: "2〜10人", time: "約15分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=POEr63lKzZ8" },
+  { name: "UNO", players: "2〜10人", time: "約30分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=oOclX058PR8" },
+  { name: "マスクメン", players: "2〜6人", time: "20〜30分", diff: 2, videoUrl: "https://www.youtube.com/watch?v=3frL3w8jKq0" },
+  { name: "ワードスナイパー", players: "2〜6人", time: "10〜20分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=qofr58ar9ow" },
+  { name: "NONO", players: "遊び方による", time: "約10分", diff: 2, videoUrl: "https://www.youtube.com/watch?v=SIGIqjkJWic" },
+  { name: "XENO", players: "2〜4人", time: "3〜10分", diff: 2, videoUrl: "https://www.youtube.com/watch?v=ouVF1DTZa7E" },
   { name: "トランプ", players: "2人〜", time: "5分〜", diff: 0 },
-  { name: "犯人は踊る", players: "3〜8人", time: "10〜20分", diff: 1 },
-  { name: "ナナ", players: "2〜5人", time: "15分", diff: 1 },
-  { name: "コヨーテ", players: "2〜10人", time: "約30分", diff: 1 },
-  { name: "クジラオルカ", players: "2〜5人", time: "約30分", diff: 2 },
-  { name: "定時退社", players: "3〜6人", time: "3〜10分", diff: 2 },
-  { name: "トマトマト", players: "3〜6人", time: "約20分", diff: 2 },
-  { name: "インサイダーゲーム", players: "4〜8人", time: "10〜15分", diff: 2 },
+  { name: "犯人は踊る", players: "3〜8人", time: "10〜20分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=v97PP5AHF5w" },
+  { name: "ナナ", players: "2〜5人", time: "15分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=1L_s6kM5Deg" },
+  { name: "コヨーテ", players: "2〜10人", time: "約30分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=GfpHdg6ZXiM" },
+  { name: "クジラオルカ", players: "2〜5人", time: "約30分", diff: 2, videoUrl: "https://www.youtube.com/watch?v=mqYxrYgMgvI" },
+  { name: "定時退社", players: "3〜6人", time: "3〜10分", diff: 2, videoUrl: "https://www.youtube.com/shorts/6n2u70w7V1g" },
+  { name: "トマトマト", players: "3〜6人", time: "約20分", diff: 2, videoUrl: "https://www.youtube.com/watch?v=pK_OFCgMk_A" },
+  { name: "インサイダーゲーム", players: "4〜8人", time: "10〜15分", diff: 2, videoUrl: "https://www.youtube.com/watch?v=nVnJOHOrUQY" },
   { name: "私とあなた", players: "3〜6人", time: "15〜30分", diff: 1 },
   { name: "極 チンチロセット", players: "遊び方による", time: "遊び方による", diff: 1 },
   { name: "ジェンガ", players: "2人〜", time: "10〜20分", diff: 1 },
-  { name: "ドブル", players: "2〜8人", time: "約15分", diff: 1 },
+  { name: "ドブル", players: "2〜8人", time: "約15分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=FFUUbTutQ5s" },
   { name: "パーティピリピリ", players: "2〜4人", time: "1分〜/ラウンド", diff: 1 }
   ];
 
@@ -1117,6 +1300,14 @@
   var closeBtn = document.getElementById("lightboxClose");
   var prevBtn = document.getElementById("lightboxPrev");
   var nextBtn = document.getElementById("lightboxNext");
+  var lightboxVideoBtn = document.getElementById("lightboxVideoBtn");
+  var lightboxVideoBtnLabel = document.getElementById("lightboxVideoBtnLabel");
+  var lightboxVideoPending = document.getElementById("lightboxVideoPending");
+
+  // videoUrlがYouTubeのURLかどうかを判定する（記事などの外部リンクと区別するため）
+  function isYouTubeUrl(url){
+    return !!url && /(?:youtube\.com|youtu\.be)/i.test(url);
+  }
   var activeList = [];
   var currentPos = 0;
   var lastFocused = null;
@@ -1172,6 +1363,19 @@
       '<span class="meta-item"><span class="meta-label">時間</span>' + timeText + '</span>' +
       '<span class="meta-item"><span class="meta-label">難易度の目安</span>' + diffText + '</span>';
     lightboxMeta.innerHTML = metaHtml;
+
+    // videoUrlが設定されているゲームだけ「遊び方動画を見る」ボタンを表示する
+    // videoUrlがないゲームは、代わりに「準備中」の案内テキストを表示する
+    if (lightboxVideoBtn) {
+      lightboxVideoBtn.hidden = !game.videoUrl;
+      if (lightboxVideoBtnLabel) {
+        // YouTube以外のURL（解説記事など）の場合はボタン文言を「遊び方を見る」にする
+        lightboxVideoBtnLabel.textContent = isYouTubeUrl(game.videoUrl) ? "遊び方動画を見る" : "遊び方を見る";
+      }
+    }
+    if (lightboxVideoPending) {
+      lightboxVideoPending.hidden = !!game.videoUrl;
+    }
   }
 
   function openLightbox(index){
@@ -1208,7 +1412,134 @@
     if (e.target === lightbox) closeLightbox();
   });
 
+  /* 遊び方動画モーダル
+     ・「遊び方動画を見る」を押したときだけYouTube iframeを読み込む（63本を最初から読み込まない）
+     ・閉じたらiframeを丸ごと削除する（＝動画停止）
+     ・videoUrlはGAMES配列の videoUrl フィールドで管理。後から動画を変える場合は
+       GAMES配列のvideoUrlの値（YouTubeのURL）を書き換えるだけでよい。
+     ・埋め込みが許可されていない動画は、YouTube側からのonErrorメッセージ（101/150）を
+       検知して、埋め込み枠内に「YouTubeで開く」への案内を表示する。 */
+  var videoModal = document.getElementById("videoModal");
+  var videoModalBackdrop = document.getElementById("videoModalBackdrop");
+  var videoModalClose = document.getElementById("videoModalClose");
+  var videoModalTitle = document.getElementById("videoModalTitle");
+  var videoModalFrame = document.getElementById("videoModalFrame");
+  var videoModalOpenLink = document.getElementById("videoModalOpenLink");
+  var videoModalOpenLinkLabel = document.getElementById("videoModalOpenLinkLabel");
+  var videoModalLastFocused = null;
+
+  function extractYouTubeId(url){
+    if (!url) return null;
+    var m = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
+    return m ? m[1] : null;
+  }
+
+  // URLの t= / start= パラメータから開始秒数を取得する（通常URL・youtu.be・Shortsのいずれでも動作）
+  // 対応形式: "134" / "134s" / "2m14s" / "1h2m3s" のような YouTube の t パラメータ表記
+  function extractYouTubeStart(url){
+    if (!url) return null;
+    var m = url.match(/[?&](?:t|start)=([^&]+)/);
+    if (!m) return null;
+    var raw = decodeURIComponent(m[1]);
+    if (/^\d+$/.test(raw)) return parseInt(raw, 10);
+    var hms = raw.match(/^(?:(\d+)h)?(?:(\d+)m)?(?:(\d+)s)?$/);
+    if (hms && (hms[1] || hms[2] || hms[3])) {
+      var h = parseInt(hms[1] || 0, 10);
+      var mnt = parseInt(hms[2] || 0, 10);
+      var s = parseInt(hms[3] || 0, 10);
+      var total = h * 3600 + mnt * 60 + s;
+      return total > 0 ? total : null;
+    }
+    return null;
+  }
+
+  // YouTubeの埋め込みが許可されていない場合のフォールバック表示
+  function showVideoFallback(){
+    videoModalFrame.innerHTML =
+      '<div class="video-modal-fallback">' +
+      '<p>この動画は埋め込みが許可されていないため、下の『YouTubeで開く』からご覧ください。</p>' +
+      '</div>';
+    if (videoModalOpenLinkLabel) videoModalOpenLinkLabel.textContent = "YouTubeで開く";
+  }
+
+  // videoUrlがYouTube以外（解説記事など）の場合の表示
+  function showExternalLinkFallback(){
+    videoModalFrame.innerHTML =
+      '<div class="video-modal-fallback">' +
+      '<p>この遊び方は動画ではなく、外部サイトでご案内しています。下のボタンからご覧ください。</p>' +
+      '</div>';
+    if (videoModalOpenLinkLabel) videoModalOpenLinkLabel.textContent = "サイトで見る";
+  }
+
+  function handleYouTubeEmbedMessage(e){
+    if (typeof e.origin !== "string" || e.origin.indexOf("youtube.com") === -1) return;
+    var data;
+    try { data = JSON.parse(e.data); } catch (err) { return; }
+    if (data && data.event === "onError" && (data.info === 101 || data.info === 150)) {
+      showVideoFallback();
+    }
+  }
+
+  function handleVideoModalKeydown(e){
+    if (e.key === "Escape") closeVideoModal();
+  }
+
+  function openVideoModal(videoUrl, gameName){
+    if (!videoModal || !videoUrl) return;
+
+    videoModalLastFocused = document.activeElement;
+    videoModalTitle.textContent = gameName ? gameName : "遊び方動画";
+    videoModalOpenLink.href = videoUrl;
+
+    if (isYouTubeUrl(videoUrl)) {
+      var videoId = extractYouTubeId(videoUrl);
+      if (videoId) {
+        var startSec = extractYouTubeStart(videoUrl);
+        var embedSrc = "https://www.youtube.com/embed/" + videoId + "?rel=0&playsinline=1&enablejsapi=1";
+        if (startSec) embedSrc += "&start=" + startSec;
+        videoModalFrame.innerHTML =
+          '<iframe id="videoModalIframe" src="' + embedSrc + '" title="' +
+          escapeHTML(gameName ? gameName + " の遊び方動画" : "遊び方動画") + '" ' +
+          'allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; web-share" ' +
+          'allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>';
+        window.addEventListener("message", handleYouTubeEmbedMessage);
+        if (videoModalOpenLinkLabel) videoModalOpenLinkLabel.textContent = "YouTubeで開く";
+      } else {
+        showVideoFallback();
+      }
+    } else {
+      // YouTube以外のURL（解説記事など）は埋め込みを試みず、直接開くための案内を表示する
+      showExternalLinkFallback();
+    }
+
+    videoModal.hidden = false;
+    document.addEventListener("keydown", handleVideoModalKeydown);
+    videoModalClose.focus();
+  }
+
+  function closeVideoModal(){
+    if (!videoModal || videoModal.hidden) return;
+    videoModal.hidden = true;
+    videoModalFrame.innerHTML = ""; // iframeを削除＝動画を停止
+    window.removeEventListener("message", handleYouTubeEmbedMessage);
+    document.removeEventListener("keydown", handleVideoModalKeydown);
+    if (videoModalLastFocused && typeof videoModalLastFocused.focus === "function") {
+      videoModalLastFocused.focus();
+    }
+  }
+
+  if (lightboxVideoBtn) {
+    lightboxVideoBtn.addEventListener("click", function(){
+      var idx = activeList[currentPos];
+      var game = GAMES[idx] || {};
+      openVideoModal(game.videoUrl, game.name);
+    });
+  }
+  if (videoModalClose) videoModalClose.addEventListener("click", closeVideoModal);
+  if (videoModalBackdrop) videoModalBackdrop.addEventListener("click", closeVideoModal);
+
   document.addEventListener("keydown", function(e){
+    if (videoModal && !videoModal.hidden) return; // 動画モーダル表示中は写真拡大表示側のキー操作を無効化
     if (!lightbox.classList.contains("is-open")) return;
     if (e.key === "Escape") closeLightbox();
     if (e.key === "ArrowLeft") show(currentPos - 1);
