@@ -535,6 +535,92 @@
     transform:translate(-50%,-50%);
   }
 
+  /* ---------- Official Movie ---------- */
+  #movie{ padding-top:4px; }
+  .movie-frame{
+    position:relative;
+    max-width:900px;
+    margin:0 auto;
+    border-radius:var(--radius);
+    overflow:hidden;
+    background:#000;
+    border:1px solid rgba(255,255,255,0.10);
+    box-shadow:
+      0 0 24px rgba(255,63,166,0.16),
+      0 0 46px rgba(63,212,255,0.12);
+  }
+  .movie-video-wrap{
+    position:relative;
+    width:100%;
+    aspect-ratio:16/9;
+    background:#000;
+  }
+  .movie-video-wrap video{
+    width:100%;
+    height:100%;
+    display:block;
+    object-fit:cover;
+    background:#000;
+  }
+  /* Chromium/Safariの標準の大きな再生ボタンは非表示にし、
+     下の自作ボタン（.movie-play-btn）だけを表示する（二重表示防止） */
+  .movie-video-wrap video::-webkit-media-controls-start-playback-button,
+  .movie-video-wrap video::-webkit-media-controls-overlay-play-button{
+    display:none !important;
+    -webkit-appearance:none;
+  }
+  .movie-fallback{
+    margin:0;
+    padding:0 24px;
+    text-align:center;
+    color:var(--text-sub);
+    font-size:0.85rem;
+  }
+  .movie-play-btn{
+    position:absolute;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    width:72px;
+    height:72px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,0.55);
+    background:rgba(10,9,20,0.45);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    padding:0;
+    box-shadow:
+      0 0 18px rgba(255,63,166,0.45),
+      0 0 34px rgba(63,212,255,0.25),
+      inset 0 0 12px rgba(255,255,255,0.08);
+    transition:transform .25s ease, box-shadow .25s ease, opacity .2s ease;
+    z-index:3;
+  }
+  .movie-play-btn svg{
+    width:24px;
+    height:24px;
+    fill:#fff;
+    margin-left:3px;
+  }
+  @media (hover:hover) and (pointer:fine){
+    .movie-play-btn:hover{
+      transform:translate(-50%,-50%) scale(1.06);
+      box-shadow:
+        0 0 24px rgba(255,63,166,0.6),
+        0 0 44px rgba(63,212,255,0.35),
+        inset 0 0 12px rgba(255,255,255,0.12);
+    }
+  }
+  .movie-video-wrap.is-playing .movie-play-btn{
+    opacity:0;
+    pointer-events:none;
+  }
+  @media (max-width:600px){
+    .movie-play-btn{ width:56px; height:56px; }
+    .movie-play-btn svg{ width:19px; height:19px; }
+  }
+
   /* ---------- Play cards ---------- */
   #play{padding-top:36px;}
   .play-grid{
@@ -1500,6 +1586,30 @@
     <div class="section-connector-line"></div>
   </div>
 
+  <!-- 3.5 OFFICIAL MOVIE -->
+  <section id="movie">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="section-eyebrow">OFFICIAL MOVIE</span>
+        <h2 class="section-title">30秒で見るGLOW</h2>
+        <p class="section-lead">飲むだけじゃない。遊ぶ夜へ。</p>
+        <div class="divider"></div>
+      </div>
+
+      <div class="movie-frame reveal">
+        <div class="movie-video-wrap" id="movieVideoWrap">
+          <video id="movieVideo" poster="pv-poster.jpg" controls playsinline preload="metadata">
+            <source src="glow-pv.mp4" type="video/mp4">
+            <p class="movie-fallback">動画を再生できません。</p>
+          </video>
+          <button type="button" class="movie-play-btn" id="moviePlayBtn" aria-label="動画を再生">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- 4. 遊べるもの -->
   <section id="play" class="section-glow-right">
     <div class="container">
@@ -2054,6 +2164,26 @@
   } else {
     // 非対応ブラウザ用フォールバック：即表示
     revealEls.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  // OFFICIAL MOVIE：最初はサムネイル＋中央の再生ボタンを表示し、
+  // 押した瞬間にその場で（別画面へ移動せず）音声付きで再生する
+  var movieVideo = document.getElementById('movieVideo');
+  var movieWrap = document.getElementById('movieVideoWrap');
+  var moviePlayBtn = document.getElementById('moviePlayBtn');
+  if (movieVideo && movieWrap && moviePlayBtn) {
+    moviePlayBtn.addEventListener('click', function(){
+      movieVideo.play();
+    });
+    movieVideo.addEventListener('play', function(){
+      movieWrap.classList.add('is-playing');
+    });
+    movieVideo.addEventListener('pause', function(){
+      movieWrap.classList.remove('is-playing');
+    });
+    movieVideo.addEventListener('ended', function(){
+      movieWrap.classList.remove('is-playing');
+    });
   }
 })();
 </script>
