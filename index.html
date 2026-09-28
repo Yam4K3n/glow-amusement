@@ -515,9 +515,9 @@
     100%{background-position:-120% 0%;}
   }
 
-  /* ---------- Preopen announcement (細いお知らせ欄) ---------- */
-  #preopen{ padding:32px 0; }
-  .preopen-strip{
+  /* ---------- Grand Open announcement (細いお知らせ欄) ---------- */
+  #grandopen{ padding:32px 0; }
+  .grand-open-strip{
     max-width:560px;
     margin:0 auto;
     text-align:center;
@@ -526,15 +526,15 @@
     border:1px solid rgba(255,255,255,0.12);
     background:linear-gradient(90deg, rgba(255,63,166,0.06), rgba(155,92,255,0.06));
   }
-  .preopen-strip p{
+  .grand-open-strip p{
     margin:0 0 6px;
     font-size:0.88rem;
     color:var(--text-sub);
     line-height:1.7;
   }
-  .preopen-strip p:last-child{ margin-bottom:0; }
-  .preopen-strip strong{ color:#fff; }
-  .preopen-strip-note{
+  .grand-open-strip p:last-child{ margin-bottom:0; }
+  .grand-open-strip strong{ color:#fff; }
+  .grand-open-strip-note{
     font-size:0.78rem;
     color:var(--text-faint);
   }
@@ -1023,7 +1023,7 @@
   .menu-list,
   .info-table,
   .insta-card,
-  .preopen-strip{
+  .grand-open-strip{
     box-shadow:0 0 0 1px rgba(255,255,255,0.03), 0 0 26px rgba(155,92,255,0.07);
   }
 
@@ -1466,9 +1466,9 @@
   </section>
 
   <!-- 2. グランドオープン告知（細いお知らせ欄） -->
-  <section id="preopen">
+  <section id="grandopen">
     <div class="container">
-      <div class="preopen-strip reveal">
+      <div class="grand-open-strip reveal">
         <p><strong>2026年10月1日<br>GRAND OPEN</strong></p>
         <p>皆さまのお越しを心よりお待ちしております。</p>
       </div>
@@ -1733,7 +1733,6 @@
   </a>
 </div>
 <!-- ▲スマホ専用・下部固定予約バー▲ -->
-<!-- ▲予約方法選択モーダル▲ -->
 
 <script>
 (function(){
