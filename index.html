@@ -301,30 +301,132 @@
     font-weight:600;
   }
 
-  .hero-badge{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    font-size:0.72rem;
-    letter-spacing:0.15em;
-    padding:7px 16px;
-    border-radius:999px;
-    border:1px solid var(--pink);
-    color:var(--pink);
-    background:rgba(255,63,166,0.05);
-    box-shadow:0 0 12px rgba(255,63,166,0.35), inset 0 0 8px rgba(255,63,166,0.12);
+  /* ---------- Grand Open reveal（ファーストビューの特別演出） ---------- */
+  .grand-open-stage{
+    position:relative;
+    width:100%;
+    max-width:420px;
+    margin:0 auto;
   }
-  .hero-badge .chip-dot{
-    width:6px;height:6px;
+  .go-ambient{
+    position:absolute;
+    inset:-46px -24px;
+    z-index:0;
+    pointer-events:none;
+    overflow:hidden;
+  }
+  .go-glow{
+    position:absolute;
+    top:50%;left:50%;
+    width:min(140vw, 620px);
+    height:min(140vw, 620px);
+    transform:translate(-50%,-50%);
     border-radius:50%;
-    background:var(--pink);
-    box-shadow:0 0 8px var(--pink);
-    animation:dotPulse 2.4s ease-in-out infinite;
-    flex-shrink:0;
+    background:
+      radial-gradient(circle at 32% 38%, rgba(255,63,166,0.30), transparent 55%),
+      radial-gradient(circle at 68% 62%, rgba(63,212,255,0.26), transparent 55%);
+    filter:blur(30px);
+    opacity:0;
+    animation:
+      goGlowIn 1.6s ease-out 0.2s forwards,
+      goGlowDrift 8s ease-in-out 1.8s infinite;
   }
-  @keyframes dotPulse{
-    0%,100%{opacity:0.55; transform:scale(0.85);}
-    50%{opacity:1; transform:scale(1.15);}
+  @keyframes goGlowIn{
+    to{ opacity:1; }
+  }
+  @keyframes goGlowDrift{
+    0%,100%{ transform:translate(-52%,-48%) scale(1); }
+    50%{ transform:translate(-48%,-52%) scale(1.07); }
+  }
+  .go-sparkles{ position:absolute; inset:0; }
+  .go-sparkles i{
+    position:absolute;
+    display:block;
+    width:3px;height:3px;
+    border-radius:50%;
+    background:#fff;
+    opacity:0;
+    animation:goSparkle 5.5s ease-in infinite;
+  }
+  .go-sparkles i:nth-child(1){ left:10%; top:68%; background:var(--pink); animation-delay:0.3s; }
+  .go-sparkles i:nth-child(2){ left:20%; top:18%; animation-delay:1.6s; }
+  .go-sparkles i:nth-child(3){ left:36%; top:82%; background:var(--blue); animation-delay:2.7s; }
+  .go-sparkles i:nth-child(4){ left:54%; top:10%; animation-delay:0.9s; }
+  .go-sparkles i:nth-child(5){ left:66%; top:76%; background:var(--pink); animation-delay:3.4s; }
+  .go-sparkles i:nth-child(6){ left:80%; top:28%; background:var(--blue); animation-delay:2.1s; }
+  .go-sparkles i:nth-child(7){ left:90%; top:60%; animation-delay:4.2s; }
+  .go-sparkles i:nth-child(8){ left:4%; top:38%; background:var(--blue); animation-delay:3.0s; }
+  @keyframes goSparkle{
+    0%{ opacity:0; transform:translateY(0) scale(0.6); }
+    15%{ opacity:0.9; }
+    55%{ opacity:0.3; }
+    100%{ opacity:0; transform:translateY(-38px) scale(1); }
+  }
+
+  .hero-logo.go-logo{
+    position:relative;
+    z-index:1;
+    opacity:0;
+    transform:translateY(16px);
+    animation:goLogoRise 1.1s ease-out 0.15s forwards;
+  }
+  @keyframes goLogoRise{
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  .go-banner{
+    position:relative;
+    z-index:1;
+    margin:14px 0 0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:5px;
+  }
+  .go-main{
+    font-family:Georgia,"Times New Roman",serif;
+    font-weight:700;
+    font-size:clamp(1.3rem, 6vw, 2rem);
+    letter-spacing:0.16em;
+    color:#fff;
+    opacity:0;
+    animation:goFlicker 1.3s steps(1,end) 1.05s forwards;
+  }
+  .go-date{
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:clamp(0.82rem, 3vw, 1rem);
+    letter-spacing:0.26em;
+    color:var(--blue);
+    text-shadow:0 0 10px rgba(63,212,255,0.6);
+    opacity:0;
+    transform:translateY(6px);
+    animation:goDateIn 0.8s ease-out 2.3s forwards;
+  }
+  @keyframes goFlicker{
+    0%{ opacity:0; text-shadow:none; }
+    8%{ opacity:1; text-shadow:0 0 4px #fff, 0 0 16px var(--pink), 0 0 30px rgba(255,63,166,0.6); }
+    16%{ opacity:0.25; text-shadow:none; }
+    24%{ opacity:1; text-shadow:0 0 6px #fff, 0 0 18px var(--pink), 0 0 34px rgba(255,63,166,0.7); }
+    32%{ opacity:0.4; }
+    40%{
+      opacity:1;
+      text-shadow:
+        0 0 8px #fff,
+        0 0 22px var(--pink),
+        0 0 40px rgba(255,63,166,0.8),
+        0 0 60px rgba(63,212,255,0.4);
+    }
+    100%{
+      opacity:1;
+      text-shadow:
+        0 0 8px #fff,
+        0 0 22px var(--pink),
+        0 0 40px rgba(255,63,166,0.8),
+        0 0 60px rgba(63,212,255,0.4);
+    }
+  }
+  @keyframes goDateIn{
+    to{ opacity:1; transform:translateY(0); }
   }
 
   .hero-lead{
@@ -1071,97 +1173,12 @@
   @media (min-width:480px){
     .reserve-mail-btn{ width:auto; padding:16px 32px; }
   }
-  .reserve-gmail-btn{
-    display:inline-flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-    width:100%;
-    max-width:360px;
-    padding:16px 24px;
-    border-radius:999px;
-    font-size:0.95rem;
-    font-weight:700;
-    text-decoration:none;
-    color:var(--text-main);
-    background:rgba(63,212,255,0.06);
-    border:1px solid rgba(63,212,255,0.45);
-    box-shadow:0 0 16px rgba(63,212,255,0.12);
-    position:relative;
-    overflow:hidden;
-    transition:filter .2s ease, border-color .2s ease, box-shadow .2s ease, transform .15s ease;
-  }
-  .reserve-gmail-btn:hover,
-  .reserve-gmail-btn:active{
-    filter:brightness(1.15);
-    border-color:rgba(63,212,255,0.7);
-    box-shadow:0 0 22px rgba(63,212,255,0.22);
-  }
-  .reserve-gmail-btn:active{ transform:translateY(2px); }
-  .reserve-gmail-btn::after{
-    content:"";
-    position:absolute;
-    top:0; left:-60%;
-    width:35%; height:100%;
-    background:linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
-    transform:skewX(-18deg);
-    mix-blend-mode:screen;
-    pointer-events:none;
-    animation:btnSheen 7s ease-in-out infinite;
-    animation-delay:3s;
-  }
-  .reserve-gmail-btn svg{ flex-shrink:0; width:19px; height:19px; color:var(--blue); }
-  @media (min-width:480px){
-    .reserve-gmail-btn{ width:auto; padding:16px 32px; }
-  }
   .reserve-fallback{
     margin:14px 0 0;
     text-align:center;
     font-size:0.78rem;
     line-height:1.9;
     color:var(--text-faint);
-  }
-  .reserve-fallback-row{
-    display:inline-flex;
-    align-items:center;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:8px;
-    margin-top:2px;
-  }
-  .reserve-fallback-mail{
-    color:var(--text-sub);
-    word-break:break-all;
-    -webkit-user-select:text;
-    user-select:text;
-  }
-  .reserve-copy-btn{
-    appearance:none;
-    border:1px solid rgba(255,255,255,0.2);
-    background:transparent;
-    color:var(--text-sub);
-    border-radius:999px;
-    font-size:0.72rem;
-    padding:4px 12px;
-    cursor:pointer;
-    white-space:nowrap;
-    transition:filter .2s ease, border-color .2s ease, color .2s ease, transform .15s ease;
-  }
-  .reserve-copy-btn:hover,
-  .reserve-copy-btn:active{
-    filter:brightness(1.2);
-    border-color:rgba(255,255,255,0.35);
-  }
-  .reserve-copy-btn:active{
-    transform:translateY(2px);
-  }
-  .reserve-copy-btn:focus-visible{
-    outline:2px solid var(--blue);
-    outline-offset:2px;
-  }
-  .reserve-copy-btn.is-copied{
-    color:var(--blue);
-    border-color:rgba(63,212,255,0.5);
   }
 
   /* ---------- スマホ下部固定・予約バー（スマホ専用／タブレット・PCでは非表示） ---------- */
@@ -1228,128 +1245,6 @@
   }
   @media (min-width:768px){
     body{ padding-bottom:0; }
-  }
-
-  /* ---------- 予約方法選択モーダル（スマホ下部固定ボタンから開く） ---------- */
-  .reserve-modal{
-    position:fixed;
-    inset:0;
-    z-index:200;
-  }
-  .reserve-modal[hidden]{
-    display:none;
-  }
-  .reserve-modal-backdrop{
-    position:absolute;
-    inset:0;
-    background:rgba(4,3,9,0.72);
-    -webkit-backdrop-filter:blur(2px);
-    backdrop-filter:blur(2px);
-  }
-  .reserve-modal-panel{
-    position:absolute;
-    left:50%;
-    bottom:0;
-    transform:translateX(-50%);
-    width:100%;
-    max-width:480px;
-    max-height:88vh;
-    overflow-y:auto;
-    -webkit-overflow-scrolling:touch;
-    background:var(--panel);
-    border:1px solid var(--panel-border);
-    border-bottom:none;
-    border-radius:20px 20px 0 0;
-    padding:22px 20px calc(22px + env(safe-area-inset-bottom));
-    box-shadow:0 -10px 40px rgba(0,0,0,0.55), 0 0 30px rgba(155,92,255,0.12);
-  }
-  .reserve-modal-close{
-    position:absolute;
-    top:14px;
-    right:14px;
-    width:34px;
-    height:34px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:0;
-    border:1px solid var(--panel-border);
-    border-radius:50%;
-    background:rgba(255,255,255,0.04);
-    color:var(--text-sub);
-    cursor:pointer;
-  }
-  .reserve-modal-close svg{ width:16px; height:16px; }
-  .reserve-modal-close:hover,
-  .reserve-modal-close:active{
-    color:var(--text-main);
-    border-color:rgba(255,255,255,0.3);
-  }
-  .reserve-modal-close:focus-visible{
-    outline:2px solid var(--blue);
-    outline-offset:2px;
-  }
-  .reserve-modal-title{
-    margin:0 34px 10px 0;
-    font-size:1.05rem;
-    font-weight:700;
-    color:var(--text-main);
-  }
-  .reserve-modal-desc{
-    margin:0 0 20px;
-    font-size:0.82rem;
-    line-height:1.8;
-    color:var(--text-sub);
-  }
-  .reserve-modal-actions{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-  }
-  .reserve-modal-btn{
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-    width:100%;
-    padding:14px 18px;
-    border-radius:999px;
-    font-size:0.9rem;
-    font-weight:700;
-    font-family:inherit;
-    text-decoration:none;
-    border:1px solid rgba(255,255,255,0.18);
-    background:rgba(255,255,255,0.03);
-    color:var(--text-main);
-    cursor:pointer;
-    transition:filter .2s ease, border-color .2s ease, box-shadow .2s ease, transform .15s ease;
-  }
-  .reserve-modal-btn svg{ flex-shrink:0; width:18px; height:18px; }
-  .reserve-modal-btn:hover,
-  .reserve-modal-btn:active{
-    filter:brightness(1.15);
-    border-color:rgba(255,255,255,0.32);
-  }
-  .reserve-modal-btn:active{
-    transform:translateY(2px);
-  }
-  .reserve-modal-btn:focus-visible{
-    outline:2px solid var(--blue);
-    outline-offset:2px;
-  }
-  .reserve-modal-btn--primary{
-    background:linear-gradient(90deg, var(--pink), var(--purple));
-    border-color:transparent;
-    color:#fff;
-    box-shadow:0 0 18px rgba(255,63,166,0.3);
-  }
-  .reserve-modal-btn--primary:hover,
-  .reserve-modal-btn--primary:active{
-    box-shadow:0 0 24px rgba(255,63,166,0.45);
-  }
-  .reserve-modal-btn.is-copied{
-    color:var(--blue);
-    border-color:rgba(63,212,255,0.5);
   }
 
   /* ---------- キーボード操作時のフォーカス表示 ---------- */
@@ -1488,16 +1383,26 @@
     .brand-logo{ animation:none !important; }
     .btn::after,
     .reserve-mail-btn::after,
-    .reserve-gmail-btn::after,
     .reserve-bar-link::after{ animation:none !important; opacity:0 !important; }
     .btn:active,
     .reserve-mail-btn:active,
-    .reserve-gmail-btn:active,
-    .reserve-bar-link:active,
-    .reserve-modal-btn:active,
-    .reserve-copy-btn:active{ transform:none !important; }
+    .reserve-bar-link:active{ transform:none !important; }
     .art-panel img,
     .play-card-visual img{ transition:none !important; transform:none !important; }
+    /* Grand Openの演出は、待ち時間なしで最終状態を静止表示にする */
+    .go-glow{ animation:none !important; opacity:0.85 !important; transform:translate(-50%,-50%) !important; }
+    .go-sparkles i{ display:none !important; }
+    .hero-logo.go-logo{ animation:none !important; opacity:1 !important; transform:none !important; }
+    .go-main{
+      animation:none !important;
+      opacity:1 !important;
+      text-shadow:
+        0 0 8px #fff,
+        0 0 22px var(--pink),
+        0 0 40px rgba(255,63,166,0.8),
+        0 0 60px rgba(63,212,255,0.4) !important;
+    }
+    .go-date{ animation:none !important; opacity:1 !important; transform:none !important; }
   }
 </style>
 </head>
@@ -1506,7 +1411,7 @@
 <header class="site-header" id="siteHeader">
   <div class="brand">
     <span class="brand-logo">GLOW</span>
-    <span class="brand-badge">PRE OPEN</span>
+    <span class="brand-badge">GRAND OPEN</span>
   </div>
   <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="mobileNav">
     <span></span>
@@ -1530,8 +1435,19 @@
   <section class="hero" id="top">
     <img class="hero-bg" src="IMG_6155(1).jpeg" alt="" aria-hidden="true" loading="eager">
 
-    <span class="hero-badge"><span class="chip-dot" aria-hidden="true"></span>ただいまプレオープン中</span>
-    <h1 class="hero-logo"><img src="glow-logo.png" alt="GLOW AMUSEMENT BAR" loading="eager"></h1>
+    <div class="grand-open-stage">
+      <div class="go-ambient" aria-hidden="true">
+        <span class="go-glow"></span>
+        <span class="go-sparkles">
+          <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+        </span>
+      </div>
+      <h1 class="hero-logo go-logo"><img src="glow-logo.png" alt="GLOW AMUSEMENT BAR" loading="eager"></h1>
+      <p class="go-banner">
+        <span class="go-main">GRAND OPEN</span>
+        <span class="go-date">2026.10.1</span>
+      </p>
+    </div>
     <p class="hero-tagline">ネオンが灯る、<strong>大人のための秘密基地。</strong></p>
     <p class="hero-lead"><span class="lead-highlight">現在65種類</span>のボードゲーム<br>レトロゲーム、カラオケ<br>中標津に生まれた、大人の遊び場。</p>
 
@@ -1549,13 +1465,12 @@
     </div>
   </section>
 
-  <!-- 2. プレオープン告知（細いお知らせ欄） -->
+  <!-- 2. グランドオープン告知（細いお知らせ欄） -->
   <section id="preopen">
     <div class="container">
       <div class="preopen-strip reveal">
-        <p><strong>グランドオープンしてません！<br>ただいまプレオープン中！</strong></p>
-        <p>〜お客様の流れを見定め中〜</p>
-        <p class="preopen-strip-note">期間中は営業時間や内容が変更になる場合があります。</p>
+        <p><strong>2026年10月1日<br>GRAND OPEN</strong></p>
+        <p>皆さまのお越しを心よりお待ちしております。</p>
       </div>
     </div>
   </section>
@@ -1664,7 +1579,7 @@
       <!-- 料金プランはJavaScriptのDRINK_PLANS配列から自動生成されます -->
       <div class="plan-grid" id="planGrid"></div>
 
-      <p class="price-note reveal">プレオープン期間中は、料金や内容が変更になる場合があります。最新情報はInstagramをご確認ください。</p>
+      <p class="price-note reveal">料金や内容は変更になる場合があります。最新情報はInstagramをご確認ください。</p>
     </div>
   </section>
 
@@ -1689,36 +1604,25 @@
       <div class="section-head reveal">
         <span class="section-eyebrow">RESERVATION</span>
         <h2 class="section-title">ご予約</h2>
-        <p class="section-lead">メールで簡単にご予約いただけます</p>
+        <p class="section-lead">Googleフォームから簡単にご予約いただけます</p>
         <div class="divider"></div>
       </div>
 
-      <p class="reserve-note reveal">ご予約の際は、お名前・人数・希望プラン・希望日時をご記入ください。内容を確認後、店舗より返信いたします。店舗からの返信をもって予約確定となります。</p>
+      <p class="reserve-note reveal">ご予約はGoogleフォームから受け付けています。ご希望の日時・人数・プランなど、必要事項をご入力のうえ送信してください。内容を確認後、店舗よりご連絡いたします。</p>
 
       <div class="reserve-btn-wrap reveal">
-        <a class="reserve-mail-btn" href="mailto:youmore0028@gmail.com?subject=GLOW%E4%BA%88%E7%B4%84%E5%B8%8C%E6%9C%9B&amp;body=GLOW%E3%81%AE%E4%BA%88%E7%B4%84%E3%82%92%E5%B8%8C%E6%9C%9B%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0D%0A%0D%0A%E2%96%A0%E3%81%8A%E5%90%8D%E5%89%8D%EF%BC%9A%0D%0A%E2%96%A0%E4%BA%BA%E6%95%B0%EF%BC%9A%0D%0A%E2%96%A0%E5%B8%8C%E6%9C%9B%E3%83%97%E3%83%A9%E3%83%B3%EF%BC%9ASimple%E9%A3%B2%E3%81%BF%E6%94%BE%E9%A1%8C%EF%BC%8FALL%E9%A3%B2%E3%81%BF%E6%94%BE%E9%A1%8C%EF%BC%8F%E6%9C%AA%E5%AE%9A%0D%0A%E2%96%A0%E5%B8%8C%E6%9C%9B%E6%97%A5%EF%BC%9A%0D%0A%E2%96%A0%E5%B8%8C%E6%9C%9B%E6%99%82%E9%96%93%EF%BC%9A%0D%0A%E2%96%A0%E3%81%9D%E3%81%AE%E4%BB%96%E3%83%BB%E3%81%94%E8%A6%81%E6%9C%9B%EF%BC%9A%0D%0A%0D%0A%E2%80%BB%E5%BA%97%E8%88%97%E3%81%8B%E3%82%89%E3%81%AE%E8%BF%94%E4%BF%A1%E3%82%92%E3%82%82%E3%81%A3%E3%81%A6%E4%BA%88%E7%B4%84%E7%A2%BA%E5%AE%9A%E3%81%A8%E3%81%AA%E3%82%8A%E3%81%BE%E3%81%99%E3%80%82">
+        <a class="reserve-mail-btn" href="https://docs.google.com/forms/d/e/1FAIpQLScoh-x2coiShjTDubU0zo3LKmYwMXS-KDLrsPakyGHMK9xAmg/viewform" target="_blank" rel="noopener noreferrer">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <rect x="3" y="5" width="18" height="14" rx="2"/>
             <path d="M3 7l9 6 9-6"/>
           </svg>
-          メールアプリで予約
-        </a>
-        <a class="reserve-gmail-btn" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=youmore0028%40gmail.com&amp;su=GLOW%E4%BA%88%E7%B4%84%E5%B8%8C%E6%9C%9B&amp;body=GLOW%E3%81%AE%E4%BA%88%E7%B4%84%E3%82%92%E5%B8%8C%E6%9C%9B%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E2%96%A0%E3%81%8A%E5%90%8D%E5%89%8D%EF%BC%9A%0A%E2%96%A0%E4%BA%BA%E6%95%B0%EF%BC%9A%0A%E2%96%A0%E5%B8%8C%E6%9C%9B%E3%83%97%E3%83%A9%E3%83%B3%EF%BC%9ASimple%E9%A3%B2%E3%81%BF%E6%94%BE%E9%A1%8C%EF%BC%8FALL%E9%A3%B2%E3%81%BF%E6%94%BE%E9%A1%8C%EF%BC%8F%E6%9C%AA%E5%AE%9A%0A%E2%96%A0%E5%B8%8C%E6%9C%9B%E6%97%A5%EF%BC%9A%0A%E2%96%A0%E5%B8%8C%E6%9C%9B%E6%99%82%E9%96%93%EF%BC%9A%0A%E2%96%A0%E3%81%9D%E3%81%AE%E4%BB%96%E3%83%BB%E3%81%94%E8%A6%81%E6%9C%9B%EF%BC%9A%0A%0A%E2%80%BB%E5%BA%97%E8%88%97%E3%81%8B%E3%82%89%E3%81%AE%E8%BF%94%E4%BF%A1%E3%82%92%E3%82%82%E3%81%A3%E3%81%A6%E4%BA%88%E7%B4%84%E7%A2%BA%E5%AE%9A%E3%81%A8%E3%81%AA%E3%82%8A%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M14 4h6v6"/>
-            <path d="M10 14L20 4"/>
-            <path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/>
-          </svg>
-          Gmailで予約
+          Googleフォームから予約する
         </a>
       </div>
 
       <p class="reserve-fallback reveal">
-        メールが開かない場合<br>
-        <span class="reserve-fallback-row">
-          <span class="reserve-fallback-mail" id="reserveFallbackMail">youmore0028@gmail.com</span>
-          <button type="button" class="reserve-copy-btn" id="reserveCopyBtn" data-default-label="コピー" data-copied-label="コピーしました"><span class="reserve-btn-label">コピー</span></button>
-        </span>
+        フォームを送信した時点では、予約はまだ確定していません。<br>
+        店舗からの確認連絡をもって予約確定となります。
       </p>
     </div>
   </section>
@@ -1743,7 +1647,7 @@
         </div>
         <div class="info-row">
           <dt>営業時間</dt>
-          <dd>20:00〜27:00（深夜3:00）<br><span style="color:var(--text-faint);font-size:0.82rem;">※プレオープン期間中は変更になる場合があります</span></dd>
+          <dd>20:00〜27:00（深夜3:00）<br><span style="color:var(--text-faint);font-size:0.82rem;">※営業時間は変更になる場合があります</span></dd>
         </div>
         <div class="info-row">
           <dt>定休日</dt>
@@ -1820,53 +1724,15 @@
 
 <!-- ▼スマホ専用・下部固定予約バー▼ -->
 <div class="reserve-bar" id="reserveBar">
-  <button type="button" class="reserve-bar-link" id="reserveBarTrigger" aria-haspopup="dialog" aria-controls="reserveModal">
+  <a class="reserve-bar-link" href="https://docs.google.com/forms/d/e/1FAIpQLScoh-x2coiShjTDubU0zo3LKmYwMXS-KDLrsPakyGHMK9xAmg/viewform" target="_blank" rel="noopener noreferrer">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <rect x="3" y="5" width="18" height="16" rx="2"/>
       <path d="M8 3v4M16 3v4M3 10h18"/>
     </svg>
-    メールで予約する
-  </button>
+    ご予約はこちら
+  </a>
 </div>
 <!-- ▲スマホ専用・下部固定予約バー▲ -->
-
-<!-- ▼予約方法選択モーダル（スマホ下部固定ボタンから開く）▼ -->
-<div class="reserve-modal" id="reserveModal" hidden>
-  <div class="reserve-modal-backdrop" id="reserveModalBackdrop"></div>
-  <div class="reserve-modal-panel" role="dialog" aria-modal="true" aria-labelledby="reserveModalTitle">
-    <button type="button" class="reserve-modal-close" id="reserveModalClose" aria-label="閉じる">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M6 6l12 12M18 6L6 18"/>
-      </svg>
-    </button>
-    <h2 class="reserve-modal-title" id="reserveModalTitle">予約方法を選択してください</h2>
-    <p class="reserve-modal-desc">ご予約の際は、お名前・人数・希望プラン・希望日時をご記入ください。店舗からの返信をもって予約確定となります。</p>
-    <div class="reserve-modal-actions">
-      <a class="reserve-modal-btn reserve-modal-btn--primary" href="mailto:youmore0028@gmail.com?subject=GLOW%E4%BA%88%E7%B4%84%E5%B8%8C%E6%9C%9B&amp;body=GLOW%E3%81%AE%E4%BA%88%E7%B4%84%E3%82%92%E5%B8%8C%E6%9C%9B%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0D%0A%0D%0A%E2%96%A0%E3%81%8A%E5%90%8D%E5%89%8D%EF%BC%9A%0D%0A%E2%96%A0%E4%BA%BA%E6%95%B0%EF%BC%9A%0D%0A%E2%96%A0%E5%B8%8C%E6%9C%9B%E3%83%97%E3%83%A9%E3%83%B3%EF%BC%9ASimple%E9%A3%B2%E3%81%BF%E6%94%BE%E9%A1%8C%EF%BC%8FALL%E9%A3%B2%E3%81%BF%E6%94%BE%E9%A1%8C%EF%BC%8F%E6%9C%AA%E5%AE%9A%0D%0A%E2%96%A0%E5%B8%8C%E6%9C%9B%E6%97%A5%EF%BC%9A%0D%0A%E2%96%A0%E5%B8%8C%E6%9C%9B%E6%99%82%E9%96%93%EF%BC%9A%0D%0A%E2%96%A0%E3%81%9D%E3%81%AE%E4%BB%96%E3%83%BB%E3%81%94%E8%A6%81%E6%9C%9B%EF%BC%9A%0D%0A%0D%0A%E2%80%BB%E5%BA%97%E8%88%97%E3%81%8B%E3%82%89%E3%81%AE%E8%BF%94%E4%BF%A1%E3%82%92%E3%82%82%E3%81%A3%E3%81%A6%E4%BA%88%E7%B4%84%E7%A2%BA%E5%AE%9A%E3%81%A8%E3%81%AA%E3%82%8A%E3%81%BE%E3%81%99%E3%80%82">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="3" y="5" width="18" height="14" rx="2"/>
-          <path d="M3 7l9 6 9-6"/>
-        </svg>
-        <span class="reserve-btn-label">メールアプリで予約</span>
-      </a>
-      <a class="reserve-modal-btn" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=youmore0028%40gmail.com&amp;su=GLOW%E4%BA%88%E7%B4%84%E5%B8%8C%E6%9C%9B&amp;body=GLOW%E3%81%AE%E4%BA%88%E7%B4%84%E3%82%92%E5%B8%8C%E6%9C%9B%E3%81%97%E3%81%BE%E3%81%99%E3%80%82%0A%0A%E2%96%A0%E3%81%8A%E5%90%8D%E5%89%8D%EF%BC%9A%0A%E2%96%A0%E4%BA%BA%E6%95%B0%EF%BC%9A%0A%E2%96%A0%E5%B8%8C%E6%9C%9B%E3%83%97%E3%83%A9%E3%83%B3%EF%BC%9ASimple%E9%A3%B2%E3%81%BF%E6%94%BE%E9%A1%8C%EF%BC%8FALL%E9%A3%B2%E3%81%BF%E6%94%BE%E9%A1%8C%EF%BC%8F%E6%9C%AA%E5%AE%9A%0A%E2%96%A0%E5%B8%8C%E6%9C%9B%E6%97%A5%EF%BC%9A%0A%E2%96%A0%E5%B8%8C%E6%9C%9B%E6%99%82%E9%96%93%EF%BC%9A%0A%E2%96%A0%E3%81%9D%E3%81%AE%E4%BB%96%E3%83%BB%E3%81%94%E8%A6%81%E6%9C%9B%EF%BC%9A%0A%0A%E2%80%BB%E5%BA%97%E8%88%97%E3%81%8B%E3%82%89%E3%81%AE%E8%BF%94%E4%BF%A1%E3%82%92%E3%82%82%E3%81%A3%E3%81%A6%E4%BA%88%E7%B4%84%E7%A2%BA%E5%AE%9A%E3%81%A8%E3%81%AA%E3%82%8A%E3%81%BE%E3%81%99%E3%80%82" target="_blank" rel="noopener noreferrer">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M14 4h6v6"/>
-          <path d="M10 14L20 4"/>
-          <path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/>
-        </svg>
-        <span class="reserve-btn-label">Gmailで予約</span>
-      </a>
-      <button type="button" class="reserve-modal-btn" id="reserveModalCopyBtn" data-default-label="メールアドレスをコピー" data-copied-label="コピーしました">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <rect x="9" y="9" width="12" height="12" rx="2"/>
-          <path d="M5 15V5a2 2 0 0 1 2-2h10"/>
-        </svg>
-        <span class="reserve-btn-label">メールアドレスをコピー</span>
-      </button>
-    </div>
-  </div>
-</div>
 <!-- ▲予約方法選択モーダル▲ -->
 
 <script>
@@ -2018,112 +1884,6 @@
     nav.querySelectorAll('a').forEach(function(link){
       link.addEventListener('click', closeNav);
     });
-  }
-
-  // ご予約：メールアドレスのコピー機能
-  // （メールアプリが開かない環境向けの代替手段。アドレス自体は通常の
-  //   テキストなので、長押しや選択でのコピーも常に可能。
-  //   ご予約セクションの小さなコピーボタンと、下部固定ボタンから開く
-  //   選択モーダル内のコピーボタンの、両方から共通で利用する）
-  var RESERVE_EMAIL = 'youmore0028@gmail.com';
-
-  function reserveLegacyCopy(text){
-    var textarea = document.createElement('textarea');
-    textarea.value = text;
-    textarea.setAttribute('readonly', '');
-    textarea.style.position = 'fixed';
-    textarea.style.top = '-9999px';
-    textarea.style.left = '-9999px';
-    document.body.appendChild(textarea);
-    textarea.select();
-    textarea.setSelectionRange(0, textarea.value.length);
-    var ok = false;
-    try {
-      ok = document.execCommand('copy');
-    } catch (err) {
-      ok = false;
-    }
-    document.body.removeChild(textarea);
-    return ok;
-  }
-
-  function bindReserveCopyButton(btn, text){
-    if (!btn) return;
-    var labelEl = btn.querySelector('.reserve-btn-label');
-    var defaultLabel = btn.getAttribute('data-default-label') || (labelEl ? labelEl.textContent : btn.textContent);
-    var copiedLabel = btn.getAttribute('data-copied-label') || 'コピーしました';
-    var resetTimer = null;
-
-    var setLabel = function(label){
-      if (labelEl) { labelEl.textContent = label; }
-      else { btn.textContent = label; }
-    };
-
-    var showCopied = function(){
-      setLabel(copiedLabel);
-      btn.classList.add('is-copied');
-      if (resetTimer) clearTimeout(resetTimer);
-      resetTimer = setTimeout(function(){
-        setLabel(defaultLabel);
-        btn.classList.remove('is-copied');
-      }, 2200);
-    };
-
-    btn.addEventListener('click', function(){
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(showCopied, function(){
-          // クリップボードAPIが失敗した場合は、旧方式のコピーにフォールバック
-          if (reserveLegacyCopy(text)) showCopied();
-        });
-      } else if (reserveLegacyCopy(text)) {
-        showCopied();
-      }
-      // どちらの方法も使えない場合でも、メールアドレスは通常のテキストなので
-      // 利用者が自分で選択してコピーできる。
-    });
-  }
-
-  bindReserveCopyButton(document.getElementById('reserveCopyBtn'), RESERVE_EMAIL);
-  bindReserveCopyButton(document.getElementById('reserveModalCopyBtn'), RESERVE_EMAIL);
-
-  // スマホ下部固定ボタン：予約方法を選択するモーダルの開閉
-  var reserveModal = document.getElementById('reserveModal');
-  var reserveModalBackdrop = document.getElementById('reserveModalBackdrop');
-  var reserveModalClose = document.getElementById('reserveModalClose');
-  var reserveBarTrigger = document.getElementById('reserveBarTrigger');
-  var reserveModalLastFocused = null;
-
-  function handleReserveModalKeydown(e){
-    if (e.key === 'Escape') closeReserveModal();
-  }
-
-  function openReserveModal(){
-    if (!reserveModal) return;
-    reserveModalLastFocused = document.activeElement;
-    reserveModal.hidden = false;
-    document.body.style.overflow = 'hidden';
-    document.addEventListener('keydown', handleReserveModalKeydown);
-    if (reserveModalClose) reserveModalClose.focus();
-  }
-
-  function closeReserveModal(){
-    if (!reserveModal || reserveModal.hidden) return;
-    reserveModal.hidden = true;
-    document.body.style.overflow = '';
-    document.removeEventListener('keydown', handleReserveModalKeydown);
-    if (reserveModalLastFocused && typeof reserveModalLastFocused.focus === 'function') {
-      reserveModalLastFocused.focus();
-    }
-  }
-
-  if (reserveBarTrigger) {
-    reserveBarTrigger.addEventListener('click', openReserveModal);
-  }
-  if (reserveModalClose) {
-    reserveModalClose.addEventListener('click', closeReserveModal);
-  }
-  if (reserveModalBackdrop) {
-    reserveModalBackdrop.addEventListener('click', closeReserveModal);
   }
 
   // 左上のロゴは、トップ画面から少しスクロールした後にだけ表示する
