@@ -28,6 +28,31 @@
 <link rel="icon" type="image/png" href="./favicon.png">
 <link rel="apple-touch-icon" href="./favicon.png">
 
+<!-- 店舗情報の構造化データ（Google検索向け） -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BarOrPub",
+  "name": "GLOW Amusement Bar",
+  "image": "https://yam4k3n.github.io/glow-amusement/ogp.jpg",
+  "url": "https://yam4k3n.github.io/glow-amusement/",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "大通り北2丁目1番地1 第一マイビル1階",
+    "addressLocality": "標津郡中標津町",
+    "addressRegion": "北海道",
+    "addressCountry": "JP"
+  },
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    "opens": "20:00",
+    "closes": "03:00"
+  },
+  "sameAs": ["https://www.instagram.com/glow_amusement/"]
+}
+</script>
+
 <style>
   :root{
     --bg-0:#07060d;
@@ -983,6 +1008,7 @@
     width:100%;
     height:auto;
   }
+  .price-reserve-cta{ margin-top:28px; }
 
   /* ---------- 料金画像の拡大表示（ライトボックス） ---------- */
   .price-lightbox{
@@ -1694,21 +1720,31 @@
         <h3 class="price-gallery-title">新料金・飲み放題プラン</h3>
         <div class="price-gallery-grid">
           <button type="button" class="price-gallery-item" data-full="glow-menu.jpg" aria-label="料金メニュー画像を拡大表示">
-            <img src="glow-menu.jpg" alt="GLOW 料金メニュー：SIMPLE飲み放題2時間3,000円・ALL飲み放題2時間4,000円の案内画像" loading="lazy">
+            <img src="glow-menu.jpg" alt="GLOW 料金メニュー：SIMPLE飲み放題2時間3,000円・ALL飲み放題2時間4,000円の案内画像" width="1024" height="1536" loading="lazy">
           </button>
           <button type="button" class="price-gallery-item" data-full="glow-drink-plan.jpg" aria-label="時間無制限飲み放題プラン画像を拡大表示">
-            <img src="glow-drink-plan.jpg" alt="GLOW 時間無制限飲み放題プラン7,000円の案内画像" loading="lazy">
+            <img src="glow-drink-plan.jpg" alt="GLOW 時間無制限飲み放題プラン7,000円の案内画像" width="1024" height="1536" loading="lazy">
           </button>
           <button type="button" class="price-gallery-item" data-full="glow-infinity-plan.jpg" aria-label="GLOW全メニュー∞放題プラン画像を拡大表示">
-            <img src="glow-infinity-plan.jpg" alt="GLOW 全メニュー∞放題10,000円の案内画像" loading="lazy">
+            <img src="glow-infinity-plan.jpg" alt="GLOW 全メニュー∞放題10,000円の案内画像" width="1024" height="1536" loading="lazy">
           </button>
         </div>
+      </div>
+
+      <div class="reserve-btn-wrap price-reserve-cta reveal">
+        <a class="reserve-mail-btn" href="https://docs.google.com/forms/d/e/1FAIpQLScoh-x2coiShjTDubU0zo3LKmYwMXS-KDLrsPakyGHMK9xAmg/viewform" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="14" rx="2"/>
+            <path d="M3 7l9 6 9-6"/>
+          </svg>
+          このプランで予約する
+        </a>
       </div>
     </div>
   </section>
 
   <!-- 料金画像の拡大表示用ライトボックス -->
-  <div class="price-lightbox" id="priceLightbox" hidden>
+  <div class="price-lightbox" id="priceLightbox" hidden role="dialog" aria-modal="true" aria-label="料金プラン画像の拡大表示">
     <div class="price-lightbox-backdrop" id="priceLightboxBackdrop"></div>
     <div class="price-lightbox-inner">
       <button type="button" class="price-lightbox-close" id="priceLightboxClose" aria-label="閉じる">
