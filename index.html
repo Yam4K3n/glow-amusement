@@ -937,6 +937,114 @@
     color:var(--text-faint);
     line-height:1.6;
   }
+  .price-note strong{ color:var(--text-main); }
+
+  /* ---------- 新料金・飲み放題プラン（画像ギャラリー） ---------- */
+  .price-gallery{ margin-top:36px; }
+  .price-gallery-title{
+    margin:0 0 18px;
+    text-align:center;
+    font-size:0.92rem;
+    font-weight:700;
+    letter-spacing:0.06em;
+    color:#fff;
+  }
+  .price-gallery-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:16px;
+  }
+  @media (min-width:768px){
+    .price-gallery-grid{ grid-template-columns:repeat(3, 1fr); }
+  }
+  .price-gallery-item{
+    appearance:none;
+    border:1px solid var(--panel-border);
+    background:var(--panel);
+    border-radius:var(--radius);
+    padding:0;
+    overflow:hidden;
+    cursor:pointer;
+    line-height:0;
+    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+  .price-gallery-item:hover,
+  .price-gallery-item:active{
+    transform:translateY(-2px);
+    border-color:rgba(255,63,166,0.4);
+    box-shadow:0 0 24px rgba(255,63,166,0.15);
+  }
+  .price-gallery-item:focus-visible{
+    outline:2px solid var(--blue);
+    outline-offset:3px;
+  }
+  .price-gallery-item img{
+    display:block;
+    width:100%;
+    height:auto;
+  }
+
+  /* ---------- 料金画像の拡大表示（ライトボックス） ---------- */
+  .price-lightbox{
+    position:fixed;
+    inset:0;
+    z-index:200;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    background:rgba(4,3,9,0.92);
+    -webkit-backdrop-filter:blur(4px);
+    backdrop-filter:blur(4px);
+  }
+  .price-lightbox[hidden]{ display:none; }
+  .price-lightbox-backdrop{
+    position:absolute;
+    inset:0;
+  }
+  .price-lightbox-inner{
+    position:relative;
+    max-width:min(92vw, 640px);
+    max-height:92vh;
+    display:flex;
+  }
+  .price-lightbox-img{
+    max-width:100%;
+    max-height:92vh;
+    border-radius:12px;
+    border:1px solid var(--panel-border);
+    box-shadow:0 0 40px rgba(155,92,255,0.3);
+    display:block;
+  }
+  .price-lightbox-close{
+    position:absolute;
+    top:-18px;
+    right:-18px;
+    width:38px;
+    height:38px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0;
+    border:1px solid var(--panel-border);
+    border-radius:50%;
+    background:rgba(21,18,40,0.92);
+    color:var(--text-main);
+    cursor:pointer;
+  }
+  .price-lightbox-close svg{ width:16px; height:16px; }
+  .price-lightbox-close:hover,
+  .price-lightbox-close:active{
+    color:#fff;
+    border-color:rgba(255,255,255,0.35);
+  }
+  .price-lightbox-close:focus-visible{
+    outline:2px solid var(--blue);
+    outline-offset:2px;
+  }
+  @media (max-width:600px){
+    .price-lightbox-close{ top:-14px; right:0; }
+  }
 
   /* ---------- Menu ---------- */
   .menu-categories{
@@ -1572,16 +1680,45 @@
       <div class="section-head reveal">
         <span class="section-eyebrow">PRICE</span>
         <h2 class="section-title">料金</h2>
-        <p class="section-lead">2種類の飲み放題プランをご用意しています。</p>
+        <p class="section-lead">4種類の飲み放題プランをご用意しています。</p>
         <div class="divider"></div>
       </div>
 
       <!-- 料金プランはJavaScriptのDRINK_PLANS配列から自動生成されます -->
       <div class="plan-grid" id="planGrid"></div>
 
+      <p class="price-note reveal"><strong>当店はチャージのみのご利用はありません。</strong>飲み放題プランのみのご利用となります。</p>
       <p class="price-note reveal">料金や内容は変更になる場合があります。最新情報はInstagramをご確認ください。</p>
+
+      <div class="price-gallery reveal">
+        <h3 class="price-gallery-title">新料金・飲み放題プラン</h3>
+        <div class="price-gallery-grid">
+          <button type="button" class="price-gallery-item" data-full="glow-menu.jpg" aria-label="料金メニュー画像を拡大表示">
+            <img src="glow-menu.jpg" alt="GLOW 料金メニュー：SIMPLE飲み放題2時間3,000円・ALL飲み放題2時間4,000円の案内画像" loading="lazy">
+          </button>
+          <button type="button" class="price-gallery-item" data-full="glow-drink-plan.jpg" aria-label="時間無制限飲み放題プラン画像を拡大表示">
+            <img src="glow-drink-plan.jpg" alt="GLOW 時間無制限飲み放題プラン7,000円の案内画像" loading="lazy">
+          </button>
+          <button type="button" class="price-gallery-item" data-full="glow-infinity-plan.jpg" aria-label="GLOW全メニュー∞放題プラン画像を拡大表示">
+            <img src="glow-infinity-plan.jpg" alt="GLOW 全メニュー∞放題10,000円の案内画像" loading="lazy">
+          </button>
+        </div>
+      </div>
     </div>
   </section>
+
+  <!-- 料金画像の拡大表示用ライトボックス -->
+  <div class="price-lightbox" id="priceLightbox" hidden>
+    <div class="price-lightbox-backdrop" id="priceLightboxBackdrop"></div>
+    <div class="price-lightbox-inner">
+      <button type="button" class="price-lightbox-close" id="priceLightboxClose" aria-label="閉じる">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18"/>
+        </svg>
+      </button>
+      <img class="price-lightbox-img" id="priceLightboxImg" src="" alt="">
+    </div>
+  </div>
 
   <!-- 6. メニュー -->
   <section id="menu" class="section-glow-right">
@@ -1749,16 +1886,39 @@
     {
       name: "SIMPLE飲み放題",
       time: "2時間",
-      price: "2,000円",
-      extension: "延長 800円",
-      items: ["サワー", "ハイボール", "ボードゲーム", "レトロゲーム"]
+      price: "3,000円",
+      extension: "延長(1時間) 1,200円",
+      items: ["ビール・カクテルなし", "ボードゲーム", "レトロゲーム"]
     },
     {
       name: "ALL飲み放題",
       time: "2時間",
-      price: "3,000円",
-      extension: "延長 1,200円",
-      items: ["SIMPLEの全内容", "ビール", "カクテル", "カラオケ"]
+      price: "4,000円",
+      extension: "延長(1時間) 1,500円",
+      items: ["ビール・カクテルあり", "ボードゲーム", "レトロゲーム", "カラオケ"]
+    },
+    {
+      name: "時間無制限飲み放題",
+      time: "時間無制限",
+      price: "7,000円",
+      items: [
+        "ALL飲み放題と同じ内容",
+        "グループ全員でのご利用",
+        "オプションドリンク・フード・酒ガチャは対象外",
+        "ラストオーダー 2:30"
+      ]
+    },
+    {
+      name: "GLOW全メニュー∞放題",
+      time: "入店時間に関係なく時間無制限",
+      price: "10,000円",
+      items: [
+        "ドリンク・シャンパン・オプションドリンク・フード",
+        "カラオケ・レトロゲーム・ボードゲーム",
+        "酒ガチャは対象外",
+        "グループ全員でのご利用",
+        "ラストオーダー 2:30"
+      ]
     }
   ];
   // ▲▲▲ 料金プラン ここまで ▲▲▲
@@ -1812,6 +1972,9 @@
       var itemsHtml = plan.items.map(function(item){
         return '<li>' + checkIcon + escapeHTML(item) + '</li>';
       }).join('');
+      var extensionHtml = plan.extension
+        ? '<div class="plan-extension">' + escapeHTML(plan.extension) + '</div>'
+        : '';
       return (
         '<div class="plan-card reveal">' +
           '<div class="plan-name">' + escapeHTML(plan.name) + '</div>' +
@@ -1819,7 +1982,7 @@
             '<span class="plan-time">' + escapeHTML(plan.time) + '</span>' +
             '<span class="plan-price">' + escapeHTML(plan.price) + '</span>' +
           '</div>' +
-          '<div class="plan-extension">' + escapeHTML(plan.extension) + '</div>' +
+          extensionHtml +
           '<div class="plan-includes">' +
             '<span class="plan-includes-label">含まれるもの</span>' +
             '<ul class="plan-checklist">' + itemsHtml + '</ul>' +
@@ -1852,6 +2015,53 @@
 
   renderPlans();
   renderMenu();
+
+  // 料金画像（新料金・飲み放題プラン）の拡大表示
+  var priceLightbox = document.getElementById('priceLightbox');
+  var priceLightboxBackdrop = document.getElementById('priceLightboxBackdrop');
+  var priceLightboxClose = document.getElementById('priceLightboxClose');
+  var priceLightboxImg = document.getElementById('priceLightboxImg');
+  var priceLightboxLastFocused = null;
+
+  function handlePriceLightboxKeydown(e){
+    if (e.key === 'Escape') closePriceLightbox();
+  }
+
+  function openPriceLightbox(src, alt){
+    if (!priceLightbox || !priceLightboxImg) return;
+    priceLightboxLastFocused = document.activeElement;
+    priceLightboxImg.src = src;
+    priceLightboxImg.alt = alt || '';
+    priceLightbox.hidden = false;
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', handlePriceLightboxKeydown);
+    if (priceLightboxClose) priceLightboxClose.focus();
+  }
+
+  function closePriceLightbox(){
+    if (!priceLightbox || priceLightbox.hidden) return;
+    priceLightbox.hidden = true;
+    priceLightboxImg.src = '';
+    document.body.style.overflow = '';
+    document.removeEventListener('keydown', handlePriceLightboxKeydown);
+    if (priceLightboxLastFocused && typeof priceLightboxLastFocused.focus === 'function') {
+      priceLightboxLastFocused.focus();
+    }
+  }
+
+  document.querySelectorAll('.price-gallery-item').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var img = btn.querySelector('img');
+      var full = btn.getAttribute('data-full') || (img ? img.getAttribute('src') : '');
+      openPriceLightbox(full, img ? img.getAttribute('alt') : '');
+    });
+  });
+  if (priceLightboxClose) {
+    priceLightboxClose.addEventListener('click', closePriceLightbox);
+  }
+  if (priceLightboxBackdrop) {
+    priceLightboxBackdrop.addEventListener('click', closePriceLightbox);
+  }
 
   // フッターの年
   var yearEl = document.getElementById('year');
