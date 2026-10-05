@@ -241,6 +241,22 @@
     transform:translateY(0);
   }
 
+  /* ---------- スマートフォン表示：スクロールアニメーションを無効化し、最初から表示する ---------- */
+  @media (max-width: 767px) {
+    .reveal {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+    /* ボタン等に時々横切る「光」の演出も、スマホでは表示しない */
+    .btn::after,
+    .reserve-mail-btn::after,
+    .reserve-bar-link::after {
+      animation: none !important;
+      opacity: 0 !important;
+    }
+  }
+
   /* ---------- Hero (top) ---------- */
   .hero{
     position:relative;
