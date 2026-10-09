@@ -1033,6 +1033,47 @@
     if (e.target === lightbox) closeLightbox();
   });
 
+  /* スマホでは、詳細画面の写真を左右にスワイプして次・前の作品に移動できるようにする */
+  var lightboxFigure = document.querySelector(".lightbox-figure");
+  if (lightboxFigure) {
+    var touchStartX = 0;
+    var touchStartY = 0;
+    var touchActive = false;
+    var SWIPE_THRESHOLD = 40;
+
+    lightboxFigure.addEventListener("touchstart", function(e){
+      if (e.touches.length !== 1) return;
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+      touchActive = true;
+    }, { passive: true });
+
+    lightboxFigure.addEventListener("touchmove", function(e){
+      if (!touchActive || e.touches.length !== 1) return;
+      var dx = e.touches[0].clientX - touchStartX;
+      var dy = e.touches[0].clientY - touchStartY;
+      // 横方向の動きが縦方向より大きい場合だけ、ページの縦スクロールを止めてスワイプとして扱う
+      if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+
+    lightboxFigure.addEventListener("touchend", function(e){
+      if (!touchActive) return;
+      touchActive = false;
+      var touch = e.changedTouches[0];
+      var dx = touch.clientX - touchStartX;
+      var dy = touch.clientY - touchStartY;
+      if (Math.abs(dx) >= SWIPE_THRESHOLD && Math.abs(dx) > Math.abs(dy)) {
+        if (dx < 0) {
+          show(currentPos + 1); // 左スワイプ → 次の作品
+        } else {
+          show(currentPos - 1); // 右スワイプ → 前の作品
+        }
+      }
+    });
+  }
+
   /* 詳細画面（拡大表示）が開いている間は、Tabキーでの移動を画面内の要素だけに留める
      （背景のカードやページ本文にフォーカスが抜けてしまわないようにするため） */
   function getFocusableInLightbox(){
