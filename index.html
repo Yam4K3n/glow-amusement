@@ -1549,13 +1549,6 @@
     color:#fff;
     margin:0;
   }
-  .mm-promo-catch{
-    margin-top:16px;
-    font-size:clamp(1.05rem, 3.2vw, 1.3rem);
-    font-weight:700;
-    color:#fff;
-    text-shadow:0 0 10px rgba(255,225,77,0.4), 0 0 20px rgba(255,63,166,0.3);
-  }
   .mm-promo-sub{
     margin-top:8px;
     color:var(--text-sub);
@@ -1578,20 +1571,109 @@
   .mm-promo-motif{
     position:absolute;
     pointer-events:none;
-    opacity:0.5;
+    opacity:0.45;
   }
-  .mm-promo-motif.m-glass{ top:8%; left:5%; width:40px; height:40px; color:var(--pink); filter:drop-shadow(0 0 10px rgba(255,63,166,0.4)); animation:mmPromoSway 4.5s ease-in-out infinite; }
-  .mm-promo-motif.m-key{ bottom:10%; right:6%; width:34px; height:34px; color:var(--yellow); filter:drop-shadow(0 0 10px rgba(255,225,77,0.4)); animation:mmPromoFloat 5.5s ease-in-out infinite; }
-  @keyframes mmPromoSway{
-    0%,100%{ transform:rotate(-6deg) translateY(0); }
-    50%{ transform:rotate(6deg) translateY(-4px); }
+  .mm-promo-motif.m-envelope{ top:8%; left:5%; width:36px; height:36px; color:var(--purple); filter:drop-shadow(0 0 10px rgba(155,92,255,0.4)); animation:mmPromoFloat 5.5s ease-in-out infinite; }
+  .mm-promo-motif.m-finger{ bottom:10%; right:6%; width:30px; height:30px; color:var(--blue); filter:drop-shadow(0 0 8px rgba(63,212,255,0.35)); animation:mmPromoPulseFade 4s ease-in-out infinite; }
+  .mm-promo-footsteps{
+    position:absolute;
+    left:50%;
+    bottom:4%;
+    transform:translateX(-50%);
+    display:flex;
+    gap:14px;
+    pointer-events:none;
   }
+  .mm-promo-footsteps svg{
+    width:14px;height:14px;
+    color:var(--text-faint);
+    opacity:0;
+    animation:mmPromoFootstep 4.5s ease-in-out infinite;
+  }
+  .mm-promo-footsteps svg:nth-child(1){ animation-delay:0s; transform:rotate(-8deg); }
+  .mm-promo-footsteps svg:nth-child(2){ animation-delay:0.45s; transform:rotate(6deg); }
+  .mm-promo-footsteps svg:nth-child(3){ animation-delay:0.9s; transform:rotate(-8deg); }
   @keyframes mmPromoFloat{
     0%,100%{ transform:translateY(0) rotate(0deg); }
     50%{ transform:translateY(-6px) rotate(-8deg); }
   }
+  @keyframes mmPromoPulseFade{
+    0%,100%{ opacity:0.3; }
+    50%{ opacity:0.6; }
+  }
+  @keyframes mmPromoFootstep{
+    0%,10%{ opacity:0; }
+    30%,70%{ opacity:0.5; }
+    90%,100%{ opacity:0; }
+  }
   @media (max-width:640px){
     .mm-promo-motif{ display:none; }
+  }
+
+  /* ---------- 虫眼鏡が「今夜、あなたも事件の登場人物。」をなぞる演出 ---------- */
+  .mm-catch-wrap{
+    position:relative;
+    display:inline-block;
+    max-width:100%;
+    margin-top:16px;
+  }
+  .mm-promo-catch{
+    position:relative;
+    margin:0;
+    font-size:clamp(1.05rem, 3.2vw, 1.3rem);
+    font-weight:700;
+    color:#fff;
+    text-shadow:0 0 8px rgba(255,225,77,0.3), 0 0 16px rgba(255,63,166,0.22);
+  }
+  .mm-catch-highlight{
+    position:absolute;
+    inset:0;
+    margin:0;
+    font-size:clamp(1.05rem, 3.2vw, 1.3rem);
+    font-weight:700;
+    color:transparent;
+    background-image:linear-gradient(90deg, transparent 0%, transparent 42%, #fff8e0 50%, transparent 58%, transparent 100%);
+    background-size:300% 100%;
+    background-position:100% 0;
+    -webkit-background-clip:text;
+    background-clip:text;
+    pointer-events:none;
+    user-select:none;
+  }
+  .mm-glass-sweep{
+    position:absolute;
+    top:50%;
+    left:-4%;
+    width:26px;
+    height:26px;
+    transform:translate(-50%, -50%);
+    color:var(--pink);
+    filter:drop-shadow(0 0 8px rgba(255,63,166,0.6));
+    opacity:0;
+    pointer-events:none;
+  }
+  .mm-catch-wrap.is-sweeping .mm-catch-highlight{
+    animation:mmTextSweep 3s cubic-bezier(.45,0,.2,1) 1 forwards;
+  }
+  .mm-catch-wrap.is-sweeping .mm-glass-sweep{
+    animation:mmGlassMove 3s cubic-bezier(.45,0,.2,1) 1 forwards;
+  }
+  @keyframes mmTextSweep{
+    0%{ background-position:100% 0; }
+    100%{ background-position:0% 0; }
+  }
+  @keyframes mmGlassMove{
+    0%{ left:-4%; opacity:0; }
+    8%{ opacity:1; }
+    100%{ left:101%; opacity:1; }
+  }
+  @media (max-width:640px){
+    .mm-glass-sweep{ width:20px; height:20px; }
+    @keyframes mmGlassMove{
+      0%{ left:0%; opacity:0; }
+      8%{ opacity:1; }
+      100%{ left:98%; opacity:1; }
+    }
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -1609,6 +1691,9 @@
     .art-panel img,
     .play-card-visual img{ transition:none !important; transform:none !important; }
     .mm-promo-motif{ animation:none !important; opacity:0.4 !important; }
+    .mm-promo-footsteps svg{ animation:none !important; opacity:0.45 !important; }
+    .mm-catch-highlight{ animation:none !important; background-image:none !important; }
+    .mm-glass-sweep{ animation:none !important; opacity:0 !important; }
     /* Grand Openの演出は、待ち時間なしで最終状態を静止表示にする */
     .go-glow{ animation:none !important; opacity:0.85 !important; transform:translate(-50%,-50%) !important; }
     .go-sparkles i{ display:none !important; }
@@ -1691,6 +1776,33 @@
       <div class="grand-open-strip reveal">
         <p><strong>2026年10月1日<br>GRAND OPEN</strong></p>
         <p>皆さまのお越しを心よりお待ちしております。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2.5 マーダーミステリー新登場 告知POP -->
+  <section id="murder-mystery-announce">
+    <div class="container">
+      <div class="mm-promo reveal" id="murder-mystery">
+        <svg class="mm-promo-motif m-envelope" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+        <svg class="mm-promo-motif m-finger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 11c1.5 0 2.5 1.2 2.5 3v3M9 12.5v3.5c0 2.5 1.5 4 4 4M7 13v2c0 3.5 2.2 6 6 6M5 13.5v1c0 4.5 3 8 9 8M12 7a5 5 0 0 1 5 5v2"/></svg>
+        <span class="mm-promo-footsteps" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="12" rx="4" ry="8"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="12" rx="4" ry="8"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="12" rx="4" ry="8"/></svg>
+        </span>
+
+        <span class="mm-promo-eyebrow">NEW ARRIVAL</span>
+        <h2>マーダーミステリー、登場！</h2>
+
+        <span class="mm-catch-wrap" id="mmCatchWrap">
+          <p class="mm-promo-catch" id="mmCatch">今夜、あなたも事件の登場人物。</p>
+          <span class="mm-catch-highlight" aria-hidden="true">今夜、あなたも事件の登場人物。</span>
+          <svg class="mm-glass-sweep" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="M20 20l-5.6-5.6"/></svg>
+        </span>
+
+        <p class="mm-promo-sub">話して、推理して、秘密を探る。5つの物語がGLOWに仲間入り。</p>
+        <a class="btn btn-mm" href="murder-mystery.html">5つの物語を見てみる</a>
       </div>
     </div>
   </section>
@@ -1782,16 +1894,6 @@
           <h3>カラオケ</h3>
           <p>みんなで歌って、笑って。飲みながら気軽に楽しめます。</p>
         </div>
-      </div>
-
-      <div class="mm-promo reveal" id="murder-mystery">
-        <svg class="mm-promo-motif m-glass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="M20 20l-5.6-5.6"/></svg>
-        <svg class="mm-promo-motif m-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M14 9l2 2"/></svg>
-        <span class="mm-promo-eyebrow">NEW</span>
-        <h2>GLOWにマーダーミステリー登場！</h2>
-        <p class="mm-promo-catch">今夜、あなたも事件の登場人物。</p>
-        <p class="mm-promo-sub">話して、推理して、秘密を探る。GLOWで楽しむマーダーミステリー。</p>
-        <a class="btn btn-mm" href="murder-mystery.html">5つの物語を見てみる</a>
       </div>
     </div>
   </section>
@@ -2265,6 +2367,25 @@
   } else {
     // 非対応ブラウザ用フォールバック：即表示
     revealEls.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  // マーダーミステリー告知POP：虫眼鏡が「今夜、あなたも事件の登場人物。」をなぞる演出（1回だけ）
+  var mmCatchWrap = document.getElementById('mmCatchWrap');
+  var prefersReducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (mmCatchWrap && !prefersReducedMotion) {
+    if ('IntersectionObserver' in window) {
+      var mmObserver = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting) {
+            mmCatchWrap.classList.add('is-sweeping');
+            mmObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.4 });
+      mmObserver.observe(mmCatchWrap);
+    } else {
+      mmCatchWrap.classList.add('is-sweeping');
+    }
   }
 
   // OFFICIAL MOVIE：最初はサムネイル＋中央の再生ボタンを表示し、
