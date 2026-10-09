@@ -297,6 +297,20 @@
     text-align:center;
     margin-bottom:28px;
   }
+  .mm-caution{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    margin-top:16px;
+    padding:9px 18px;
+    border-radius:999px;
+    border:1px dashed rgba(255,225,77,0.45);
+    background:rgba(255,225,77,0.06);
+    color:var(--yellow);
+    font-size:0.78rem;
+    font-weight:700;
+  }
+  .mm-caution svg{width:16px;height:16px;flex-shrink:0;}
   .mm-grid{
     display:grid;
     grid-template-columns:repeat(2, 1fr);
@@ -367,6 +381,30 @@
     width:100%;
     height:100%;
     object-fit:cover;
+  }
+  /* 画像が読み込めない場合のプレースホルダー（タイトル・詳細は引き続き読める状態を保つ） */
+  .mm-img-fallback{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    color:var(--text-faint);
+    background:
+      radial-gradient(circle at 50% 40%, rgba(255,225,77,0.08), transparent 60%),
+      var(--panel);
+  }
+  .mm-img-fallback svg{width:28px;height:28px;opacity:0.6;}
+  .mm-img-fallback span{font-size:0.68rem;letter-spacing:0.05em;}
+  .lightbox-figure{ position:relative; }
+  .lightbox-figure .mm-img-fallback{
+    position:relative;
+    width:100%;
+    min-height:220px;
+    border-radius:12px;
+    border:1px solid var(--panel-border);
   }
   .mm-card-body{
     padding:10px 12px 14px;
@@ -673,7 +711,7 @@
     <div class="divider"></div>
     <p class="mm-catch">今夜、あなたも事件の登場人物。</p>
     <p class="mm-subtext">話して、推理して、秘密を探る。GLOWで楽しむマーダーミステリー。</p>
-    <p class="page-lead">マーダーミステリーは、物語の登場人物になりきり、他のプレイヤーとの会話や手がかりから事件の真相を探っていく体験型の推理ゲームです。初めての方でも、スタッフがご案内しますのでお気軽にどうぞ。</p>
+    <p class="page-lead">マーダーミステリーは、物語の登場人物になりきり、他のプレイヤーとの会話や手がかりから事件の真相を探っていく体験型の推理ゲームです。まずは人数や所要時間から、気になる物語を選んでみてください。</p>
 
     <a class="mm-crosslink" href="boardgames.html">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -713,6 +751,10 @@
       <span class="page-eyebrow">5 STORIES</span>
       <h2 class="page-title" style="font-size:clamp(1.2rem,3.4vw,1.6rem);">GLOWで遊べる<span class="hl">5つの物語</span></h2>
       <p class="page-lead">気になる一枚をタップすると、人数や時間などの詳細をご覧いただけます（ネタバレなし）。</p>
+      <p class="mm-caution">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/><path d="M3 3l18 18"/></svg>
+        参加予定の作品のネタバレは見ないようにしましょう
+      </p>
     </div>
 
     <div class="mm-grid" id="mmGrid">
@@ -729,7 +771,7 @@
         <span class="mm-card-photo"><img src="web-optimized/mm-kairanban.jpg" alt="回覧板" loading="lazy"></span>
         <span class="mm-card-body">
           <span class="mm-card-title">回覧板</span>
-          <span class="mm-card-players">人数未確認</span>
+          <span class="mm-card-players">1人〜（推奨）</span>
         </span>
       </button>
       <button class="mm-card reveal" type="button" data-index="2">
@@ -828,34 +870,34 @@
     },
     {
       name: "回覧板",
-      players: "",
-      time: "",
-      gm: "",
-      level: null,
+      players: "1人〜（推奨）",
+      time: "約30分〜60分",
+      gm: "不要",
+      level: 2,
       synopsis: "作品の詳細情報は現在確認中です。気になる方はぜひ店舗スタッフまでお気軽にお尋ねください。"
     },
     {
       name: "死体と温泉",
       players: "4〜5人",
       time: "60分",
-      gm: "",
-      level: null,
+      gm: "不要",
+      level: 2,
       synopsis: "温泉旅館の露天風呂で、ひとりの男性が撲殺された状態で発見される。疑われるのは小説家、編集者、温泉ライター、近くに宿泊していた踊り子、タオルサービスの配達員の5人。被害者の脱衣カゴから見つかったサイレンサー付きの銃が、事件をさらに複雑にしていく。"
     },
     {
       name: "時をかけるトライアングル",
       players: "3人",
       time: "90分",
-      gm: "",
-      level: null,
+      gm: "不要",
+      level: 2,
       synopsis: "大学のオカルト研究会の周年イベントで、部長が遺体となって発見される。残る3人の部員の誰かが犯人と目される中、部長の過去や各メンバーの動機、部室に残された奇妙な跡、怪異の噂が少しずつ明らかになっていく。"
     },
     {
       name: "週末の殺人鬼",
       players: "2人（5人のキャラクターを2人で担当）",
       time: "60分",
-      gm: "",
-      level: null,
+      gm: "不要",
+      level: 2,
       synopsis: "7年前、田舎町の廃れた寺を訪れた6人の中学生のうちひとりが命を落とし、事故として処理された。7年後、生き残った5人が彼女の墓参りのため故郷に集まるが、折しも近隣の都市では「週末の殺人鬼」と呼ばれる殺人犯の噂が人々を震え上がらせていた。"
     }
   ];
@@ -905,9 +947,31 @@
   var currentPos = 0;
   var lastFocused = null;
 
+  /* 画像が読み込めなかった場合も、タイトルや詳細情報は読めるようにプレースホルダーを表示する */
+  function handleImgError(imgEl){
+    if (imgEl.dataset.fallbackApplied === "1") return;
+    imgEl.dataset.fallbackApplied = "1";
+    imgEl.style.display = "none";
+    var parent = imgEl.parentElement;
+    if (parent && !parent.querySelector(".mm-img-fallback")) {
+      var ph = document.createElement("span");
+      ph.className = "mm-img-fallback";
+      ph.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="M20 20l-5.6-5.6"/></svg><span>画像準備中</span>';
+      parent.appendChild(ph);
+    }
+  }
+  document.querySelectorAll(".mm-card-photo img").forEach(function(img){
+    img.addEventListener("error", function(){ handleImgError(img); });
+  });
+  lightboxImg.addEventListener("error", function(){ handleImgError(lightboxImg); });
+
   function show(pos){
     currentPos = (pos + GAMES.length) % GAMES.length;
     var game = GAMES[currentPos] || {};
+    lightboxImg.dataset.fallbackApplied = "";
+    lightboxImg.style.display = "";
+    var existingFallback = lightboxImg.parentElement.querySelector(".mm-img-fallback");
+    if (existingFallback) existingFallback.remove();
     lightboxImg.src = SOURCES[currentPos];
     lightboxImg.alt = game.name ? game.name : ("マーダーミステリー " + (currentPos + 1));
     lightboxCounter.textContent = (currentPos + 1) + " / " + GAMES.length;
@@ -962,11 +1026,36 @@
     if (e.target === lightbox) closeLightbox();
   });
 
+  /* 詳細画面（拡大表示）が開いている間は、Tabキーでの移動を画面内の要素だけに留める
+     （背景のカードやページ本文にフォーカスが抜けてしまわないようにするため） */
+  function getFocusableInLightbox(){
+    return Array.prototype.slice.call(
+      lightbox.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])')
+    ).filter(function(el){ return el.offsetParent !== null; });
+  }
+
   document.addEventListener("keydown", function(e){
     if (!lightbox.classList.contains("is-open")) return;
     if (e.key === "Escape") closeLightbox();
     if (e.key === "ArrowLeft") show(currentPos - 1);
     if (e.key === "ArrowRight") show(currentPos + 1);
+    if (e.key === "Tab") {
+      var focusable = getFocusableInLightbox();
+      if (!focusable.length) return;
+      var first = focusable[0];
+      var last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      } else if (!lightbox.contains(document.activeElement)) {
+        // 何らかの理由でフォーカスが画面外に出てしまった場合は、閉じるボタンへ戻す
+        e.preventDefault();
+        first.focus();
+      }
+    }
   });
 })();
 </script>
