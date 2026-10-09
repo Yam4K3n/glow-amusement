@@ -93,6 +93,12 @@
     padding:0 20px;
   }
 
+  /* スマホで読みやすい位置で改行するための改行（PCでは無効化） */
+  .sp-br{ display:none; }
+  @media (max-width:640px){
+    .sp-br{ display:inline; }
+  }
+
   /* ---------- Header ---------- */
   .site-header{
     position:fixed;
@@ -1801,7 +1807,7 @@
           <svg class="mm-glass-sweep" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="M20 20l-5.6-5.6"/></svg>
         </span>
 
-        <p class="mm-promo-sub">話して、推理して、秘密を探る。5つの物語がGLOWに仲間入り。</p>
+        <p class="mm-promo-sub">話して、推理して、秘密を探る。<br class="sp-br">5つの物語がGLOWに仲間入り。</p>
         <a class="btn btn-mm" href="murder-mystery.html">5つの物語を見てみる</a>
       </div>
     </div>
@@ -1822,8 +1828,8 @@
         </div>
         <div class="about-text">
           <p>北海道中標津町に生まれた、アミューズメントバー「GLOW」。</p>
-          <p>ネオンの光がやさしく灯る店内で、大人がゆったり肩の力を抜いて過ごせる「秘密基地」のような空間を目指しています。</p>
-          <p>お一人でも、初めての方でも入りやすいアットホームな雰囲気を大切にしながら、遊んで、話して、笑える時間をお届けします。</p>
+          <p>ネオンの光がやさしく灯る店内で、<br class="sp-br">大人がゆったり肩の力を抜いて過ごせる「秘密基地」のような空間を目指しています。</p>
+          <p>お一人でも、初めての方でも入りやすいアットホームな雰囲気を大切にしながら、<br class="sp-br">遊んで、話して、笑える時間をお届けします。</p>
         </div>
       </div>
     </div>
@@ -1863,7 +1869,7 @@
       <div class="section-head reveal">
         <span class="section-eyebrow">PLAY</span>
         <h2 class="section-title">遊べるもの</h2>
-        <p class="section-lead">豊富なボードゲーム・レトロゲーム・カラオケで、大人も夢中になれる時間を。</p>
+        <p class="section-lead">豊富なボードゲーム・<br class="sp-br">レトロゲーム・カラオケで、<br class="sp-br">大人も夢中になれる時間を。</p>
         <div class="divider"></div>
       </div>
 
@@ -1911,8 +1917,8 @@
       <!-- 料金プランはJavaScriptのDRINK_PLANS配列から自動生成されます -->
       <div class="plan-grid" id="planGrid"></div>
 
-      <p class="price-note reveal"><strong>当店はチャージのみのご利用はありません。</strong>飲み放題プランのみのご利用となります。</p>
-      <p class="price-note reveal">料金や内容は変更になる場合があります。最新情報はInstagramをご確認ください。</p>
+      <p class="price-note reveal"><strong>当店はチャージのみのご利用はありません。</strong><br class="sp-br">飲み放題プランのみのご利用となります。</p>
+      <p class="price-note reveal">料金や内容は変更になる場合があります。<br class="sp-br">最新情報はInstagramをご確認ください。</p>
 
       <div class="price-gallery reveal">
         <h3 class="price-gallery-title">新料金・飲み放題プラン</h3>
@@ -1979,7 +1985,7 @@
         <div class="divider"></div>
       </div>
 
-      <p class="reserve-note reveal">ご予約はGoogleフォームから受け付けています。ご希望の日時・人数・プランなど、必要事項をご入力のうえ送信してください。内容を確認後、店舗よりご連絡いたします。</p>
+      <p class="reserve-note reveal">ご予約はGoogleフォームから受け付けています。<br class="sp-br">ご希望の日時・人数・プランなど、必要事項をご入力のうえ送信してください。<br class="sp-br">内容を確認後、店舗よりご連絡いたします。</p>
 
       <div class="reserve-btn-wrap reveal">
         <a class="reserve-mail-btn" href="https://docs.google.com/forms/d/e/1FAIpQLScoh-x2coiShjTDubU0zo3LKmYwMXS-KDLrsPakyGHMK9xAmg/viewform" target="_blank" rel="noopener noreferrer">
@@ -2074,7 +2080,7 @@
         <div class="insta-icon">
           <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.8.07 1.2.06 2 .24 2.7.5.7.28 1.3.66 1.9 1.26.6.6.98 1.2 1.26 1.9.27.7.45 1.5.5 2.7.07 1.2.07 1.6.07 4.8s0 3.6-.07 4.8c-.06 1.2-.24 2-.5 2.7-.28.7-.66 1.3-1.26 1.9-.6.6-1.2.98-1.9 1.26-.7.27-1.5.45-2.7.5-1.2.07-1.6.07-4.8.07s-3.6 0-4.8-.07c-1.2-.06-2-.24-2.7-.5-.7-.28-1.3-.66-1.9-1.26-.6-.6-.98-1.2-1.26-1.9-.27-.7-.45-1.5-.5-2.7C2.2 15.6 2.2 15.2 2.2 12s0-3.6.07-4.8c.06-1.2.24-2 .5-2.7.28-.7.66-1.3 1.26-1.9.6-.6 1.2-.98 1.9-1.26.7-.27 1.5-.45 2.7-.5C8.4 2.2 8.8 2.2 12 2.2zm0 1.8c-3.14 0-3.5 0-4.74.07-1 .05-1.5.2-1.86.34-.47.18-.8.4-1.15.75-.35.35-.57.68-.75 1.15-.14.36-.29.86-.34 1.86C3.1 8.5 3.1 8.86 3.1 12s0 3.5.07 4.74c.05 1 .2 1.5.34 1.86.18.47.4.8.75 1.15.35.35.68.57 1.15.75.36.14.86.29 1.86.34 1.24.07 1.6.07 4.74.07s3.5 0 4.74-.07c1-.05 1.5-.2 1.86-.34.47-.18.8-.4 1.15-.75.35-.35.57-.68.75-1.15.14-.36.29-.86.34-1.86.07-1.24.07-1.6.07-4.74s0-3.5-.07-4.74c-.05-1-.2-1.5-.34-1.86-.18-.47-.4-.8-.75-1.15-.35-.35-.68-.57-1.15-.75-.36-.14-.86-.29-1.86-.34C15.5 4 15.14 4 12 4zm0 3.4a4.6 4.6 0 110 9.2 4.6 4.6 0 010-9.2zm0 1.8a2.8 2.8 0 100 5.6 2.8 2.8 0 000-5.6zm5.8-2a1.08 1.08 0 11-2.16 0 1.08 1.08 0 012.16 0z"/></svg>
         </div>
-        <p>営業時間の変更や最新情報は、Instagramでお知らせしています。ぜひフォローしてお待ちください。</p>
+        <p>営業時間の変更や最新情報は、Instagramでお知らせしています。<br class="sp-br">ぜひフォローしてお待ちください。</p>
         <a class="btn btn-outline" href="https://www.instagram.com/glow_amusement/" target="_blank" rel="noopener noreferrer">Instagramをフォローする</a>
         <span class="insta-handle">@glow_amusement</span>
       </div>

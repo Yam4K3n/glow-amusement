@@ -73,6 +73,12 @@
     padding:0 20px;
   }
 
+  /* スマホで読みやすい位置で改行するための改行（PCでは無効化） */
+  .sp-br{ display:none; }
+  @media (max-width:640px){
+    .sp-br{ display:inline; }
+  }
+
   /* ---------- Header ---------- */
   .site-header{
     position:sticky;
@@ -620,6 +626,7 @@
     font-size:0.82rem;
     line-height:1.85;
     text-align:left;
+    white-space:pre-line;
   }
   .lightbox-note{
     margin:10px 0 0;
@@ -710,8 +717,8 @@
     <h1 class="page-title">GLOWの<span class="hl">マーダーミステリー</span></h1>
     <div class="divider"></div>
     <p class="mm-catch">今夜、あなたも事件の登場人物。</p>
-    <p class="mm-subtext">話して、推理して、秘密を探る。GLOWで楽しむマーダーミステリー。</p>
-    <p class="page-lead">マーダーミステリーは、物語の登場人物になりきり、他のプレイヤーとの会話や手がかりから事件の真相を探っていく体験型の推理ゲームです。まずは人数や所要時間から、気になる物語を選んでみてください。</p>
+    <p class="mm-subtext">話して、推理して、秘密を探る。<br class="sp-br">GLOWで楽しむマーダーミステリー。</p>
+    <p class="page-lead">マーダーミステリーは、物語の登場人物になりきり、<br class="sp-br">他のプレイヤーとの会話や手がかりから事件の真相を探っていく体験型の推理ゲームです。<br class="sp-br">まずは人数や所要時間から、気になる物語を選んでみてください。</p>
 
     <a class="mm-crosslink" href="boardgames.html">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
@@ -750,7 +757,7 @@
     <div class="mm-section-head reveal">
       <span class="page-eyebrow">5 STORIES</span>
       <h2 class="page-title" style="font-size:clamp(1.2rem,3.4vw,1.6rem);">GLOWで遊べる<span class="hl">5つの物語</span></h2>
-      <p class="page-lead">気になる一枚をタップすると、人数や時間などの詳細をご覧いただけます（ネタバレなし）。</p>
+      <p class="page-lead">気になる一枚をタップすると、<br class="sp-br">人数や時間などの詳細をご覧いただけます（ネタバレなし）。</p>
       <p class="mm-caution">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/><path d="M3 3l18 18"/></svg>
         参加予定の作品のネタバレは見ないようにしましょう
@@ -804,14 +811,14 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M9 4v18"/></svg>
       <span class="mm-linkcard-text">
         <h3>通常のボードゲームは70種類</h3>
-        <p>定番からじっくり楽しめるものまで。ボードゲーム一覧はこちら。</p>
+        <p>定番からじっくり楽しめるものまで。<br class="sp-br">ボードゲーム一覧はこちら。</p>
       </span>
     </a>
   </div>
 
   <div class="container mm-reserve">
     <h2 class="reveal">気になる物語は見つかりましたか？</h2>
-    <p class="reveal">ご来店・体験に関するご予約やお問い合わせは、下記フォームよりお気軽にどうぞ。</p>
+    <p class="reveal">ご来店・体験に関するご予約やお問い合わせは、<br class="sp-br">下記フォームよりお気軽にどうぞ。</p>
     <a class="btn btn-mm reveal" href="https://docs.google.com/forms/d/e/1FAIpQLScoh-x2coiShjTDubU0zo3LKmYwMXS-KDLrsPakyGHMK9xAmg/viewform" target="_blank" rel="noopener noreferrer">ご予約・お問い合わせはこちら</a>
   </div>
 </main>
@@ -866,7 +873,7 @@
       time: "約75分",
       gm: "不要（GMレス）",
       level: 3,
-      synopsis: "湖畔のキャンプ場で夜を過ごす高校生たちの前に、覆面の殺人鬼が現れ、仲間が次々と襲われていく。生き残った数人は管理棟へ逃げ込むが、犯人の持ち物らしきものが見つかり――助かったはずの仲間の中に、殺人鬼がいるのではという疑いが広がっていく。"
+      synopsis: "湖畔のキャンプ場で夜を過ごす高校生たちの前に、覆面の殺人鬼が現れ、仲間が次々と襲われていく。\n生き残った数人は管理棟へ逃げ込むが、犯人の持ち物らしきものが見つかり――助かったはずの仲間の中に、殺人鬼がいるのではという疑いが広がっていく。"
     },
     {
       name: "回覧板",
@@ -874,7 +881,7 @@
       time: "約30分〜60分",
       gm: "不要",
       level: 2,
-      synopsis: "作品の詳細情報は現在確認中です。気になる方はぜひ店舗スタッフまでお気軽にお尋ねください。"
+      synopsis: "作品の詳細情報は現在確認中です。\n気になる方はぜひ店舗スタッフまでお気軽にお尋ねください。"
     },
     {
       name: "死体と温泉",
@@ -882,7 +889,7 @@
       time: "60分",
       gm: "不要",
       level: 2,
-      synopsis: "温泉旅館の露天風呂で、ひとりの男性が撲殺された状態で発見される。疑われるのは小説家、編集者、温泉ライター、近くに宿泊していた踊り子、タオルサービスの配達員の5人。被害者の脱衣カゴから見つかったサイレンサー付きの銃が、事件をさらに複雑にしていく。"
+      synopsis: "温泉旅館の露天風呂で、ひとりの男性が撲殺された状態で発見される。\n疑われるのは小説家、編集者、温泉ライター、近くに宿泊していた踊り子、タオルサービスの配達員の5人。\n被害者の脱衣カゴから見つかったサイレンサー付きの銃が、事件をさらに複雑にしていく。"
     },
     {
       name: "時をかけるトライアングル",
@@ -890,7 +897,7 @@
       time: "90分",
       gm: "不要",
       level: 2,
-      synopsis: "大学のオカルト研究会の周年イベントで、部長が遺体となって発見される。残る3人の部員の誰かが犯人と目される中、部長の過去や各メンバーの動機、部室に残された奇妙な跡、怪異の噂が少しずつ明らかになっていく。"
+      synopsis: "大学のオカルト研究会の周年イベントで、部長が遺体となって発見される。\n残る3人の部員の誰かが犯人と目される中、部長の過去や各メンバーの動機、部室に残された奇妙な跡、怪異の噂が少しずつ明らかになっていく。"
     },
     {
       name: "週末の殺人鬼",
@@ -898,7 +905,7 @@
       time: "60分",
       gm: "不要",
       level: 2,
-      synopsis: "7年前、田舎町の廃れた寺を訪れた6人の中学生のうちひとりが命を落とし、事故として処理された。7年後、生き残った5人が彼女の墓参りのため故郷に集まるが、折しも近隣の都市では「週末の殺人鬼」と呼ばれる殺人犯の噂が人々を震え上がらせていた。"
+      synopsis: "7年前、田舎町の廃れた寺を訪れた6人の中学生のうちひとりが命を落とし、事故として処理された。\n7年後、生き残った5人が彼女の墓参りのため故郷に集まるが、折しも近隣の都市では「週末の殺人鬼」と呼ばれる殺人犯の噂が人々を震え上がらせていた。"
     }
   ];
 

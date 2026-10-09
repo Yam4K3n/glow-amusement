@@ -71,6 +71,12 @@
     padding:0 20px;
   }
 
+  /* スマホで読みやすい位置で改行するための改行（PCでは無効化） */
+  .sp-br{ display:none; }
+  @media (max-width:640px){
+    .sp-br{ display:inline; }
+  }
+
   /* ---------- Header ---------- */
   .site-header{
     position:sticky;
@@ -911,8 +917,8 @@
 
     <div class="bg-grid" id="bgGrid">
           <button class="bg-card reveal" type="button" data-index="0">
-            <span class="bg-card-photo"><span class="bg-card-new-badge">NEW</span><img src="web-optimized/boardgame-kion.jpg" alt="きおん" loading="lazy"></span>
-            <span class="bg-card-title">きおん</span>
+            <span class="bg-card-photo"><span class="bg-card-new-badge">NEW</span><img src="web-optimized/boardgame-kion.jpg" alt="ぎおーん" loading="lazy"></span>
+            <span class="bg-card-title">ぎおーん</span>
           </button>
           <button class="bg-card reveal" type="button" data-index="1">
             <span class="bg-card-photo"><span class="bg-card-new-badge">NEW</span><img src="web-optimized/boardgame-ojamamono.jpg" alt="お邪魔者" loading="lazy"></span>
@@ -1333,7 +1339,7 @@
 
   /* ゲーム情報（ネットで確認できた範囲で記載。不明な項目は空欄にしています） */
   var GAMES = [
-  { name: "きおん", players: "", time: "", diff: null, videoUrl: "https://www.youtube.com/watch?v=b8JFgRN6hTU", isNew: true },
+  { name: "ぎおーん", players: "3〜6人", time: "約15分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=b8JFgRN6hTU", isNew: true },
   { name: "お邪魔者", players: "3〜10人", time: "20〜30分", diff: 2, videoUrl: "https://www.youtube.com/watch?v=OEa9TfSmx1M", isNew: true },
   { name: "ごきぶりポーカー", players: "2〜6人", time: "10〜20分", diff: 2, videoUrl: "https://www.youtube.com/watch?v=GdlSa2mSev8", isNew: true },
   { name: "ヒュードロドロップ", players: "2〜5人", time: "15分", diff: 2, videoUrl: "https://www.youtube.com/watch?v=TTp6Wo1cYYo", isNew: true },
@@ -1679,7 +1685,7 @@
   function showVideoFallback(){
     videoModalFrame.innerHTML =
       '<div class="video-modal-fallback">' +
-      '<p>この動画は埋め込みが許可されていないため、下の『YouTubeで開く』からご覧ください。</p>' +
+      '<p>この動画は埋め込みが許可されていないため、<br class="sp-br">下の『YouTubeで開く』からご覧ください。</p>' +
       '</div>';
     if (videoModalOpenLinkLabel) videoModalOpenLinkLabel.textContent = "YouTubeで開く";
   }
@@ -1688,7 +1694,7 @@
   function showExternalLinkFallback(){
     videoModalFrame.innerHTML =
       '<div class="video-modal-fallback">' +
-      '<p>この遊び方は動画ではなく、外部サイトでご案内しています。下のボタンからご覧ください。</p>' +
+      '<p>この遊び方は動画ではなく、外部サイトでご案内しています。<br class="sp-br">下のボタンからご覧ください。</p>' +
       '</div>';
     if (videoModalOpenLinkLabel) videoModalOpenLinkLabel.textContent = "サイトで見る";
   }
