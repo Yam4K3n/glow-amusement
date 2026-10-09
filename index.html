@@ -58,6 +58,7 @@
     --pink:#ff3fa6;
     --purple:#9b5cff;
     --blue:#3fd4ff;
+    --yellow:#ffe14d;
     --radius:16px;
     --maxw:1040px;
     --header-h:64px;
@@ -1519,6 +1520,80 @@
     .plan-grid{gap:24px;}
   }
 
+  /* ---------- マーダーミステリー 紹介POP ---------- */
+  .mm-promo{
+    position:relative;
+    overflow:hidden;
+    margin-top:36px;
+    padding:36px 24px;
+    border-radius:20px;
+    border:1px solid rgba(255,225,77,0.22);
+    background:
+      radial-gradient(circle at 15% 20%, rgba(255,63,166,0.14), transparent 55%),
+      radial-gradient(circle at 85% 80%, rgba(255,225,77,0.10), transparent 55%),
+      var(--panel);
+    box-shadow:0 0 0 1px rgba(255,255,255,0.03), 0 0 30px rgba(255,63,166,0.1);
+    text-align:center;
+  }
+  .mm-promo-eyebrow{
+    font-size:0.7rem;
+    letter-spacing:0.3em;
+    color:var(--yellow);
+    text-shadow:0 0 10px rgba(255,225,77,0.5);
+    margin-bottom:10px;
+    display:block;
+  }
+  .mm-promo h2{
+    font-size:clamp(1.3rem, 4vw, 1.7rem);
+    font-weight:700;
+    color:#fff;
+    margin:0;
+  }
+  .mm-promo-catch{
+    margin-top:16px;
+    font-size:clamp(1.05rem, 3.2vw, 1.3rem);
+    font-weight:700;
+    color:#fff;
+    text-shadow:0 0 10px rgba(255,225,77,0.4), 0 0 20px rgba(255,63,166,0.3);
+  }
+  .mm-promo-sub{
+    margin-top:8px;
+    color:var(--text-sub);
+    font-size:0.9rem;
+  }
+  .mm-promo .btn{
+    max-width:320px;
+    margin:22px auto 0;
+  }
+  .btn-mm{
+    background:linear-gradient(90deg, var(--pink), var(--purple) 55%, var(--yellow));
+    color:#160f06;
+    box-shadow:0 0 22px rgba(255,225,77,0.3);
+  }
+  .btn-mm:hover,
+  .btn-mm:active{
+    filter:brightness(1.08);
+    box-shadow:0 0 28px rgba(255,225,77,0.45);
+  }
+  .mm-promo-motif{
+    position:absolute;
+    pointer-events:none;
+    opacity:0.5;
+  }
+  .mm-promo-motif.m-glass{ top:8%; left:5%; width:40px; height:40px; color:var(--pink); filter:drop-shadow(0 0 10px rgba(255,63,166,0.4)); animation:mmPromoSway 4.5s ease-in-out infinite; }
+  .mm-promo-motif.m-key{ bottom:10%; right:6%; width:34px; height:34px; color:var(--yellow); filter:drop-shadow(0 0 10px rgba(255,225,77,0.4)); animation:mmPromoFloat 5.5s ease-in-out infinite; }
+  @keyframes mmPromoSway{
+    0%,100%{ transform:rotate(-6deg) translateY(0); }
+    50%{ transform:rotate(6deg) translateY(-4px); }
+  }
+  @keyframes mmPromoFloat{
+    0%,100%{ transform:translateY(0) rotate(0deg); }
+    50%{ transform:translateY(-6px) rotate(-8deg); }
+  }
+  @media (max-width:640px){
+    .mm-promo-motif{ display:none; }
+  }
+
   @media (prefers-reduced-motion: reduce){
     *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
     html{scroll-behavior:auto;}
@@ -1533,6 +1608,7 @@
     .reserve-bar-link:active{ transform:none !important; }
     .art-panel img,
     .play-card-visual img{ transition:none !important; transform:none !important; }
+    .mm-promo-motif{ animation:none !important; opacity:0.4 !important; }
     /* Grand Openの演出は、待ち時間なしで最終状態を静止表示にする */
     .go-glow{ animation:none !important; opacity:0.85 !important; transform:translate(-50%,-50%) !important; }
     .go-sparkles i{ display:none !important; }
@@ -1706,6 +1782,16 @@
           <h3>カラオケ</h3>
           <p>みんなで歌って、笑って。飲みながら気軽に楽しめます。</p>
         </div>
+      </div>
+
+      <div class="mm-promo reveal" id="murder-mystery">
+        <svg class="mm-promo-motif m-glass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="M20 20l-5.6-5.6"/></svg>
+        <svg class="mm-promo-motif m-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M14 9l2 2"/></svg>
+        <span class="mm-promo-eyebrow">NEW</span>
+        <h2>GLOWにマーダーミステリー登場！</h2>
+        <p class="mm-promo-catch">今夜、あなたも事件の登場人物。</p>
+        <p class="mm-promo-sub">話して、推理して、秘密を探る。GLOWで楽しむマーダーミステリー。</p>
+        <a class="btn btn-mm" href="murder-mystery.html">5つの物語を見てみる</a>
       </div>
     </div>
   </section>

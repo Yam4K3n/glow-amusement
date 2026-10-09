@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>マーダーミステリー｜GLOW（グロウ）</title>
+<meta name="description" content="GLOWで遊べる体験型推理ゲーム「マーダーミステリー」5作品をご紹介。会話と手がかりから事件の真相を探る、中標津の大人の推理体験。">
+<meta name="theme-color" content="#0a0916">
+
+<!-- OGP（SNSシェア時の表示設定） -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="GLOW">
+<meta property="og:title" content="マーダーミステリー｜GLOW">
+<meta property="og:description" content="今夜、あなたも事件の登場人物。GLOWで遊べる体験型推理ゲーム「マーダーミステリー」5作品をご紹介します。">
+<meta property="og:url" content="https://yam4k3n.github.io/glow-amusement/murder-mystery.html">
+<meta property="og:image" content="https://yam4k3n.github.io/glow-amusement/ogp.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="中標津のアミューズメントバーGLOW">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="マーダーミステリー｜GLOW">
+<meta name="twitter:description" content="今夜、あなたも事件の登場人物。GLOWで遊べる体験型推理ゲーム「マーダーミステリー」5作品をご紹介します。">
+<meta name="twitter:image" content="https://yam4k3n.github.io/glow-amusement/ogp.jpg">
+
+<link rel="canonical" href="https://yam4k3n.github.io/glow-amusement/murder-mystery.html">
+
+<link rel="icon" type="image/png" href="./favicon.png">
+<link rel="apple-touch-icon" href="./favicon.png">
+
+<style>
+  :root{
+    --bg-0:#07060d;
+    --panel:#151228;
+    --panel-border:rgba(255,255,255,0.08);
+    --text-main:#f4f2fa;
+    --text-sub:#b7b0cc;
+    --text-faint:#8a83a3;
+    --pink:#ff3fa6;
+    --purple:#9b5cff;
+    --blue:#3fd4ff;
+    --yellow:#ffe14d;
+    --radius:16px;
+    --maxw:1200px;
+    --header-h:60px;
+    color-scheme: dark;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle 1px, rgba(255,63,166,0.45), transparent 1.6px) 12% 8%/210px 260px repeat,
+      radial-gradient(circle 1px, rgba(63,212,255,0.4), transparent 1.6px) 68% 35%/260px 300px repeat,
+      radial-gradient(circle 1px, rgba(155,92,255,0.4), transparent 1.6px) 35% 70%/230px 240px repeat,
+      radial-gradient(ellipse at 20% -10%, rgba(155,92,255,0.16), transparent 55%),
+      radial-gradient(ellipse at 90% 10%, rgba(63,212,255,0.10), transparent 50%),
+      radial-gradient(ellipse at 50% 100%, rgba(255,225,77,0.06), transparent 55%),
+      var(--bg-0);
+    color:var(--text-main);
+    font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.8;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;}
+  h1,h2,h3{margin:0;line-height:1.4;}
+
+  .container{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 20px;
+  }
+
+  /* ---------- Header ---------- */
+  .site-header{
+    position:sticky;
+    top:0;
+    z-index:50;
+    height:var(--header-h);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 20px;
+    background:rgba(7,6,13,0.82);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--panel-border);
+  }
+  .back-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:0.85rem;
+    color:var(--text-sub);
+    text-decoration:none;
+    letter-spacing:0.02em;
+  }
+  .back-link svg{width:16px;height:16px;flex-shrink:0;}
+  .header-brand{
+    font-family:Georgia,"Times New Roman",serif;
+    font-weight:700;
+    letter-spacing:0.08em;
+    color:#fff;
+    font-size:1.1rem;
+    text-shadow:0 0 10px rgba(255,63,166,0.5), 0 0 22px rgba(155,92,255,0.3);
+    animation:headerBrandNeonPulse 5s ease-in-out infinite;
+  }
+  @keyframes headerBrandNeonPulse{
+    0%,100%{ text-shadow:0 0 10px rgba(255,63,166,0.5), 0 0 22px rgba(155,92,255,0.3); }
+    50%{ text-shadow:0 0 15px rgba(255,63,166,0.75), 0 0 32px rgba(155,92,255,0.5); }
+  }
+
+  /* ---------- Page head / hero ---------- */
+  .page-head{
+    position:relative;
+    padding:52px 0 32px;
+    text-align:center;
+    overflow:hidden;
+  }
+  .page-eyebrow{
+    font-size:0.7rem;
+    letter-spacing:0.3em;
+    color:var(--blue);
+    text-shadow:0 0 10px rgba(63,212,255,0.5);
+    margin-bottom:12px;
+    display:block;
+  }
+  .page-title{
+    font-size:clamp(1.5rem, 4vw, 2.1rem);
+    font-weight:700;
+    color:#fff;
+  }
+  .page-title .hl{
+    background:linear-gradient(90deg, var(--pink), var(--purple), var(--yellow));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .divider{
+    width:56px;
+    height:3px;
+    margin:18px auto 0;
+    border-radius:3px;
+    background:linear-gradient(90deg, var(--pink), var(--purple), var(--blue), var(--yellow), var(--pink));
+    background-size:220% 100%;
+    animation:dividerFlow 7s linear infinite;
+  }
+  @keyframes dividerFlow{
+    0%{background-position:0% 0%;}
+    100%{background-position:-120% 0%;}
+  }
+  .mm-catch{
+    margin-top:22px;
+    font-size:clamp(1.15rem, 3.4vw, 1.5rem);
+    font-weight:700;
+    color:#fff;
+    text-shadow:0 0 10px rgba(255,225,77,0.45), 0 0 22px rgba(255,63,166,0.3);
+  }
+  .mm-subtext{
+    margin-top:10px;
+    color:var(--text-sub);
+    font-size:0.92rem;
+  }
+  .page-lead{
+    margin-top:18px;
+    color:var(--text-sub);
+    font-size:0.92rem;
+    max-width:560px;
+    margin-left:auto;
+    margin-right:auto;
+  }
+
+  /* ---------- 相互リンクピル ---------- */
+  .mm-crosslink{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    margin-top:20px;
+    padding:8px 18px;
+    border-radius:999px;
+    border:1px solid rgba(63,212,255,0.4);
+    color:var(--blue);
+    font-size:0.78rem;
+    text-decoration:none;
+    background:rgba(63,212,255,0.06);
+    transition:filter .2s ease, border-color .2s ease;
+  }
+  .mm-crosslink:hover,
+  .mm-crosslink:active{
+    filter:brightness(1.15);
+    border-color:rgba(63,212,255,0.7);
+  }
+  .mm-crosslink svg{width:14px;height:14px;flex-shrink:0;}
+
+  /* ---------- 探偵モチーフの装飾（控えめ・ゆらぎ程度） ---------- */
+  .mm-motif{
+    position:absolute;
+    pointer-events:none;
+    opacity:0.5;
+    color:var(--blue);
+    filter:drop-shadow(0 0 10px rgba(63,212,255,0.35));
+  }
+  .mm-motif.m-glass{ top:6%; left:6%; width:46px; height:46px; color:var(--pink); filter:drop-shadow(0 0 10px rgba(255,63,166,0.4)); animation:mmSway 4.5s ease-in-out infinite; }
+  .mm-motif.m-key{ top:10%; right:7%; width:38px; height:38px; color:var(--yellow); filter:drop-shadow(0 0 10px rgba(255,225,77,0.4)); animation:mmKeyFloat 5.5s ease-in-out infinite; }
+  .mm-motif.m-finger{ bottom:10%; left:10%; width:34px; height:34px; animation:mmPulseFade 4s ease-in-out infinite; }
+  .mm-motif.m-envelope{ bottom:8%; right:9%; width:40px; height:40px; color:var(--purple); filter:drop-shadow(0 0 10px rgba(155,92,255,0.4)); animation:mmKeyFloat 6s ease-in-out infinite reverse; }
+  .mm-footsteps{
+    position:absolute;
+    left:50%;
+    bottom:2%;
+    transform:translateX(-50%);
+    display:flex;
+    gap:16px;
+    pointer-events:none;
+  }
+  .mm-footsteps svg{
+    width:18px;height:18px;
+    color:var(--text-faint);
+    opacity:0;
+    animation:mmFootstep 4.5s ease-in-out infinite;
+  }
+  .mm-footsteps svg:nth-child(1){ animation-delay:0s; transform:translateY(4px) rotate(-8deg); }
+  .mm-footsteps svg:nth-child(2){ animation-delay:0.45s; transform:translateY(-2px) rotate(6deg); }
+  .mm-footsteps svg:nth-child(3){ animation-delay:0.9s; transform:translateY(4px) rotate(-8deg); }
+  .mm-footsteps svg:nth-child(4){ animation-delay:1.35s; transform:translateY(-2px) rotate(6deg); }
+  @keyframes mmSway{
+    0%,100%{ transform:rotate(-6deg) translateY(0); }
+    50%{ transform:rotate(6deg) translateY(-4px); }
+  }
+  @keyframes mmKeyFloat{
+    0%,100%{ transform:translateY(0) rotate(0deg); }
+    50%{ transform:translateY(-6px) rotate(-8deg); }
+  }
+  @keyframes mmPulseFade{
+    0%,100%{ opacity:0.3; }
+    50%{ opacity:0.65; }
+  }
+  @keyframes mmFootstep{
+    0%,10%{ opacity:0; }
+    30%,70%{ opacity:0.55; }
+    90%,100%{ opacity:0; }
+  }
+  @media (max-width:640px){
+    .mm-motif{ display:none; }
+  }
+
+  /* ---------- あそびかたステップ ---------- */
+  .mm-flow{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:12px;
+    margin-top:36px;
+  }
+  @media (min-width:700px){
+    .mm-flow{ grid-template-columns:repeat(4, 1fr); gap:16px; }
+  }
+  .mm-flow-step{
+    padding:18px 14px;
+    border-radius:var(--radius);
+    border:1px solid var(--panel-border);
+    background:var(--panel);
+    text-align:center;
+    box-shadow:0 0 0 1px rgba(255,255,255,0.03), 0 0 20px rgba(155,92,255,0.06);
+  }
+  .mm-flow-step-icon{
+    width:30px;height:30px;
+    margin:0 auto 10px;
+    color:var(--yellow);
+    filter:drop-shadow(0 0 8px rgba(255,225,77,0.4));
+  }
+  .mm-flow-step-num{
+    display:block;
+    font-size:0.68rem;
+    letter-spacing:0.1em;
+    color:var(--pink);
+    text-shadow:0 0 8px rgba(255,63,166,0.4);
+    margin-bottom:4px;
+  }
+  .mm-flow-step h3{
+    font-size:0.88rem;
+    font-weight:700;
+    color:#fff;
+  }
+  .mm-flow-step p{
+    margin:6px 0 0;
+    font-size:0.76rem;
+    color:var(--text-sub);
+    line-height:1.6;
+  }
+
+  /* ---------- 作品グリッド（ケースファイル風カード） ---------- */
+  .mm-section{
+    padding:48px 0 8px;
+  }
+  .mm-section-head{
+    text-align:center;
+    margin-bottom:28px;
+  }
+  .mm-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:14px;
+    padding:0 0 56px;
+  }
+  @media (min-width:700px){
+    .mm-grid{ grid-template-columns:repeat(3, 1fr); gap:18px; }
+  }
+  .mm-card{
+    appearance:none;
+    display:flex;
+    flex-direction:column;
+    width:100%;
+    border:1px solid rgba(255,225,77,0.18);
+    background:var(--panel);
+    padding:0;
+    margin:0;
+    border-radius:14px;
+    overflow:hidden;
+    cursor:pointer;
+    text-align:left;
+    position:relative;
+    box-shadow:0 0 0 1px rgba(255,255,255,0.03), 0 0 18px rgba(255,63,166,0.08);
+    animation:mmCardGlow 6s ease-in-out infinite;
+  }
+  .mm-card:nth-child(2n){ animation-delay:1.2s; }
+  .mm-card:nth-child(3n){ animation-delay:2.4s; }
+  @keyframes mmCardGlow{
+    0%,100%{ box-shadow:0 0 0 1px rgba(255,255,255,0.03), 0 0 16px rgba(255,63,166,0.08); }
+    50%{ box-shadow:0 0 0 1px rgba(255,255,255,0.05), 0 0 24px rgba(255,225,77,0.18); }
+  }
+  .mm-card.reveal{
+    transition:opacity .6s ease, transform .6s ease, border-color .25s ease;
+  }
+  @media (hover:hover) and (pointer:fine){
+    .mm-card.reveal:hover{
+      border-color:rgba(255,225,77,0.5);
+      transform:translateY(-3px);
+    }
+  }
+  .mm-card-tag{
+    position:absolute;
+    top:7px;
+    left:7px;
+    z-index:2;
+    display:inline-flex;
+    align-items:center;
+    padding:3px 10px;
+    border-radius:999px;
+    font-size:0.6rem;
+    font-weight:700;
+    letter-spacing:0.06em;
+    color:#160f06;
+    background:var(--yellow);
+    box-shadow:0 0 10px rgba(255,225,77,0.6);
+    pointer-events:none;
+  }
+  .mm-card-photo{
+    position:relative;
+    display:block;
+    width:100%;
+    aspect-ratio:4/3;
+    overflow:hidden;
+    flex-shrink:0;
+  }
+  .mm-card-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+  }
+  .mm-card-body{
+    padding:10px 12px 14px;
+  }
+  .mm-card-title{
+    display:block;
+    font-size:0.82rem;
+    font-weight:700;
+    color:#fff;
+    line-height:1.4;
+  }
+  .mm-card-players{
+    display:block;
+    margin-top:4px;
+    font-size:0.7rem;
+    color:var(--text-faint);
+  }
+
+  /* ---------- 相互リンク（通常ゲームへ） ---------- */
+  .mm-linkcard{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin:8px 0 48px;
+    padding:18px 20px;
+    border-radius:var(--radius);
+    border:1px solid var(--panel-border);
+    background:var(--panel);
+    text-decoration:none;
+    box-shadow:0 0 0 1px rgba(255,255,255,0.03), 0 0 20px rgba(63,212,255,0.08);
+  }
+  .mm-linkcard svg{
+    flex-shrink:0;
+    width:30px;height:30px;
+    color:var(--blue);
+    filter:drop-shadow(0 0 8px rgba(63,212,255,0.4));
+  }
+  .mm-linkcard-text h3{
+    font-size:0.88rem;
+    font-weight:700;
+    color:#fff;
+  }
+  .mm-linkcard-text p{
+    margin:4px 0 0;
+    font-size:0.76rem;
+    color:var(--text-sub);
+  }
+
+  /* ---------- 予約導線 ---------- */
+  .mm-reserve{
+    text-align:center;
+    padding:40px 0 64px;
+  }
+  .mm-reserve h2{
+    font-size:1.1rem;
+    font-weight:700;
+    color:#fff;
+  }
+  .mm-reserve p{
+    margin:10px auto 22px;
+    max-width:480px;
+    color:var(--text-sub);
+    font-size:0.86rem;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:14px 32px;
+    border-radius:999px;
+    font-size:0.92rem;
+    font-weight:700;
+    text-decoration:none;
+    border:1px solid transparent;
+    cursor:pointer;
+    position:relative;
+    overflow:hidden;
+    transition:filter .2s ease, box-shadow .2s ease, transform .15s ease;
+  }
+  .btn-mm{
+    background:linear-gradient(90deg, var(--pink), var(--purple) 55%, var(--yellow));
+    color:#160f06;
+    box-shadow:0 0 22px rgba(255,225,77,0.3);
+  }
+  .btn-mm:hover,
+  .btn-mm:active{
+    filter:brightness(1.08);
+    box-shadow:0 0 28px rgba(255,225,77,0.45);
+  }
+  .btn:active{ transform:translateY(2px); }
+
+  footer{
+    text-align:center;
+    padding:28px 20px 40px;
+    font-size:0.78rem;
+    color:var(--text-faint);
+  }
+
+  /* ---------- scroll reveal ---------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(18px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  .reveal.is-visible{
+    opacity:1;
+    transform:translateY(0);
+  }
+  /* ---------- スマートフォン表示：スクロールアニメーションを無効化し、最初から表示する ---------- */
+  @media (max-width: 767px) {
+    .reveal,
+    .mm-card.reveal {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+
+  /* ---------- Lightbox ---------- */
+  .lightbox{
+    position:fixed;
+    inset:0;
+    z-index:100;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(4,3,9,0.92);
+    backdrop-filter:blur(4px);
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .25s ease;
+    padding:24px;
+  }
+  .lightbox.is-open{
+    opacity:1;
+    pointer-events:auto;
+  }
+  .lightbox-content{
+    max-width:min(92vw, 640px);
+    max-height:92vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    overflow-y:auto;
+    transform:scale(0.96);
+    transition:transform .35s ease;
+  }
+  .lightbox.is-open .lightbox-content{
+    transform:scale(1);
+  }
+  .lightbox-figure{
+    position:relative;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+  }
+  .lightbox-figure img{
+    max-width:100%;
+    max-height:50vh;
+    border-radius:12px;
+    border:1px solid rgba(255,225,77,0.25);
+    box-shadow:0 0 40px rgba(255,63,166,0.2);
+  }
+  .lightbox-info{
+    width:100%;
+    max-width:520px;
+    margin-top:16px;
+    text-align:center;
+    flex-shrink:0;
+  }
+  .lightbox-game-name{
+    margin:0 0 10px;
+    color:#fff;
+    font-size:1.05rem;
+    font-weight:700;
+  }
+  .lightbox-meta{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:center;
+    gap:8px 16px;
+    margin-bottom:14px;
+  }
+  .lightbox-meta .meta-item{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:0.8rem;
+    color:var(--text-main);
+  }
+  .lightbox-meta .meta-label{
+    font-size:0.66rem;
+    letter-spacing:0.06em;
+    color:var(--blue);
+    text-shadow:0 0 8px rgba(63,212,255,0.4);
+  }
+  .lightbox-stars{
+    color:var(--yellow);
+    letter-spacing:1px;
+    text-shadow:0 0 8px rgba(255,225,77,0.4);
+  }
+  .lightbox-synopsis{
+    margin:0;
+    padding:14px 16px;
+    border-radius:12px;
+    border:1px solid var(--panel-border);
+    background:rgba(255,255,255,0.03);
+    color:var(--text-sub);
+    font-size:0.82rem;
+    line-height:1.85;
+    text-align:left;
+  }
+  .lightbox-note{
+    margin:10px 0 0;
+    font-size:0.72rem;
+    color:var(--text-faint);
+  }
+  .lightbox-btn{
+    appearance:none;
+    border:1px solid var(--panel-border);
+    background:rgba(21,18,40,0.8);
+    color:var(--text-main);
+    width:42px;
+    height:42px;
+    border-radius:999px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition:transform .15s ease;
+  }
+  .lightbox-btn:active{ transform:scale(0.94); }
+  .lightbox-btn:focus-visible{ outline:2px solid var(--blue); outline-offset:2px; }
+  .lightbox-btn svg{width:18px;height:18px;}
+  .lightbox-close{
+    position:absolute;
+    top:-18px;
+    right:-18px;
+  }
+  @media (max-width:600px){
+    .lightbox-close{ top:-14px; right:0; }
+  }
+  .lightbox-nav{
+    position:fixed;
+    top:50%;
+    transform:translateY(-50%);
+  }
+  .lightbox-prev{ left:16px; }
+  .lightbox-next{ right:16px; }
+  .lightbox-counter{
+    display:block;
+    margin-top:12px;
+    font-size:0.76rem;
+    color:var(--text-faint);
+    letter-spacing:0.05em;
+    white-space:nowrap;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+    html{scroll-behavior:auto;}
+    .mm-card:hover,
+    .mm-card:active,
+    .lightbox-btn:active,
+    .btn:active{ transform:none !important; }
+    .lightbox-content{ transform:none !important; }
+    .header-brand{ animation:none !important; }
+    .mm-motif,
+    .mm-footsteps svg{ opacity:0.4 !important; animation:none !important; }
+    .mm-card{ animation:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <a class="back-link" href="index.html#murder-mystery">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+    トップへ戻る
+  </a>
+  <span class="header-brand">GLOW</span>
+</header>
+
+<main>
+  <div class="page-head container">
+    <!-- 探偵モチーフの装飾（虫眼鏡・鍵・指紋・封筒。控えめなゆらぎアニメーションのみ） -->
+    <svg class="mm-motif m-glass" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="M20 20l-5.6-5.6"/></svg>
+    <svg class="mm-motif m-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M14 9l2 2"/></svg>
+    <svg class="mm-motif m-finger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 11c1.5 0 2.5 1.2 2.5 3v3M9 12.5v3.5c0 2.5 1.5 4 4 4M7 13v2c0 3.5 2.2 6 6 6M5 13.5v1c0 4.5 3 8 9 8M12 7a5 5 0 0 1 5 5v2"/></svg>
+    <svg class="mm-motif m-envelope" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+    <div class="mm-footsteps" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="12" rx="4" ry="8"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="12" rx="4" ry="8"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="12" rx="4" ry="8"/></svg>
+      <svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="12" rx="4" ry="8"/></svg>
+    </div>
+
+    <span class="page-eyebrow">MURDER MYSTERY</span>
+    <h1 class="page-title">GLOWの<span class="hl">マーダーミステリー</span></h1>
+    <div class="divider"></div>
+    <p class="mm-catch">今夜、あなたも事件の登場人物。</p>
+    <p class="mm-subtext">話して、推理して、秘密を探る。GLOWで楽しむマーダーミステリー。</p>
+    <p class="page-lead">マーダーミステリーは、物語の登場人物になりきり、他のプレイヤーとの会話や手がかりから事件の真相を探っていく体験型の推理ゲームです。初めての方でも、スタッフがご案内しますのでお気軽にどうぞ。</p>
+
+    <a class="mm-crosslink" href="boardgames.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      通常のボードゲーム70種類はこちら
+    </a>
+
+    <div class="mm-flow">
+      <div class="mm-flow-step reveal">
+        <span class="mm-flow-step-num">STEP 1</span>
+        <svg class="mm-flow-step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+        <h3>配役</h3>
+        <p>自分だけのキャラクターと、秘密の設定が配られます。</p>
+      </div>
+      <div class="mm-flow-step reveal">
+        <span class="mm-flow-step-num">STEP 2</span>
+        <svg class="mm-flow-step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <h3>会話</h3>
+        <p>他のプレイヤーと話し、情報や手がかりを交換します。</p>
+      </div>
+      <div class="mm-flow-step reveal">
+        <span class="mm-flow-step-num">STEP 3</span>
+        <svg class="mm-flow-step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="M20 20l-5.6-5.6"/></svg>
+        <h3>推理</h3>
+        <p>集めた手がかりをもとに、事件の真相を考えます。</p>
+      </div>
+      <div class="mm-flow-step reveal">
+        <span class="mm-flow-step-num">STEP 4</span>
+        <svg class="mm-flow-step-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 6l3 3M14 9l2 2"/></svg>
+        <h3>解決</h3>
+        <p>推理を発表し合い、本当の真相が明らかになります。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mm-section">
+    <div class="mm-section-head reveal">
+      <span class="page-eyebrow">5 STORIES</span>
+      <h2 class="page-title" style="font-size:clamp(1.2rem,3.4vw,1.6rem);">GLOWで遊べる<span class="hl">5つの物語</span></h2>
+      <p class="page-lead">気になる一枚をタップすると、人数や時間などの詳細をご覧いただけます（ネタバレなし）。</p>
+    </div>
+
+    <div class="mm-grid" id="mmGrid">
+      <button class="mm-card reveal" type="button" data-index="0">
+        <span class="mm-card-tag">CASE 01</span>
+        <span class="mm-card-photo"><img src="web-optimized/mm-camp-murder.jpg" alt="キャンプ場の殺人鬼" loading="lazy"></span>
+        <span class="mm-card-body">
+          <span class="mm-card-title">キャンプ場の殺人鬼</span>
+          <span class="mm-card-players">4〜5人</span>
+        </span>
+      </button>
+      <button class="mm-card reveal" type="button" data-index="1">
+        <span class="mm-card-tag">CASE 02</span>
+        <span class="mm-card-photo"><img src="web-optimized/mm-kairanban.jpg" alt="回覧板" loading="lazy"></span>
+        <span class="mm-card-body">
+          <span class="mm-card-title">回覧板</span>
+          <span class="mm-card-players">人数未確認</span>
+        </span>
+      </button>
+      <button class="mm-card reveal" type="button" data-index="2">
+        <span class="mm-card-tag">CASE 03</span>
+        <span class="mm-card-photo"><img src="web-optimized/mm-onsen.jpg" alt="死体と温泉" loading="lazy"></span>
+        <span class="mm-card-body">
+          <span class="mm-card-title">死体と温泉</span>
+          <span class="mm-card-players">4〜5人</span>
+        </span>
+      </button>
+      <button class="mm-card reveal" type="button" data-index="3">
+        <span class="mm-card-tag">CASE 04</span>
+        <span class="mm-card-photo"><img src="web-optimized/mm-triangle.jpg" alt="時をかけるトライアングル" loading="lazy"></span>
+        <span class="mm-card-body">
+          <span class="mm-card-title">時をかけるトライアングル</span>
+          <span class="mm-card-players">3人</span>
+        </span>
+      </button>
+      <button class="mm-card reveal" type="button" data-index="4">
+        <span class="mm-card-tag">CASE 05</span>
+        <span class="mm-card-photo"><img src="web-optimized/mm-weekend-murderer.jpg" alt="週末の殺人鬼" loading="lazy"></span>
+        <span class="mm-card-body">
+          <span class="mm-card-title">週末の殺人鬼</span>
+          <span class="mm-card-players">2人</span>
+        </span>
+      </button>
+    </div>
+
+    <a class="mm-linkcard reveal" href="boardgames.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M9 4v18"/></svg>
+      <span class="mm-linkcard-text">
+        <h3>通常のボードゲームは70種類</h3>
+        <p>定番からじっくり楽しめるものまで。ボードゲーム一覧はこちら。</p>
+      </span>
+    </a>
+  </div>
+
+  <div class="container mm-reserve">
+    <h2 class="reveal">気になる物語は見つかりましたか？</h2>
+    <p class="reveal">ご来店・体験に関するご予約やお問い合わせは、下記フォームよりお気軽にどうぞ。</p>
+    <a class="btn btn-mm reveal" href="https://docs.google.com/forms/d/e/1FAIpQLScoh-x2coiShjTDubU0zo3LKmYwMXS-KDLrsPakyGHMK9xAmg/viewform" target="_blank" rel="noopener noreferrer">ご予約・お問い合わせはこちら</a>
+  </div>
+</main>
+
+<footer>
+  <div>GLOW - AMUSEMENT BAR</div>
+</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="マーダーミステリー作品詳細">
+  <div class="lightbox-content">
+    <div class="lightbox-figure">
+      <img id="lightboxImg" src="" alt="">
+      <button class="lightbox-btn lightbox-close" id="lightboxClose" aria-label="閉じる">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="lightbox-info">
+      <p class="lightbox-game-name" id="lightboxName"></p>
+      <div class="lightbox-meta" id="lightboxMeta"></div>
+      <p class="lightbox-synopsis" id="lightboxSynopsis"></p>
+      <p class="lightbox-note" id="lightboxNote"></p>
+      <span class="lightbox-counter" id="lightboxCounter"></span>
+    </div>
+  </div>
+  <button class="lightbox-btn lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="前の作品">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <button class="lightbox-btn lightbox-nav lightbox-next" id="lightboxNext" aria-label="次の作品">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+  </button>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var SOURCES = [
+    "web-optimized/mm-camp-murder.jpg",
+    "web-optimized/mm-kairanban.jpg",
+    "web-optimized/mm-onsen.jpg",
+    "web-optimized/mm-triangle.jpg",
+    "web-optimized/mm-weekend-murderer.jpg"
+  ];
+
+  /* 人数・時間・GMの要否・LEVELは、公式サイト等で確認できた範囲のみ記載。
+     不明な項目は「未確認」と表示し、推測の数値は入れていません。
+     LEVEL（難易度）は公式表記がある作品のみ掲載しています。 */
+  var GAMES = [
+    {
+      name: "キャンプ場の殺人鬼",
+      players: "4〜5人",
+      time: "約75分",
+      gm: "不要（GMレス）",
+      level: 3,
+      synopsis: "湖畔のキャンプ場で夜を過ごす高校生たちの前に、覆面の殺人鬼が現れ、仲間が次々と襲われていく。生き残った数人は管理棟へ逃げ込むが、犯人の持ち物らしきものが見つかり――助かったはずの仲間の中に、殺人鬼がいるのではという疑いが広がっていく。"
+    },
+    {
+      name: "回覧板",
+      players: "",
+      time: "",
+      gm: "",
+      level: null,
+      synopsis: "作品の詳細情報は現在確認中です。気になる方はぜひ店舗スタッフまでお気軽にお尋ねください。"
+    },
+    {
+      name: "死体と温泉",
+      players: "4〜5人",
+      time: "60分",
+      gm: "",
+      level: null,
+      synopsis: "温泉旅館の露天風呂で、ひとりの男性が撲殺された状態で発見される。疑われるのは小説家、編集者、温泉ライター、近くに宿泊していた踊り子、タオルサービスの配達員の5人。被害者の脱衣カゴから見つかったサイレンサー付きの銃が、事件をさらに複雑にしていく。"
+    },
+    {
+      name: "時をかけるトライアングル",
+      players: "3人",
+      time: "90分",
+      gm: "",
+      level: null,
+      synopsis: "大学のオカルト研究会の周年イベントで、部長が遺体となって発見される。残る3人の部員の誰かが犯人と目される中、部長の過去や各メンバーの動機、部室に残された奇妙な跡、怪異の噂が少しずつ明らかになっていく。"
+    },
+    {
+      name: "週末の殺人鬼",
+      players: "2人（5人のキャラクターを2人で担当）",
+      time: "60分",
+      gm: "",
+      level: null,
+      synopsis: "7年前、田舎町の廃れた寺を訪れた6人の中学生のうちひとりが命を落とし、事故として処理された。7年後、生き残った5人が彼女の墓参りのため故郷に集まるが、折しも近隣の都市では「週末の殺人鬼」と呼ばれる殺人犯の噂が人々を震え上がらせていた。"
+    }
+  ];
+
+  function escapeHTML(str){
+    return String(str)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function starString(n){
+    var full = Math.max(0, Math.min(5, Math.round(n)));
+    return "★★★★★".slice(0, full) + "☆☆☆☆☆".slice(0, 5 - full);
+  }
+
+  /* Reveal on scroll */
+  var revealEls = document.querySelectorAll(".reveal");
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add("is-visible"); });
+  }
+
+  /* Lightbox */
+  var lightbox = document.getElementById("lightbox");
+  var lightboxImg = document.getElementById("lightboxImg");
+  var lightboxName = document.getElementById("lightboxName");
+  var lightboxMeta = document.getElementById("lightboxMeta");
+  var lightboxSynopsis = document.getElementById("lightboxSynopsis");
+  var lightboxNote = document.getElementById("lightboxNote");
+  var lightboxCounter = document.getElementById("lightboxCounter");
+  var closeBtn = document.getElementById("lightboxClose");
+  var prevBtn = document.getElementById("lightboxPrev");
+  var nextBtn = document.getElementById("lightboxNext");
+  var mmCards = document.querySelectorAll(".mm-card");
+
+  var currentPos = 0;
+  var lastFocused = null;
+
+  function show(pos){
+    currentPos = (pos + GAMES.length) % GAMES.length;
+    var game = GAMES[currentPos] || {};
+    lightboxImg.src = SOURCES[currentPos];
+    lightboxImg.alt = game.name ? game.name : ("マーダーミステリー " + (currentPos + 1));
+    lightboxCounter.textContent = (currentPos + 1) + " / " + GAMES.length;
+
+    lightboxName.textContent = game.name ? game.name : "未確認";
+
+    var playersText = game.players ? escapeHTML(game.players) : "未確認";
+    var timeText = game.time ? escapeHTML(game.time) : "未確認";
+    var gmText = game.gm ? escapeHTML(game.gm) : "未確認";
+
+    var metaHtml =
+      '<span class="meta-item"><span class="meta-label">人数</span>' + playersText + '</span>' +
+      '<span class="meta-item"><span class="meta-label">時間</span>' + timeText + '</span>' +
+      '<span class="meta-item"><span class="meta-label">GM</span>' + gmText + '</span>';
+    if (game.level !== null && game.level !== undefined) {
+      metaHtml += '<span class="meta-item"><span class="meta-label">LEVEL</span><span class="lightbox-stars">' + starString(game.level) + '</span></span>';
+    }
+    lightboxMeta.innerHTML = metaHtml;
+
+    lightboxSynopsis.textContent = game.synopsis || "";
+    lightboxNote.textContent = "※犯人・結末など事件の核心部分は記載していません。";
+  }
+
+  function openLightbox(index){
+    lastFocused = document.activeElement;
+    show(index);
+    lightbox.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+    closeBtn.focus();
+  }
+
+  function closeLightbox(){
+    lightbox.classList.remove("is-open");
+    document.body.style.overflow = "";
+    if (lastFocused && typeof lastFocused.focus === "function") {
+      lastFocused.focus();
+    }
+  }
+
+  mmCards.forEach(function(card){
+    card.addEventListener("click", function(){
+      var idx = parseInt(card.getAttribute("data-index"), 10) || 0;
+      openLightbox(idx);
+    });
+  });
+
+  closeBtn.addEventListener("click", closeLightbox);
+  prevBtn.addEventListener("click", function(){ show(currentPos - 1); });
+  nextBtn.addEventListener("click", function(){ show(currentPos + 1); });
+
+  lightbox.addEventListener("click", function(e){
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener("keydown", function(e){
+    if (!lightbox.classList.contains("is-open")) return;
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowLeft") show(currentPos - 1);
+    if (e.key === "ArrowRight") show(currentPos + 1);
+  });
+})();
+</script>
+
+</body>
+</html>
