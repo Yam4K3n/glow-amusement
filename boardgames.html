@@ -13,14 +13,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>ボードゲーム一覧｜GLOW（グロウ）</title>
-<meta name="description" content="GLOWで遊べる76種類のボードゲーム一覧。人数・所要時間・難易度を掲載し、遊び方動画や解説記事も確認できます。">
+<meta name="description" content="GLOWで遊べる85種類のボードゲーム一覧。人数・所要時間・難易度を掲載し、遊び方動画や解説記事も確認できます。">
 <meta name="theme-color" content="#0a0916">
 
 <!-- OGP（SNSシェア時の表示設定） -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="GLOW">
-<meta property="og:title" content="76種類のボードゲーム一覧｜GLOW">
-<meta property="og:description" content="GLOWで遊べる76種類のボードゲーム一覧。人数・所要時間・難易度を掲載し、遊び方動画や解説記事も確認できます。">
+<meta property="og:title" content="85種類のボードゲーム一覧｜GLOW">
+<meta property="og:description" content="GLOWで遊べる85種類のボードゲーム一覧。人数・所要時間・難易度を掲載し、遊び方動画や解説記事も確認できます。">
 <meta property="og:url" content="https://yam4k3n.github.io/glow-amusement/boardgames.html">
 <meta property="og:image" content="https://yam4k3n.github.io/glow-amusement/ogp.jpg">
 <meta property="og:image:width" content="1200">
@@ -28,8 +28,8 @@
 <meta property="og:image:alt" content="中標津のアミューズメントバーGLOW">
 <meta property="og:locale" content="ja_JP">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="76種類のボードゲーム一覧｜GLOW">
-<meta name="twitter:description" content="GLOWで遊べる76種類のボードゲーム一覧。人数・所要時間・難易度を掲載し、遊び方動画や解説記事も確認できます。">
+<meta name="twitter:title" content="85種類のボードゲーム一覧｜GLOW">
+<meta name="twitter:description" content="GLOWで遊べる85種類のボードゲーム一覧。人数・所要時間・難易度を掲載し、遊び方動画や解説記事も確認できます。">
 <meta name="twitter:image" content="https://yam4k3n.github.io/glow-amusement/ogp.jpg">
 
 <link rel="canonical" href="https://yam4k3n.github.io/glow-amusement/boardgames.html">
@@ -721,6 +721,27 @@
   }
   .lightbox-video-pending[hidden]{ display:none; }
 
+  /* ---------- 公式商品情報リンク（確認できたゲームだけ小さく表示） ---------- */
+  .lightbox-official-link{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    margin-top:12px;
+    font-size:0.72rem;
+    color:var(--text-faint);
+    text-decoration:none;
+    letter-spacing:0.02em;
+    border-bottom:1px solid rgba(255,255,255,0.18);
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .lightbox-official-link:hover,
+  .lightbox-official-link:focus-visible{
+    color:var(--blue);
+    border-color:var(--blue);
+  }
+  .lightbox-official-link svg{ flex-shrink:0; width:12px; height:12px; }
+  .lightbox-official-link[hidden]{ display:none; }
+
   /* ---------- 遊び方動画モーダル ---------- */
   .video-modal{
     position:fixed;
@@ -887,10 +908,10 @@
 <main>
   <div class="page-head container">
     <span class="page-eyebrow">GAME LIST</span>
-    <h1 class="page-title"><span class="hl">76種類</span>のボードゲーム</h1>
+    <h1 class="page-title"><span class="hl">85種類</span>のボードゲーム</h1>
     <div class="divider"></div>
     <p class="page-lead">気になる一枚をタップすると拡大表示できます。</p>
-    <p class="page-count-note">現在76種類。<span class="badge-soft">ラインナップは随時追加予定！</span></p>
+    <p class="page-count-note">現在85種類。<span class="badge-soft">ラインナップは随時追加予定！</span></p>
     <a class="crosslink-pill" href="murder-mystery.html">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="M20 20l-5.6-5.6"/></svg>
       体験型推理ゲーム「マーダーミステリー」も遊べます
@@ -1241,6 +1262,42 @@
             <span class="bg-card-photo"><img src="web-optimized/IMG_6231.jpeg" alt="パーティピリピリ" loading="lazy"></span>
             <span class="bg-card-title">パーティピリピリ</span>
           </button>
+          <button class="bg-card reveal" type="button" data-index="76">
+            <span class="bg-card-photo"><span class="bg-card-new-badge">NEW</span><img src="web-optimized/boardgame-linq.jpg" alt="リンク（LINQ）" loading="lazy"></span>
+            <span class="bg-card-title">リンク（LINQ）</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="77">
+            <span class="bg-card-photo"><span class="bg-card-new-badge">NEW</span><img src="web-optimized/boardgame-kyouso-bakutan.jpg" alt="教祖爆誕" loading="lazy"></span>
+            <span class="bg-card-title">教祖爆誕</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="78">
+            <span class="bg-card-photo"><span class="bg-card-new-badge">NEW</span><img src="web-optimized/boardgame-cheese-thief.jpg" alt="チーズは誰が食べた？" loading="lazy"></span>
+            <span class="bg-card-title">チーズは誰が食べた？</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="79">
+            <span class="bg-card-photo"><span class="bg-card-new-badge">NEW</span><img src="web-optimized/boardgame-resumend.jpg" alt="レジュメンド" loading="lazy"></span>
+            <span class="bg-card-title">レジュメンド</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="80">
+            <span class="bg-card-photo"><span class="bg-card-new-badge">NEW</span><img src="web-optimized/boardgame-crazy-corgi.jpg" alt="クレイジーコーギー" loading="lazy"></span>
+            <span class="bg-card-title">クレイジーコーギー</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="81">
+            <span class="bg-card-photo"><span class="bg-card-new-badge">NEW</span><img src="web-optimized/boardgame-insider-black.jpg" alt="インサイダーゲーム ブラック" loading="lazy"></span>
+            <span class="bg-card-title">インサイダーゲーム ブラック</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="82">
+            <span class="bg-card-photo"><span class="bg-card-new-badge">NEW</span><img src="web-optimized/boardgame-genkai-shiritori-party.jpg" alt="限界しりとりパーティー！" loading="lazy"></span>
+            <span class="bg-card-title">限界しりとりパーティー！</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="83">
+            <span class="bg-card-photo"><span class="bg-card-new-badge">NEW</span><img src="web-optimized/boardgame-matchstick-tycoon.jpg" alt="マッチ売りの大富豪" loading="lazy"></span>
+            <span class="bg-card-title">マッチ売りの大富豪</span>
+          </button>
+          <button class="bg-card reveal" type="button" data-index="84">
+            <span class="bg-card-photo"><span class="bg-card-new-badge">NEW</span><img src="web-optimized/boardgame-dobble-pokemon.jpg" alt="ドブル ポケットモンスター" loading="lazy"></span>
+            <span class="bg-card-title">ドブル ポケットモンスター</span>
+          </button>
     </div>
   </div>
 
@@ -1274,6 +1331,12 @@
         <span id="lightboxVideoBtnLabel">遊び方動画を見る</span>
       </button>
       <p class="lightbox-video-pending" id="lightboxVideoPending" hidden>遊び方動画は準備中です</p>
+      <a class="lightbox-official-link" id="lightboxOfficialLink" href="#" target="_blank" rel="noopener noreferrer" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M14 4h6v6"/><path d="M10 14L20 4"/><path d="M18 13v5a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h5"/>
+        </svg>
+        <span id="lightboxOfficialLinkLabel">公式商品情報</span>
+      </a>
       <span class="lightbox-counter" id="lightboxCounter"></span>
     </div>
   </div>
@@ -1386,10 +1449,20 @@
   "web-optimized/IMG_6228.jpeg",
   "web-optimized/IMG_6229.jpeg",
   "web-optimized/IMG_6230.jpeg",
-  "web-optimized/IMG_6231.jpeg"
+  "web-optimized/IMG_6231.jpeg",
+  "web-optimized/boardgame-linq.jpg",
+  "web-optimized/boardgame-kyouso-bakutan.jpg",
+  "web-optimized/boardgame-cheese-thief.jpg",
+  "web-optimized/boardgame-resumend.jpg",
+  "web-optimized/boardgame-crazy-corgi.jpg",
+  "web-optimized/boardgame-insider-black.jpg",
+  "web-optimized/boardgame-genkai-shiritori-party.jpg",
+  "web-optimized/boardgame-matchstick-tycoon.jpg",
+  "web-optimized/boardgame-dobble-pokemon.jpg"
   ];
 
-  /* ゲーム情報（ネットで確認できた範囲で記載。不明な項目は空欄にしています） */
+  /* ゲーム情報（ネットで確認できた範囲で記載。不明な項目は空欄にしています）
+     officialUrl: 公式の商品ページ等を実際に開いて確認できた場合のみ設定（推測で作らない） */
   var GAMES = [
   { name: "街コロ 新装版", players: "2〜5人", time: "30分", diff: 2, desc: "サイコロを振って出た目で収入を得て、建物を建てながら街を発展させるすごろく風ゲーム。シンプルなルールで子どもから大人まで楽しめます。", isNew: true },
   { name: "ウェイウェイらんど！3", time: "25〜90分", diff: 1, desc: "コマを進めながら指示に従って盛り上がる、お酒がテーマのすごろく風パーティーゲーム。一気飲みなど無理な飲酒を強いるルールはなく、お酒が苦手な方はソフトドリンクでも楽しめます。", isNew: true },
@@ -1466,7 +1539,16 @@
   { name: "極 チンチロセット", players: "遊び方による", time: "遊び方による", diff: 1 },
   { name: "ジェンガ", players: "2人〜", time: "10〜20分", diff: 1 },
   { name: "ドブル", players: "2〜8人", time: "約15分", diff: 1, videoUrl: "https://www.youtube.com/watch?v=FFUUbTutQ5s" },
-  { name: "パーティピリピリ", players: "2〜4人", time: "1分〜/ラウンド", diff: 1 }
+  { name: "パーティピリピリ", players: "2〜4人", time: "1分〜/ラウンド", diff: 1 },
+  { name: "リンク（LINQ）", players: "4〜8人", time: "約15分", diff: 2, desc: "全員の中に2人だけ潜む「スパイ」が、互いだけが知る共通キーワードから連想した言葉でひそかに相方を探し合う会話推理ゲーム。周りはスパイに気づかれないよう紛らわしい言葉で撹乱したり、正体を推理したりして盛り上がる。", officialUrl: "https://sugorokuya.jp/p/linq", officialLabel: "公式商品情報", isNew: true },
+  { name: "教祖爆誕", players: "3〜6人", time: "15〜30分", diff: 2, desc: "親以外の全員が「教祖」となり、配られたお告げカードを組み合わせて即興の神託（お告げ）を作る発想力パーティーゲーム。親が一番心に響いた（面白かった）お告げを選び、選ばれた教祖は教典カードを獲得。先に3枚集めたら勝ち。", videoUrl: "https://www.youtube.com/watch?v=bWjIiAqKMuY", officialUrl: "https://www.clagla.jp/view/item/000000000121", officialLabel: "公式商品情報", isNew: true },
+  { name: "チーズは誰が食べた？", players: "4〜8人", time: "10〜15分", diff: 1, desc: "朝起きたらチーズが消えていた…！犯人はこの中にいる、正体隠匿パーティーゲーム。会話と推理を重ねて、誰がチーズを盗んだのかをみんなで突き止めよう。", isNew: true },
+  { name: "レジュメンド", isNew: true },
+  { name: "クレイジーコーギー", players: "2〜4人", diff: 2, desc: "手札を3つの「ケンネル」に並べてカードのセットを作るスピード感あるカードゲーム。同じ数字が重なると手持ちのカードが「バースト」して他のプレイヤーに渡ってしまうハプニングも。", isNew: true },
+  { name: "インサイダーゲーム ブラック", players: "4〜8人", time: "約15分", diff: 3, desc: "大人気『インサイダー・ゲーム』の発展版。難化したお題カードやNGワードカード、新役職「フォロワー」が加わり、心理戦がさらに複雑に。単体でも、無印版と組み合わせたチーム戦でも楽しめる。", officialUrl: "https://oinkgames.com/ja/games/analog/insider-black", officialLabel: "公式商品情報", isNew: true },
+  { name: "限界しりとりパーティー！", players: "2〜6人", time: "約5〜10分", diff: 2, desc: "専用タイマーで一人ずつの持ち時間を管理しながら、カードに書かれた文字数ぴったりの言葉でしりとりをつなぐスピード勝負ゲーム。持ち時間が0になったら脱落、最後まで残った人の勝ち。", officialUrl: "https://jellyjellycafe.com/games/genkai_shiritori_party", officialLabel: "公式商品情報", isNew: true },
+  { name: "マッチ売りの大富豪", players: "2〜8人", time: "約20分", diff: 3, desc: "大富豪のルールにマッチ棒パズルを組み合わせた変則カードゲーム。場に出たカードの数字をマッチ棒を動かして書き換えながら、手札とマッチ棒を先に使い切った人の勝ち。", videoUrl: "https://www.youtube.com/watch?v=W1M1S5hSNgc", officialUrl: "https://heyteam.net/424/", officialLabel: "公式商品情報", isNew: true },
+  { name: "ドブル ポケットモンスター", diff: 1, desc: "大人気カードゲーム「ドブル」のポケットモンスターデザイン缶ケース版。2枚のカードに1つだけ共通するポケモンの絵柄を、誰よりも早く見つけよう。5種類の遊び方を収録。", officialUrl: "https://www.pokemoncenter-online.com/4970381803407.html", officialLabel: "公式商品情報", isNew: true }
   ];
 
   /* 絞り込みフィルター */
@@ -1590,6 +1672,8 @@
   var lightboxVideoBtn = document.getElementById("lightboxVideoBtn");
   var lightboxVideoBtnLabel = document.getElementById("lightboxVideoBtnLabel");
   var lightboxVideoPending = document.getElementById("lightboxVideoPending");
+  var lightboxOfficialLink = document.getElementById("lightboxOfficialLink");
+  var lightboxOfficialLinkLabel = document.getElementById("lightboxOfficialLinkLabel");
 
   // videoUrlがYouTubeのURLかどうかを判定する（記事などの外部リンクと区別するため）
   function isYouTubeUrl(url){
@@ -1667,6 +1751,21 @@
     }
     if (lightboxVideoPending) {
       lightboxVideoPending.hidden = !!game.videoUrl;
+    }
+
+    // officialUrlが設定されているゲームだけ、公式商品情報への小さなリンクを表示する
+    // （確認できたゲームにのみ設定。存在しないURLを作って表示することはしない）
+    if (lightboxOfficialLink) {
+      lightboxOfficialLink.hidden = !game.officialUrl;
+      if (game.officialUrl) {
+        lightboxOfficialLink.href = game.officialUrl;
+        if (lightboxOfficialLinkLabel) {
+          lightboxOfficialLinkLabel.textContent = game.officialLabel || "公式商品情報";
+        }
+      } else {
+        lightboxOfficialLink.href = "#";
+        if (lightboxOfficialLinkLabel) lightboxOfficialLinkLabel.textContent = "公式商品情報";
+      }
     }
   }
 
