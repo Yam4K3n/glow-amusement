@@ -364,7 +364,10 @@
     inset:-46px -24px;
     z-index:0;
     pointer-events:none;
-    overflow:hidden;
+    /* 以前はここで overflow:hidden していたが、.go-glow のぼかし半径よりこの箱が小さく、
+       ぼかしが消えきる前に四角く切り取られ、薄い矩形の輪郭が見えてしまっていた。
+       親の .hero 自体が overflow:hidden（かつ body にも overflow-x:hidden）なので、
+       ここでの切り取りをやめても画面外にはみ出したり横スクロールが出たりはしない。 */
   }
   .go-glow{
     position:absolute;
@@ -990,15 +993,21 @@
   }
   .price-note strong{ color:var(--text-main); }
 
-  /* ---------- 新料金・飲み放題プラン（画像ギャラリー） ---------- */
+  /* ---------- 料金メニュー画像（ギャラリー） ---------- */
   .price-gallery{ margin-top:36px; }
   .price-gallery-title{
-    margin:0 0 18px;
+    margin:0 0 8px;
     text-align:center;
     font-size:0.92rem;
     font-weight:700;
     letter-spacing:0.06em;
     color:#fff;
+  }
+  .price-gallery-hint{
+    margin:0 0 18px;
+    text-align:center;
+    font-size:0.76rem;
+    color:var(--text-faint);
   }
   .price-gallery-grid{
     display:grid;
@@ -1036,66 +1045,191 @@
   }
   .price-reserve-cta{ margin-top:28px; }
 
-  /* ---------- 料金画像の拡大表示（ライトボックス） ---------- */
+  /* ---------- 曜日別料金の見出し ---------- */
+  .price-day-label{
+    margin:20px 0 12px;
+    font-size:0.8rem;
+    letter-spacing:0.08em;
+    color:var(--blue);
+    text-shadow:0 0 8px rgba(63,212,255,0.35);
+    padding-left:12px;
+    border-left:3px solid var(--blue);
+  }
+  .price-day-label-flat{
+    color:var(--text-main);
+    border-left-color:var(--pink);
+    text-shadow:none;
+  }
+  .price-day-label-sub{
+    margin:-8px 0 16px;
+    padding-left:15px;
+    font-size:0.76rem;
+    color:var(--text-faint);
+  }
+  .price-note-pending{
+    margin-top:14px;
+    text-align:left;
+    background:rgba(255,225,77,0.07);
+    border:1px solid rgba(255,225,77,0.3);
+    border-radius:12px;
+    padding:14px 16px;
+    color:var(--text-sub);
+  }
+  .price-note-pending strong{ color:var(--yellow); }
+
+  /* ---------- 料金ギャラリーのキャプション／PDFリンク ---------- */
+  .price-gallery-caption{
+    display:block;
+    padding:10px 12px;
+    font-size:0.76rem;
+    text-align:center;
+    color:var(--text-sub);
+    border-top:1px solid var(--panel-border);
+  }
+  .price-pdf-link{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    margin-top:16px;
+    padding:14px 18px;
+    border-radius:12px;
+    border:1px solid rgba(255,63,166,0.4);
+    background:rgba(255,63,166,0.06);
+    color:var(--text-main);
+    text-decoration:none;
+    font-size:0.88rem;
+    font-weight:700;
+    text-align:center;
+    transition:box-shadow .2s ease, border-color .2s ease;
+  }
+  .price-pdf-link:hover,
+  .price-pdf-link:active{
+    border-color:rgba(255,63,166,0.7);
+    box-shadow:0 0 20px rgba(255,63,166,0.2);
+  }
+  .price-pdf-link svg{ width:20px; height:20px; flex-shrink:0; color:var(--pink); }
+
+  /* ---------- 酒ガチャ 出現割合テーブル ---------- */
+  .gacha-block{
+    margin-top:18px;
+    background:var(--panel);
+    border:1px solid var(--panel-border);
+    border-radius:var(--radius);
+    padding:20px;
+  }
+  .gacha-block-head{
+    display:flex;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .gacha-block-head h4{
+    font-size:1rem;
+    color:#fff;
+    margin:0;
+  }
+  .gacha-block-price{
+    font-size:0.88rem;
+    font-weight:700;
+    color:var(--pink);
+  }
+  .gacha-table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:0.86rem;
+  }
+  .gacha-table th,
+  .gacha-table td{
+    text-align:left;
+    padding:8px 6px;
+    border-bottom:1px solid var(--panel-border);
+    color:var(--text-sub);
+  }
+  .gacha-table th{
+    color:var(--text-faint);
+    font-weight:400;
+    font-size:0.74rem;
+    letter-spacing:0.05em;
+  }
+  .gacha-table td:last-child,
+  .gacha-table th:last-child{
+    text-align:right;
+    white-space:nowrap;
+    color:var(--text-main);
+    font-weight:700;
+  }
+  .gacha-note{
+    margin-top:12px;
+    font-size:0.76rem;
+    color:var(--text-faint);
+  }
+
+  /* ---------- 料金画像の拡大表示（ライトボックス） ----------
+     画像は画面幅いっぱいに表示し、縦に長い画像は上下にスクロールして
+     全体を確認できるようにしています（細かい文字はピンチズームで拡大可能）。
+     閉じるボタンはスクロールしても位置が動かないよう画面に固定しています。 */
   .price-lightbox{
     position:fixed;
     inset:0;
     z-index:200;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:24px;
-    background:rgba(4,3,9,0.92);
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+    background:rgba(4,3,9,0.94);
     -webkit-backdrop-filter:blur(4px);
     backdrop-filter:blur(4px);
   }
   .price-lightbox[hidden]{ display:none; }
   .price-lightbox-backdrop{
     position:absolute;
-    inset:0;
+    top:0; left:0;
+    width:100%;
+    min-height:100%;
   }
   .price-lightbox-inner{
     position:relative;
-    max-width:min(92vw, 640px);
-    max-height:92vh;
-    display:flex;
+    width:100%;
+    max-width:760px;
+    margin:0 auto;
+    padding:72px 16px 40px;
+    box-sizing:border-box;
   }
   .price-lightbox-img{
-    max-width:100%;
-    max-height:92vh;
+    width:100%;
+    height:auto;
     border-radius:12px;
     border:1px solid var(--panel-border);
     box-shadow:0 0 40px rgba(155,92,255,0.3);
     display:block;
   }
   .price-lightbox-close{
-    position:absolute;
-    top:-18px;
-    right:-18px;
-    width:38px;
-    height:38px;
+    position:fixed;
+    top:16px;
+    right:16px;
+    z-index:201;
+    width:44px;
+    height:44px;
     display:flex;
     align-items:center;
     justify-content:center;
     padding:0;
-    border:1px solid var(--panel-border);
+    border:1px solid rgba(255,255,255,0.18);
     border-radius:50%;
-    background:rgba(21,18,40,0.92);
+    background:rgba(21,18,40,0.95);
     color:var(--text-main);
     cursor:pointer;
   }
-  .price-lightbox-close svg{ width:16px; height:16px; }
+  .price-lightbox-close[hidden]{ display:none; }
+  .price-lightbox-close svg{ width:18px; height:18px; }
   .price-lightbox-close:hover,
   .price-lightbox-close:active{
     color:#fff;
-    border-color:rgba(255,255,255,0.35);
+    border-color:rgba(255,255,255,0.4);
   }
   .price-lightbox-close:focus-visible{
     outline:2px solid var(--blue);
     outline-offset:2px;
-  }
-  @media (max-width:600px){
-    .price-lightbox-close{ top:-14px; right:0; }
   }
 
   /* ---------- Menu ---------- */
@@ -1919,29 +2053,48 @@
       <div class="section-head reveal">
         <span class="section-eyebrow">PRICE</span>
         <h2 class="section-title">料金</h2>
-        <p class="section-lead">4種類の飲み放題プランをご用意しています。</p>
+        <p class="section-lead">4種類の飲み放題プランをご用意しています。<br class="sp-br">平日（月・火・水・木）と金・土・祝日で料金が異なります。</p>
         <div class="divider"></div>
       </div>
 
-      <!-- 料金プランはJavaScriptのDRINK_PLANS配列から自動生成されます -->
-      <div class="plan-grid" id="planGrid"></div>
+      <!-- 料金プランはJavaScriptの PRICE_PLANS_WEEKDAY / PRICE_PLANS_WEEKEND / PRICE_PLANS_FLAT から自動生成されます -->
+      <p class="price-day-label reveal">平日（月・火・水・木）</p>
+      <p class="price-day-label-sub reveal">※月〜木が祝日にあたる場合は、下記「金・土・祝日」の料金が適用されます。</p>
+      <div class="plan-grid" id="planGridWeekday"></div>
+      <p class="price-day-label reveal">金・土・祝日</p>
+      <div class="plan-grid" id="planGridWeekend"></div>
+
+      <p class="price-day-label price-day-label-flat reveal">時間無制限・使い放題プラン（曜日を問わず共通）</p>
+      <div class="plan-grid" id="planGridFlat"></div>
 
       <p class="price-note reveal"><strong>当店はチャージのみのご利用はありません。</strong><br class="sp-br">飲み放題プランのみのご利用となります。</p>
+      <p class="price-note reveal">表示価格はすべて税込です。酒ガチャ（1回500円）は上記のすべての飲み放題プランの対象外（別料金）です。</p>
       <p class="price-note reveal">料金や内容は変更になる場合があります。<br class="sp-br">最新情報はInstagramをご確認ください。</p>
 
       <div class="price-gallery reveal">
-        <h3 class="price-gallery-title">新料金・飲み放題プラン</h3>
+        <h3 class="price-gallery-title">料金・メニュー画像</h3>
+        <p class="price-gallery-hint">画像をタップすると拡大表示できます（拡大画面は上下にスクロールできます）。</p>
         <div class="price-gallery-grid">
-          <button type="button" class="price-gallery-item" data-full="glow-menu.jpg" aria-label="料金メニュー画像を拡大表示">
-            <img src="glow-menu.jpg" alt="GLOW 料金メニュー：SIMPLE飲み放題2時間3,000円・ALL飲み放題2時間4,000円の案内画像" width="1024" height="1536" loading="lazy">
+          <button type="button" class="price-gallery-item" data-full="glow-menu-2026-12.jpg" aria-label="飲み放題プラン・フード料金の画像を拡大表示">
+            <img src="glow-menu-2026-12.jpg" alt="GLOW 飲み放題プラン・フード料金：平日SIMPLE2,000円/ALL3,000円、金・土・祝SIMPLE3,000円/ALL4,000円の案内画像" width="1024" height="1447" loading="lazy">
+            <span class="price-gallery-caption">飲み放題プラン・フード料金</span>
           </button>
-          <button type="button" class="price-gallery-item" data-full="glow-drink-plan.jpg" aria-label="時間無制限飲み放題プラン画像を拡大表示">
-            <img src="glow-drink-plan.jpg" alt="GLOW 時間無制限飲み放題プラン7,000円の案内画像" width="1024" height="1536" loading="lazy">
+          <button type="button" class="price-gallery-item" data-full="glow-drink-menu.jpg" aria-label="ドリンクメニューの画像を拡大表示">
+            <img src="glow-drink-menu.jpg" alt="GLOW ドリンクメニュー表（ビール・サワー・ハイ・カクテル・ノンアルカクテル・ソフトドリンク・ショットスペシャル等の全項目案内画像）" width="2800" height="3965" loading="lazy">
+            <span class="price-gallery-caption">ドリンクメニュー</span>
           </button>
-          <button type="button" class="price-gallery-item" data-full="glow-infinity-plan.jpg" aria-label="GLOW全メニュー∞放題プラン画像を拡大表示">
-            <img src="glow-infinity-plan.jpg" alt="GLOW 全メニュー∞放題10,000円の案内画像" width="1024" height="1536" loading="lazy">
+          <button type="button" class="price-gallery-item" data-full="glow-sake-gacha.jpg" aria-label="酒ガチャ（1回500円）の内容・出現割合画像を拡大表示">
+            <img src="glow-sake-gacha.jpg" alt="GLOW 酒ガチャ 1回500円 全100個のラインナップと出現割合の案内画像" width="1024" height="1536" loading="lazy">
+            <span class="price-gallery-caption">酒ガチャ（1回500円）</span>
           </button>
         </div>
+        <a class="price-pdf-link" href="glow-drink-menu.pdf" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <path d="M14 2v6h6"/>
+          </svg>
+          ドリンクメニューをPDFでも見る（別タブで開きます）
+        </a>
       </div>
 
       <div class="reserve-btn-wrap price-reserve-cta reveal">
@@ -1957,17 +2110,19 @@
   </section>
 
   <!-- 料金画像の拡大表示用ライトボックス -->
+  <!-- 閉じるボタンはスクロールするライトボックスの外（兄弟要素）に置き、
+       常に画面に固定表示されてスクロールで流れていかないようにしています。 -->
   <div class="price-lightbox" id="priceLightbox" hidden role="dialog" aria-modal="true" aria-label="料金プラン画像の拡大表示">
     <div class="price-lightbox-backdrop" id="priceLightboxBackdrop"></div>
     <div class="price-lightbox-inner">
-      <button type="button" class="price-lightbox-close" id="priceLightboxClose" aria-label="閉じる">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M6 6l12 12M18 6L6 18"/>
-        </svg>
-      </button>
       <img class="price-lightbox-img" id="priceLightboxImg" src="" alt="">
     </div>
   </div>
+  <button type="button" class="price-lightbox-close" id="priceLightboxClose" hidden aria-label="閉じる">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M6 6l12 12M18 6L6 18"/>
+    </svg>
+  </button>
 
   <!-- 6. メニュー -->
   <section id="menu" class="section-glow-right">
@@ -1975,12 +2130,15 @@
       <div class="section-head reveal">
         <span class="section-eyebrow">MENU</span>
         <h2 class="section-title">メニュー</h2>
-        <p class="section-lead">フード・お酒・アミューズメントメニュー</p>
+        <p class="section-lead">フード・ドリンク・体験など、飲み放題プランに含まれない追加料金メニューのご紹介です。<br class="sp-br">表示価格はすべて税込です。</p>
         <div class="divider"></div>
       </div>
 
       <!-- メニューはJavaScriptのMENU_CATEGORIES配列から自動生成されます -->
       <div class="menu-categories" id="menuList"></div>
+
+      <!-- 酒ガチャの出現ラインナップはJavaScriptのGACHA_ITEMS配列から自動生成されます -->
+      <div class="gacha-block reveal" id="gachaBlock"></div>
     </div>
   </section>
 
@@ -2131,7 +2289,30 @@
      ========================================================= */
 
   // ▼▼▼ 料金プラン（飲み放題） ここを編集 ▼▼▼
-  var DRINK_PLANS = [
+  // 平日（月・火・水・木）と金・土・祝日で金額が異なります。
+  // ※月〜木が祝日にあたる場合は「金・土・祝日」の料金が適用されます（price-day-label-subの注記）。
+  // ※日曜日・祝前日の料金区分は資料未確認のため、ここには追加していません。
+
+  // 平日（月・火・水・木）
+  var PRICE_PLANS_WEEKDAY = [
+    {
+      name: "SIMPLE飲み放題",
+      time: "2時間",
+      price: "2,000円",
+      extension: "延長(1時間) 800円",
+      items: ["ビール・カクテルなし", "ボードゲーム", "レトロゲーム"]
+    },
+    {
+      name: "ALL飲み放題",
+      time: "2時間",
+      price: "3,000円",
+      extension: "延長(1時間) 1,200円",
+      items: ["ビール・カクテルあり", "ボードゲーム", "レトロゲーム", "カラオケ"]
+    }
+  ];
+
+  // 金・土・祝日
+  var PRICE_PLANS_WEEKEND = [
     {
       name: "SIMPLE飲み放題",
       time: "2時間",
@@ -2145,7 +2326,11 @@
       price: "4,000円",
       extension: "延長(1時間) 1,500円",
       items: ["ビール・カクテルあり", "ボードゲーム", "レトロゲーム", "カラオケ"]
-    },
+    }
+  ];
+
+  // 時間無制限・使い放題プラン（曜日を問わず共通）
+  var PRICE_PLANS_FLAT = [
     {
       name: "時間無制限飲み放題",
       time: "時間無制限",
@@ -2172,38 +2357,91 @@
   ];
   // ▲▲▲ 料金プラン ここまで ▲▲▲
 
-  // ▼▼▼ メニュー（フード／お酒・スペシャル／アミューズメント） ここを編集 ▼▼▼
+  // ▼▼▼ メニュー（フード／ショット・スペシャル／体験／ボトル・テキーラタワー／エナジードリンク／その他） ここを編集 ▼▼▼
+  // 2026年11月時点の最新メニューPDF（ドリンクメニュー表）を正本として全項目を転記しています。
+  // 税込価格です。なお、ビール・サワー・ハイ・ハイボール・カクテル・ノンアルカクテル・ソフトドリンクは
+  // 飲み放題プランに含まれる定番ドリンクのため、個別価格は掲載していません（詳細はPDFをご覧ください）。
   var MENU_CATEGORIES = [
     {
-      title: "フード",
+      title: "フードメニュー",
       accent: "var(--pink)",
       items: [
-        { name: "ポップコーン", price: "400円" },
-        { name: "お菓子セット", price: "2,000円" },
-        { name: "辛ラーメン", price: "500円" },
-        { name: "博多長浜豚骨ラーメン", price: "600円" },
-        { name: "パフェ", price: "1,000円" }
+        { name: "辛ラーメン", price: "600円" },
+        { name: "博多長浜豚骨ラーメン「黒浜」", price: "700円" },
+        { name: "チョコレートパフェ", price: "1,200円" },
+        { name: "いちごパフェ", price: "1,200円" }
       ]
     },
     {
-      title: "お酒・スペシャル",
+      title: "ショット・スペシャル（飲み放題対象外）",
       accent: "var(--purple)",
       items: [
-        { name: "オリシャン", price: "10,000円" },
-        { name: "酒ガチャ", price: "500円" },
-        { name: "テキーラ観覧車", price: "5,000円" },
-        { name: "テキーラタワー", price: "9,000円" }
+        { name: "テキーラショット", price: "500円" },
+        { name: "コカレロストレートショット", price: "800円" },
+        { name: "クライナー", price: "700円" },
+        { name: "スマショット", price: "700円" },
+        { name: "あるちゅーる", price: "800円" },
+        { name: "マルガリータ", price: "500円" },
+        { name: "MEX（ストロベリー・マンゴー）", price: "700円" },
+        { name: "HABUSH", price: "900円" },
+        { name: "コカボム", price: "1,000円" },
+        { name: "+WEED", price: "1,000円" }
       ]
     },
     {
-      title: "アミューズメント",
+      title: "体験（飲み放題対象外）",
       accent: "var(--blue)",
       items: [
-        { name: "アミューズメント・スクラッチ", price: "300円" }
+        { name: "酒ガチャ（1回）", price: "500円" },
+        { name: "スクラッチ（1回）", price: "300円" },
+        { name: "10.00秒チャレンジ（1回）", price: "300円" }
+      ]
+    },
+    {
+      title: "ボトル・テキーラタワー（飲み放題対象外）",
+      accent: "var(--pink)",
+      items: [
+        { name: "オリシャン", price: "10,000円" },
+        { name: "光るオリシャン", price: "20,000円" },
+        { name: "テキーラ観覧車", price: "6,000円" },
+        { name: "テキーラタワー", price: "10,000円" }
+      ]
+    },
+    {
+      title: "エナジードリンク（飲み放題対象外）",
+      accent: "var(--blue)",
+      items: [
+        { name: "レッドブル", price: "700円" }
+      ]
+    },
+    {
+      title: "その他（別料金）",
+      accent: "var(--purple)",
+      items: [
+        { name: "お菓子BOX（お菓子の詰め合わせ）", price: "2,000円" },
+        { name: "ポップコーン", price: "400円" }
       ]
     }
   ];
   // ▲▲▲ メニュー ここまで ▲▲▲
+
+  // ▼▼▼ 酒ガチャ 出現ラインナップ（全100個・1回500円） ここを編集 ▼▼▼
+  var GACHA_PRICE = "500円";
+  var GACHA_ITEMS = [
+    { name: "テキーラゴールド", count: "15本", percent: "15%" },
+    { name: "テキーラシルバー", count: "15本", percent: "15%" },
+    { name: "マルガリータ", count: "15本", percent: "15%" },
+    { name: "MEX ストロベリー", count: "10本", percent: "10%" },
+    { name: "MEX テキーラマンゴー", count: "10本", percent: "10%" },
+    { name: "クライナー", count: "10本", percent: "10%" },
+    { name: "スマショット", count: "8本", percent: "8%" },
+    { name: "ハブ酒", count: "7杯", percent: "7%" },
+    { name: "あるちゅーる", count: "7本", percent: "7%" },
+    { name: "テキーラ観覧車", count: "1本", percent: "1%" },
+    { name: "テキーラタワー", count: "1本", percent: "1%" },
+    { name: "オリシャン", count: "1本", percent: "1%" }
+  ];
+  // ▲▲▲ 酒ガチャ ここまで ▲▲▲
 
   function escapeHTML(str){
     return String(str)
@@ -2213,11 +2451,11 @@
       .replace(/"/g, "&quot;");
   }
 
-  function renderPlans(){
-    var grid = document.getElementById('planGrid');
+  function renderPlans(gridId, plans){
+    var grid = document.getElementById(gridId);
     if (!grid) return;
     var checkIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12l5 5L20 6"/></svg>';
-    grid.innerHTML = DRINK_PLANS.map(function(plan){
+    grid.innerHTML = plans.map(function(plan){
       var itemsHtml = plan.items.map(function(item){
         return '<li>' + checkIcon + escapeHTML(item) + '</li>';
       }).join('');
@@ -2262,10 +2500,38 @@
     }).join('');
   }
 
-  renderPlans();
-  renderMenu();
+  function renderGacha(){
+    var wrap = document.getElementById('gachaBlock');
+    if (!wrap) return;
+    var rowsHtml = GACHA_ITEMS.map(function(item){
+      return (
+        '<tr>' +
+          '<td>' + escapeHTML(item.name) + '</td>' +
+          '<td>' + escapeHTML(item.count) + '</td>' +
+          '<td>' + escapeHTML(item.percent) + '</td>' +
+        '</tr>'
+      );
+    }).join('');
+    wrap.innerHTML =
+      '<div class="gacha-block-head">' +
+        '<h4>酒ガチャ</h4>' +
+        '<span class="gacha-block-price">1回 ' + escapeHTML(GACHA_PRICE) + '（ハズレなし）</span>' +
+      '</div>' +
+      '<p style="margin:0 0 14px;font-size:0.86rem;color:var(--text-sub);">運試しで、最高の一杯を手に入れろ！全100個の中からランダムに1つが出てきます。</p>' +
+      '<table class="gacha-table">' +
+        '<thead><tr><th>ラインナップ</th><th>本数</th><th>出現割合</th></tr></thead>' +
+        '<tbody>' + rowsHtml + '</tbody>' +
+      '</table>' +
+      '<p class="gacha-note">※全100個・出現割合の合計は100%です。※20歳未満の方はご利用いただけません。※お一人様何回でもチャレンジOKです。※酒ガチャは飲み放題プランの対象外（別料金）です。<br>絵柄入りの画像は上の「料金メニュー画像・PDF」からもご覧いただけます。</p>';
+  }
 
-  // 料金画像（新料金・飲み放題プラン）の拡大表示
+  renderPlans('planGridWeekday', PRICE_PLANS_WEEKDAY);
+  renderPlans('planGridWeekend', PRICE_PLANS_WEEKEND);
+  renderPlans('planGridFlat', PRICE_PLANS_FLAT);
+  renderMenu();
+  renderGacha();
+
+  // 料金画像（飲み放題プラン）の拡大表示
   var priceLightbox = document.getElementById('priceLightbox');
   var priceLightboxBackdrop = document.getElementById('priceLightboxBackdrop');
   var priceLightboxClose = document.getElementById('priceLightboxClose');
@@ -2282,6 +2548,8 @@
     priceLightboxImg.src = src;
     priceLightboxImg.alt = alt || '';
     priceLightbox.hidden = false;
+    priceLightbox.scrollTop = 0;
+    if (priceLightboxClose) priceLightboxClose.hidden = false;
     document.body.style.overflow = 'hidden';
     document.addEventListener('keydown', handlePriceLightboxKeydown);
     if (priceLightboxClose) priceLightboxClose.focus();
@@ -2290,6 +2558,7 @@
   function closePriceLightbox(){
     if (!priceLightbox || priceLightbox.hidden) return;
     priceLightbox.hidden = true;
+    if (priceLightboxClose) priceLightboxClose.hidden = true;
     priceLightboxImg.src = '';
     document.body.style.overflow = '';
     document.removeEventListener('keydown', handlePriceLightboxKeydown);
